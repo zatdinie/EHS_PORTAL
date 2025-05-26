@@ -199,8 +199,6 @@
     <Content Include="Areas\CLIP\DATABASE\upd_db.sql" />
     <Content Include="Areas\CLIP\favicon.ico" />
     <Content Include="Areas\CLIP\Images\logo.png" />
-    <Content Include="Areas\CLIP\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll" />
-    <Content Include="Areas\CLIP\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.pdb" />
     <Content Include="Areas\CLIP\packages\bootstrap.5.2.3\bootstrap.png" />
     <Content Include="Areas\CLIP\packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
     <Content Include="Areas\CLIP\packages\bootstrap.5.2.3\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
