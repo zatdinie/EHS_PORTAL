@@ -9,6 +9,7 @@ using System.Data.Entity;
 using EHS_PORTAL.Areas.CLIP.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace EHS_PORTAL
 {
@@ -38,6 +39,48 @@ namespace EHS_PORTAL
             // Set up timer to update certificate statuses daily
             _statusUpdateTimer = new Timer(UpdateCertificateStatusesCallback, null, 
                 _updateInterval, _updateInterval);
+        }
+        
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            if (exception != null)
+            {
+                // Log the error to a file
+                string logPath = Server.MapPath("~/App_Data/ErrorLogs");
+                if (!Directory.Exists(logPath))
+                {
+                    Directory.CreateDirectory(logPath);
+                }
+                
+                string logFile = Path.Combine(logPath, $"Error_{DateTime.Now:yyyyMMdd}.log");
+                using (StreamWriter writer = new StreamWriter(logFile, true))
+                {
+                    writer.WriteLine("----------------- Error Details -----------------");
+                    writer.WriteLine($"Date/Time: {DateTime.Now}");
+                    writer.WriteLine($"URL: {Request.Url?.ToString() ?? "Unknown URL"}");
+                    writer.WriteLine($"User IP: {Request.UserHostAddress ?? "Unknown IP"}");
+                    writer.WriteLine($"User Agent: {Request.UserAgent ?? "Unknown Agent"}");
+                    writer.WriteLine($"Error Message: {exception.Message}");
+                    writer.WriteLine($"Stack Trace: {exception.StackTrace}");
+                    
+                    // Log inner exception if any
+                    if (exception.InnerException != null)
+                    {
+                        writer.WriteLine($"Inner Exception: {exception.InnerException.Message}");
+                        writer.WriteLine($"Inner Stack Trace: {exception.InnerException.StackTrace}");
+                    }
+                    
+                    writer.WriteLine("--------------------------------------------------");
+                    writer.WriteLine();
+                }
+                
+                // Uncomment to redirect to a custom error page
+                // Response.Redirect("~/Error.aspx");
+                
+                // Clear the error
+                Server.ClearError();
+            }
         }
         
         private void UpdateCertificateStatusesCallback(object state)
