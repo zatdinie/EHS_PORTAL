@@ -16,8 +16,42 @@ EXEC sp_MSforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL', @whereand = ' AND
 -- Disable all constraints in FETS schema
 EXEC sp_MSforeachtable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL', @whereand = ' AND SCHEMA_NAME(schema_id) = ''FETS''';
 
--- Step 2: Migrate data from CLIP database to ESH.CLIP schema
-PRINT 'Migrating data from CLIP database to ESH.CLIP schema...'
+-- Step 2: Merge data from CLIP database to ESH.CLIP schema
+PRINT 'Merging data from CLIP database to ESH.CLIP schema...'
+
+-- Delete all existing data in destination tables first (to avoid primary key conflicts)
+-- We'll do this in reverse order of dependencies to avoid foreign key issues
+PRINT 'Cleaning existing data in target tables...'
+
+-- Clear existing CLIP schema data
+DELETE FROM [ESH].[CLIP].[CertificateOfFitness];
+DELETE FROM [ESH].[CLIP].[PlantMonitoring];
+DELETE FROM [ESH].[CLIP].[UserCompetencies];
+DELETE FROM [ESH].[CLIP].[UserPlants];
+DELETE FROM [ESH].[CLIP].[ActivityTrainings];
+DELETE FROM [ESH].[CLIP].[AspNetUserClaims];
+DELETE FROM [ESH].[CLIP].[AspNetUserLogins];
+DELETE FROM [ESH].[CLIP].[AspNetUserRoles];
+DELETE FROM [ESH].[CLIP].[AspNetUsers];
+DELETE FROM [ESH].[CLIP].[AspNetRoles];
+DELETE FROM [ESH].[CLIP].[CompetencyModules];
+DELETE FROM [ESH].[CLIP].[Monitoring];
+DELETE FROM [ESH].[CLIP].[Plants];
+DELETE FROM [ESH].[CLIP].[__MigrationHistory];
+
+-- Clear existing FETS schema data
+DELETE FROM [ESH].[FETS].[ActivityLogs];
+DELETE FROM [ESH].[FETS].[EmailRecipients];
+DELETE FROM [ESH].[FETS].[ServiceReminders];
+DELETE FROM [ESH].[FETS].[MapImages];
+DELETE FROM [ESH].[FETS].[FireExtinguishers];
+DELETE FROM [ESH].[FETS].[Users];
+DELETE FROM [ESH].[FETS].[Levels];
+DELETE FROM [ESH].[FETS].[FireExtinguisherTypes];
+DELETE FROM [ESH].[FETS].[Status];
+DELETE FROM [ESH].[FETS].[Plants];
+
+PRINT 'Existing data cleared. Starting data migration...'
 
 -- Migrate __MigrationHistory
 INSERT INTO [ESH].[CLIP].[__MigrationHistory] ([MigrationId], [ContextKey], [Model], [ProductVersion])
