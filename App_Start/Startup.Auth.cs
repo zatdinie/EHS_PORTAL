@@ -27,6 +27,8 @@ namespace EHS_PORTAL
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                CookieName = ".CLIP_AUTH_COOKIE",
+                CookiePath = "/CLIP",
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.

@@ -273,11 +273,7 @@ namespace FETS.Pages.Profile
                             IsActive BIT NOT NULL DEFAULT 1,
                             DateAdded DATETIME NOT NULL DEFAULT GETDATE()
                         )";
-                    
-                    using (SqlCommand createCmd = new SqlCommand(createTableQuery, conn))
-                    {
-                        createCmd.ExecuteNonQuery();
-                    }
+                   
                 }
                 
                 // Query to get all recipients

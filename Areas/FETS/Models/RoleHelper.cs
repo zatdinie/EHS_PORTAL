@@ -24,7 +24,7 @@ namespace FETS.Models
             }
 
             // Otherwise try to get it from the authentication ticket
-            HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            HttpCookie authCookie = HttpContext.Current.Request.Cookies[".FETS_AUTH_COOKIE"];
             if (authCookie != null)
             {
                 try

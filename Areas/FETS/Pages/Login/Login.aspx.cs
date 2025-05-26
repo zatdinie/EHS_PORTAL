@@ -45,8 +45,9 @@ namespace FETS.Pages.Login
                 // Encrypt the ticket
                 string encTicket = FormsAuthentication.Encrypt(ticket);
                 
-                // Create a cookie with the encrypted ticket
-                HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                // Create a cookie with the encrypted ticket using the hardcoded cookie name
+                HttpCookie authCookie = new HttpCookie(".FETS_AUTH_COOKIE", encTicket);
+                authCookie.Path = "/FETS";
                 Response.Cookies.Add(authCookie);
 
                 // Also store role in session for quicker access
