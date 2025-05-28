@@ -253,6 +253,15 @@ namespace FETS.Pages.Admin
                             gvActivityLogs.DataSource = dataTable;
                             gvActivityLogs.DataBind();
                             
+                            // Debug information
+                            System.Diagnostics.Debug.WriteLine($"Query executed: {queryBuilder.ToString()}");
+                            System.Diagnostics.Debug.WriteLine($"Rows returned: {dataTable.Rows.Count}");
+                            System.Diagnostics.Debug.WriteLine($"Date range selected: {dateRange}");
+                            if (dateRange != "all")
+                            {
+                                System.Diagnostics.Debug.WriteLine($"From date: {parameters.First(p => p.ParameterName == "@FromDate").Value}");
+                            }
+                            
                             // If no records and this isn't the first page, go back to first page
                             if (dataTable.Rows.Count == 0 && gvActivityLogs.PageIndex > 0)
                             {
@@ -267,6 +276,7 @@ namespace FETS.Pages.Admin
             {
                 // Log error
                 System.Diagnostics.Debug.WriteLine("Error loading activity logs: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Error stack trace: " + ex.StackTrace);
             }
         }
 

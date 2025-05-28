@@ -1,8 +1,6 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Areas/FETS/Site.Master" AutoEventWireup="true" CodeBehind="ActivityLogs.aspx.cs" Inherits="FETS.Pages.Admin.ActivityLogs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <!-- Reference to new CSS file -->
-    <link href="/Areas/FETS/Assets/css/activitylogs.css" rel="stylesheet" />
     <!-- Font Awesome for better icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     
@@ -47,9 +45,9 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                             <asp:DropDownList ID="ddlDateRange" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ApplyFilters_Changed">
-                                <asp:ListItem Text="All Time" Value="all"></asp:ListItem>
+                                <asp:ListItem Text="All Time" Value="all" Selected="True"></asp:ListItem>
                                 <asp:ListItem Text="Today" Value="today"></asp:ListItem>
-                                <asp:ListItem Text="Last 7 Days" Value="week" Selected="True"></asp:ListItem>
+                                <asp:ListItem Text="Last 7 Days" Value="week"></asp:ListItem>
                                 <asp:ListItem Text="Last 30 Days" Value="month"></asp:ListItem>
                             </asp:DropDownList>
                         </div>
@@ -80,7 +78,7 @@
                 
                 <div class="d-flex justify-content-between align-items-center mt-4">
                     <div>
-                        <span class="text-muted">Total Records: <asp:Label ID="lblTotalRecords" runat="server" CssClass="fw-bold"></asp:Label></span>
+                        <span class="text-muted">Total Records: <asp:Label ID="lblTotalRecords" runat="server" CssClass="fw-bold">0</asp:Label></span>
                     </div>
                     <asp:Button ID="btnExportCsv" runat="server" Text="Export to CSV" CssClass="btn btn-primary" OnClick="btnExportCsv_Click" />
                 </div>

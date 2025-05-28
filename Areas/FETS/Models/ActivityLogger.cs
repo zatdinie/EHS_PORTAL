@@ -86,7 +86,7 @@ namespace FETS.Models
                     {
                         cmd.Connection = conn;
                         cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = "SELECT UserID FROM FETS.FETS.Users WHERE Username = @Username";
+                        cmd.CommandText = "SELECT UserID FROM FETS.Users WHERE Username = @Username";
                         cmd.Parameters.AddWithValue("@Username", username);
 
                         object result = cmd.ExecuteScalar();
