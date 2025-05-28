@@ -15,7 +15,7 @@ namespace FETS.Pages.Login
             // This prevents authenticated users from accessing the login page again
             if (User.Identity.IsAuthenticated)
             {
-                Response.Redirect("~/FETS/Dashboard");
+                Response.Redirect("~/Areas/FETS/Pages/Dashboard/Dashboard.aspx");
             }
         }
 
@@ -47,7 +47,7 @@ namespace FETS.Pages.Login
                 
                 // Create a cookie with the encrypted ticket using the hardcoded cookie name
                 HttpCookie authCookie = new HttpCookie(".FETS_AUTH_COOKIE", encTicket);
-                authCookie.Path = "/FETS";
+                authCookie.Path = "/Areas/FETS";
                 Response.Cookies.Add(authCookie);
 
                 // Also store role in session for quicker access
@@ -91,7 +91,7 @@ namespace FETS.Pages.Login
                     System.Diagnostics.Debug.WriteLine(string.Format("Error logging login activity: {0}", ex.Message));
                 }
 
-                Response.Redirect("~/FETS/Dashboard");
+                Response.Redirect("~/Areas/FETS/Pages/Dashboard/Dashboard.aspx");
             }
             else
             {

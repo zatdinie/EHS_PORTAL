@@ -84,7 +84,7 @@ namespace FETS.Pages.ViewSection
         /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
-             // Check if user is authenticated            if (!User.Identity.IsAuthenticated)            {                // Redirect to login page                Response.Redirect("~/FETS/Login");            }
+             // Check if user is authenticated            if (!User.Identity.IsAuthenticated)            {                // Redirect to login page                Response.Redirect("~/Areas/FETS/Pages/Login/Login.aspx");            }
 
             // Add this line to get user's plant and role
             GetUserPlantAndRole();

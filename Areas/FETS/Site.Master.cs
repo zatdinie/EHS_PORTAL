@@ -37,7 +37,7 @@ namespace FETS
                     if (currentPage.ToLower() != "publicdashboard.aspx")
                     {
                         // Redirect unauthenticated users to login page only if not on the PublicDashboard
-                        Response.Redirect("~/FETS/Login");
+                        Response.Redirect("~/Areas/FETS/Pages/Login/Login.aspx");
                     }
                 }
             }
@@ -91,27 +91,27 @@ namespace FETS
         /// </summary>
         protected void btnDashboard_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/FETS/Dashboard");
+            Response.Redirect("~/Areas/FETS/Pages/Dashboard/Dashboard.aspx");
         }
 
         protected void btnDataEntry_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/FETS/DataEntry");
+            Response.Redirect("~/Areas/FETS/Pages/DataEntry/DataEntry.aspx");
         }
 
         protected void btnViewSection_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/FETS/ViewSection");
+            Response.Redirect("~/Areas/FETS/Pages/ViewSection/ViewSection.aspx");
         }
 
         protected void btnMapLayout_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/FETS/MapLayout");
+            Response.Redirect("~/Areas/FETS/Pages/MapLayout/MapLayout.aspx");
         }
 
         protected void btnProfile_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/FETS/Profile");
+            Response.Redirect("~/Areas/FETS/Pages/Profile/Profile.aspx");
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace FETS
             // Only allow administrators to access activity logs
             if (RoleHelper.IsUserInRole("Administrator"))
             {
-                Response.Redirect("~/FETS/ActivityLogs");
+                Response.Redirect("~/Areas/FETS/Pages/Admin/ActivityLogs.aspx");
             }
         }
 
@@ -148,7 +148,7 @@ namespace FETS
             // Explicitly remove the FETS authentication cookie with exact name from Web.config
             HttpCookie cookie = new HttpCookie(".FETS_AUTH_COOKIE");
             cookie.Expires = DateTime.Now.AddDays(-1);
-            cookie.Path = "/FETS";
+            cookie.Path = "/Areas/FETS";
             Response.Cookies.Add(cookie);
             
             // Also try removing it from request cookies
@@ -156,7 +156,7 @@ namespace FETS
             {
                 HttpCookie expiredCookie = Request.Cookies[".FETS_AUTH_COOKIE"];
                 expiredCookie.Expires = DateTime.Now.AddDays(-1);
-                expiredCookie.Path = "/FETS";
+                expiredCookie.Path = "/Areas/FETS";
                 Response.Cookies.Add(expiredCookie);
             }
             
@@ -164,7 +164,7 @@ namespace FETS
             Session.Clear();
             Session.Abandon();
             
-            Response.Redirect("~/FETS/Login");
+            Response.Redirect("~/Areas/FETS/Pages/Login/Login.aspx");
         }
 
         private string GetUserRoleFromTicket()
@@ -197,7 +197,7 @@ namespace FETS
             // Explicitly remove the FETS authentication cookie with exact name from Web.config
             HttpCookie cookie = new HttpCookie(".FETS_AUTH_COOKIE");
             cookie.Expires = DateTime.Now.AddDays(-1);
-            cookie.Path = "/FETS";
+            cookie.Path = "/Areas/FETS";
             Response.Cookies.Add(cookie);
             
             // Also try removing it from request cookies
@@ -205,7 +205,7 @@ namespace FETS
             {
                 HttpCookie expiredCookie = Request.Cookies[".FETS_AUTH_COOKIE"];
                 expiredCookie.Expires = DateTime.Now.AddDays(-1);
-                expiredCookie.Path = "/FETS";
+                expiredCookie.Path = "/Areas/FETS";
                 Response.Cookies.Add(expiredCookie);
             }
             
@@ -214,7 +214,7 @@ namespace FETS
             Session.Abandon();
             
             // Redirect to login page
-            Response.Redirect("~/FETS/Login");
+            Response.Redirect("~/Areas/FETS/Pages/Login/Login.aspx");
         }
     }
 }

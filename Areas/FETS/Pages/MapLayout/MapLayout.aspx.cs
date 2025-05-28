@@ -23,7 +23,7 @@ namespace FETS.Pages.MapLayout
             if (!User.Identity.IsAuthenticated)
             {
                 // Redirect to login page
-                Response.Redirect("~/FETS/Login");
+                Response.Redirect("~/Areas/FETS/Pages/Login/Login.aspx");
             }
 
             // Get user's assigned plant and role

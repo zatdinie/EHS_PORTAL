@@ -529,7 +529,7 @@
                 <div class="login-section">
                     <h3>Authorized Access</h3>
                     <p>Log in to access complete system features including data entry, map view, and service management.</p>
-                    <a href="<%=ResolveUrl("~/FETS/Login")%>" class="btn-login">Login to System</a>
+                    <a href="<%=ResolveUrl("~/Areas/FETS/Pages/Login/Login.aspx")%>" class="btn-login">Login to System</a>
                 </div>
             </div>
 

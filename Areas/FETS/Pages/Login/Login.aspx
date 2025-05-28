@@ -6,13 +6,13 @@
 <head runat="server">
     <title>INARI - FETS</title>
     <!-- Favicon -->
-    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/Areas/FETS/favicon.ico" type="image/x-icon" />
     <!-- Link to Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Link to Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <!-- Link to external CSS styles -->
-    <link href="Areas/FETS/Assets/css/styles.css" rel="stylesheet" />
+    <link href="~/Areas/FETS/Assets/css/styles.css" rel="stylesheet" />
     <style>
         /* General body styling */
         body {
@@ -387,7 +387,7 @@
                 
                 <!-- Back to Dashboard Button -->
                 <div class="back-to-dashboard">
-                    <a href="/FETS/PublicDashboard" class="btn-back">
+                    <a href="~/Areas/FETS/Pages/PublicDashboard/PublicDashboard.aspx" class="btn-back">
                         <i class="fas fa-arrow-left"></i> Back to Dashboard
                     </a>
                 </div>

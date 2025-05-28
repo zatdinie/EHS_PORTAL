@@ -98,8 +98,8 @@
     <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Owin.Security.Twitter.4.2.2\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="MimeKit, Version=4.12.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
       <HintPath>packages\MimeKit.4.12.0\lib\net47\MimeKit.dll</HintPath>
@@ -194,9 +194,6 @@
     <Content Include="Areas\CLIP\Content\bootstrap.rtl.css" />
     <Content Include="Areas\CLIP\Content\bootstrap.rtl.min.css" />
     <Content Include="Areas\CLIP\Content\Site.css" />
-    <Content Include="Areas\CLIP\DATABASE\CREATE_DB29042025.sql" />
-    <Content Include="Areas\CLIP\DATABASE\Update_Competency.sql" />
-    <Content Include="Areas\CLIP\DATABASE\upd_db.sql" />
     <Content Include="Areas\CLIP\favicon.ico" />
     <Content Include="Areas\CLIP\Images\logo.png" />
     <Content Include="Areas\CLIP\Scripts\bootstrap.bundle.js" />
@@ -581,6 +578,7 @@
   <ItemGroup>
     <Folder Include="Areas\CLIP\Views\Dashboard\" />
     <Folder Include="Areas\CLIP\Views\TrainingActivity\" />
+    <Folder Include="Controllers\" />
     <Folder Include="Uploads\Maps\" />
   </ItemGroup>
   <ItemGroup>
