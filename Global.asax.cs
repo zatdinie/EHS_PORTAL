@@ -75,8 +75,8 @@ namespace EHS_PORTAL
                     writer.WriteLine();
                 }
                 
-                // Uncomment to redirect to a custom error page
-                // Response.Redirect("~/Error.aspx");
+                // Redirect to a custom error page
+                Response.Redirect("~/Error.aspx");
                 
                 // Clear the error
                 Server.ClearError();

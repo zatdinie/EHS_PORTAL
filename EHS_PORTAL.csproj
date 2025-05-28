@@ -360,6 +360,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\IdentityHelpers.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\CLIP\CLIPAreaRegistration.cs" />
@@ -429,7 +430,6 @@
     <Compile Include="Areas\CLIP\Models\PlantMonitoring.cs" />
     <Compile Include="Areas\CLIP\Models\UserCompetency.cs" />
     <Compile Include="Areas\CLIP\Models\UserPlant.cs" />
-    <Compile Include="Areas\FETS\FETSAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
