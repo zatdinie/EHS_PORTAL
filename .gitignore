@@ -57,3 +57,6 @@ _ReSharper*/
 # Configuration files with sensitive data
 Web.config
 
+# Error logs
+App_Data/ErrorLogs/
+

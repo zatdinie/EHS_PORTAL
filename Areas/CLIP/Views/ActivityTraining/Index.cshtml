@@ -7,6 +7,22 @@
 
 <h1>My Training Activities</h1>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+        <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+        <i class="bi bi-exclamation-circle me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div class="d-flex justify-content-end mb-3">
     <a href="@Url.Action("Create")" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> Log New Activity
@@ -19,8 +35,9 @@
             <tr>
                 <th>Activity Name</th>
                 <th>Date</th>
-                <th>CEP Points</th>
-                <th>CPD Points</th>
+                <th>ATOM CEP Points</th>
+                <th>DOE CPD Points</th>
+                <th>DOSH CEP Points</th>
                 <th>Document</th>
                 <th>Actions</th>
             </tr>
@@ -45,8 +62,9 @@
                     <tr>
                         <td>@activity.ActivityName</td>
                         <td>@activity.ActivityDate.ToString("MM/dd/yyyy")</td>
-                        <td>@(activity.CEPPointsGained.HasValue ? activity.CEPPointsGained.Value.ToString() : "-")</td>
-                        <td>@(activity.CPDPointsGained.HasValue ? activity.CPDPointsGained.Value.ToString() : "-")</td>
+                        <td>@(activity.ATOM_CEP_Points.HasValue ? activity.ATOM_CEP_Points.Value.ToString() : "-")</td>
+                        <td>@(activity.DOE_CPD_Points.HasValue ? activity.DOE_CPD_Points.Value.ToString() : "-")</td>
+                        <td>@(activity.DOSH_CEP_Points.HasValue ? activity.DOSH_CEP_Points.Value.ToString() : "-")</td>
                         <td>
                             @if (!string.IsNullOrEmpty(activity.Document))
                             {

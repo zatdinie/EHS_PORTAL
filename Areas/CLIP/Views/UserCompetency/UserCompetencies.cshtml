@@ -62,16 +62,25 @@
                 </div>
                 <div class="card-body">
                     <div class="row text-center">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="d-flex flex-column align-items-center">
-                                <div class="display-4 text-primary">@(ViewBag.CEPPoints ?? 0)</div>
-                                <span>CEP Points</span>
+                                <i class="fas fa-leaf mb-2 text-success" style="font-size: 1.5rem;"></i>
+                                <div class="display-4 text-success">@(ViewBag.DOECPDPoints ?? 0)</div>
+                                <span>DOE CPD</span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="d-flex flex-column align-items-center">
-                                <div class="display-4 text-primary">@(ViewBag.CPDPoints ?? 0)</div>
-                                <span>CPD Points</span>
+                                <i class="fas fa-hard-hat mb-2 text-warning" style="font-size: 1.5rem;"></i>
+                                <div class="display-4 text-warning">@(ViewBag.DOSHCEPPoints ?? 0)</div>
+                                <span>DOSH CEP</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-atom mb-2 text-primary" style="font-size: 1.5rem;"></i>
+                                <div class="display-4 text-primary">@(ViewBag.ATOMCEPPoints ?? 0)</div>
+                                <span>ATOM CEP</span>
                             </div>
                         </div>
                     </div>
@@ -92,17 +101,14 @@
                         </div>
                         <div class="col-md-3">
                             <div class="d-flex flex-column align-items-center">
-                                <div class="display-4 text-success">@Model.Count(uc => uc.Status == "Completed")</div>
-                                <span>Completed</span>
+                                <div class="display-4 text-success">@Model.Count(uc => uc.Status == "Active")</div>
+                                <span>Active</span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="d-flex flex-column align-items-center">
-                                <div class="display-4 text-info">@Model.Count(uc => 
-                                    uc.Status == "Active" || 
-                                    uc.Status == "Pending" || 
-                                    uc.Status == "Expired")</div>
-                                <span>In Progress</span>
+                                <div class="display-4 text-info">@Model.Count(uc => uc.Status == "Pending")</div>
+                                <span>Pending</span>
                             </div>
                         </div>
                         <div class="col-md-3">

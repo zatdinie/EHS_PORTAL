@@ -231,6 +231,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="css\lanyard.css" />
     <Content Include="css\styles.css" />
+    <Content Include="Error.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\clip.png" />
     <Content Include="images\data.png" />

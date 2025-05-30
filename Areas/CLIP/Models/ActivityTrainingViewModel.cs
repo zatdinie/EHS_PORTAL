@@ -6,6 +6,8 @@ namespace EHS_PORTAL.Areas.CLIP.Models
 {
     public class ActivityTrainingViewModel
     {
+        public Guid Id { get; set; }
+        
         [Required]
         [Display(Name = "Activity Name")]
         public string ActivityName { get; set; }
@@ -19,12 +21,16 @@ namespace EHS_PORTAL.Areas.CLIP.Models
         [Display(Name = "Supporting Document")]
         public HttpPostedFileBase DocumentFile { get; set; }
 
-        [Display(Name = "CEP Points")]
-        [Range(0, 100, ErrorMessage = "CEP Points must be between 0 and 100")]
-        public int? CEPPointsGained { get; set; }
+        [Display(Name = "ATOM CEP Points")]
+        [Range(0, 100, ErrorMessage = "ATOM CEP Points must be between 0 and 100")]
+        public int? ATOM_CEP_Points { get; set; }
 
-        [Display(Name = "CPD Points")]
-        [Range(0, 100, ErrorMessage = "CPD Points must be between 0 and 100")]
-        public int? CPDPointsGained { get; set; }
+        [Display(Name = "DOE CPD Points")]
+        [Range(0, 100, ErrorMessage = "DOE CPD Points must be between 0 and 100")]
+        public int? DOE_CPD_Points { get; set; }
+        
+        [Display(Name = "DOSH CEP Points")]
+        [Range(0, 100, ErrorMessage = "DOSH CEP Points must be between 0 and 100")]
+        public int? DOSH_CEP_Points { get; set; }
     }
 } 

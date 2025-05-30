@@ -37,20 +37,30 @@
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <strong>@Html.DisplayNameFor(model => model.CEPPointsGained):</strong>
+                            <strong>@Html.DisplayNameFor(model => model.ATOM_CEP_Points):</strong>
                         </div>
                         <div class="col-md-9">
-                            @(Model.CEPPointsGained.HasValue ? Model.CEPPointsGained.Value.ToString() : "None")
+                            @(Model.ATOM_CEP_Points.HasValue ? Model.ATOM_CEP_Points.Value.ToString() : "None")
                         </div>
                     </div>
                     <hr />
 
                     <div class="row">
                         <div class="col-md-3 text-right">
-                            <strong>@Html.DisplayNameFor(model => model.CPDPointsGained):</strong>
+                            <strong>@Html.DisplayNameFor(model => model.DOE_CPD_Points):</strong>
                         </div>
                         <div class="col-md-9">
-                            @(Model.CPDPointsGained.HasValue ? Model.CPDPointsGained.Value.ToString() : "None")
+                            @(Model.DOE_CPD_Points.HasValue ? Model.DOE_CPD_Points.Value.ToString() : "None")
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-3 text-right">
+                            <strong>@Html.DisplayNameFor(model => model.DOSH_CEP_Points):</strong>
+                        </div>
+                        <div class="col-md-9">
+                            @(Model.DOSH_CEP_Points.HasValue ? Model.DOSH_CEP_Points.Value.ToString() : "None")
                         </div>
                     </div>
                     <hr />

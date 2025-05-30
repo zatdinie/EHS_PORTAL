@@ -5,94 +5,118 @@
     Layout = "~/Areas/CLIP/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <i class="fa fa-edit"></i> Edit Training Activity
-                    </h3>
+<h1>Edit Training Activity</h1>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm("Edit", "ActivityTraining", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                
+                @Html.HiddenFor(model => model.Id)
+                
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.ActivityName, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ActivityName, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="panel-body">
-                    @using (Html.BeginForm("Edit", "ActivityTraining", new { id = Request.Params["id"] }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        
-                        <div class="form-horizontal">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ActivityName, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.ActivityName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ActivityDate, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.ActivityDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                                    @Html.ValidationMessageFor(model => model.ActivityDate, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.DocumentFile, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    <input type="file" name="DocumentFile" id="DocumentFile" class="form-control" />
-                                    <p class="help-block">
-                                        @if (!string.IsNullOrEmpty(ViewBag.CurrentDocumentName))
-                                        {
-                                            <span>Current document: <strong>@ViewBag.CurrentDocumentName</strong></span>
-                                            <br />
-                                            <span>Upload a new document to replace the current one</span>
-                                        }
-                                        else
-                                        {
-                                            <span>No document currently attached. Upload one if needed.</span>
-                                        }
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CEPPointsGained, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.CEPPointsGained, new { htmlAttributes = new { @class = "form-control", min = "0", step = "0.5" } })
-                                    @Html.ValidationMessageFor(model => model.CEPPointsGained, "", new { @class = "text-danger" })
-                                    <p class="help-block">CEP Points gained from this activity</p>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.CPDPointsGained, htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.CPDPointsGained, new { htmlAttributes = new { @class = "form-control", min = "0", step = "0.5" } })
-                                    @Html.ValidationMessageFor(model => model.CPDPointsGained, "", new { @class = "text-danger" })
-                                    <p class="help-block">CPD Points gained from this activity</p>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-save"></i> Save Changes
-                                    </button>
-                                    <a href="@Url.Action("Index")" class="btn btn-default">
-                                        <i class="fa fa-arrow-left"></i> Back to List
-                                    </a>
-                                </div>
-                            </div>
+                
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.ActivityDate, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ActivityDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(model => model.ActivityDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.DocumentFile, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="file" name="DocumentFile" id="DocumentFile" class="form-control file-upload" />
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting documents (certificates, presentations, etc.)">
+                                <i class="bi bi-info-circle"></i>
+                            </span>
                         </div>
-                    }
+                        <p class="form-text text-muted">
+                            @if (!string.IsNullOrEmpty(ViewBag.CurrentDocumentName))
+                            {
+                                <span>Current document: <strong>@ViewBag.CurrentDocumentName</strong></span>
+                                <br />
+                                <span>Upload a new document to replace the current one</span>
+                            }
+                            else
+                            {
+                                <span>No document currently attached. Upload one if needed.</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.ATOM_CEP_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "ATOM CEP Points gained from this activity" } })
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="ATOM CEP Points gained from this activity">
+                                <i class="bi bi-info-circle"></i>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.ATOM_CEP_Points, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.DOE_CPD_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOE CPD Points gained from this activity" } })
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="DOE CPD Points gained from this activity">
+                                <i class="bi bi-info-circle"></i>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.DOE_CPD_Points, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.DOSH_CEP_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOSH CEP Points gained from this activity" } })
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="DOSH CEP Points gained from this activity">
+                                <i class="bi bi-info-circle"></i>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.DOSH_CEP_Points, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <div class="offset-md-2 col-md-10">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Save Changes
+                        </button>
+                        <a href="@Url.Action("Index")" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
 } 

@@ -211,8 +211,8 @@
         <h1 class="h2 fw-bold">Competent Person</h1>
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("Assign", "UserCompetency")" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Assign Competency
+            <a href="@Url.Action("Add", "Competency")" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Add New Module
             </a>
         }
     </div>
@@ -374,8 +374,16 @@
                     var buildingMatch = true;
                     if (buildingFilter !== "") {
                         buildingMatch = false;
-                        $item.find(".badge.bg-info").each(function() {
-                            if ($(this).text().trim() === buildingFilter) {
+                        // Expand the accordion to ensure all buildings are visible for matching
+                        if (!$item.find('.accordion-collapse').hasClass('show')) {
+                            // Store current state to restore later if needed
+                            $item.data('was-collapsed', true);
+                        }
+                        
+                        // Check each building badge within this accordion item
+                        $item.find(".badge.bg-info.text-dark.rounded-pill").each(function() {
+                            var buildingText = $(this).text().trim();
+                            if (buildingText === buildingFilter) {
                                 buildingMatch = true;
                                 return false; // break the loop
                             }
@@ -385,6 +393,11 @@
                     // Show if all conditions match
                     if (textMatch && buildingMatch) {
                         $item.show();
+                        // If there's a building filter and we have a match, expand the accordion
+                        if (buildingFilter !== "" && buildingMatch) {
+                            var collapseId = $item.find('.accordion-collapse').attr('id');
+                            $('#' + collapseId).collapse('show');
+                        }
                     }
                 });
                 

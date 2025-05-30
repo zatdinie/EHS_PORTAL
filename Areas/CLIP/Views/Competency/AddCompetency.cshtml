@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-secondary text-white">
                     <h4 class="card-title mb-0">Add New Competency Module</h4>
                 </div>
                 <div class="card-body">
@@ -18,35 +18,55 @@
                         
                         <div class="mb-3">
                             @Html.LabelFor(m => m.ModuleName, "Module Name", new { @class = "form-label" })
-                            @Html.TextBoxFor(m => m.ModuleName, new { @class = "form-control", placeholder = "Enter module name" })
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.ModuleName, new { @class = "form-control" })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter module name">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
                             @Html.ValidationMessageFor(m => m.ModuleName, "", new { @class = "text-danger" })
                         </div>
                         
                         <div class="mb-3">
                             @Html.LabelFor(m => m.Description, new { @class = "form-label" })
-                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter module description", rows = 3 })
+                            <div class="input-group">
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3 })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter module description">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
                             @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
                         </div>
                         <div class="mb-3">
                             @Html.LabelFor(m => m.CompetencyType, "Competency Type", new { @class = "form-label" })
-                            @Html.DropDownListFor(m => m.CompetencyType, 
-                                new List<SelectListItem> { 
-                                    new SelectListItem { Text = "Environment", Value = "Environment" },
-                                    new SelectListItem { Text = "Safety", Value = "Safety" },
-                                    new SelectListItem { Text = "Others", Value = "Others" }
-                                },
-                                "Select competency type", new { @class = "form-control", id = "competencyType" })
+                            <div class="position-relative">
+                                @Html.DropDownListFor(m => m.CompetencyType, 
+                                    new List<SelectListItem> { 
+                                        new SelectListItem { Text = "Environment", Value = "Environment" },
+                                        new SelectListItem { Text = "Safety", Value = "Safety" },
+                                        new SelectListItem { Text = "Others", Value = "Others" }
+                                    },
+                                    "Select competency type", new { @class = "form-control", id = "competencyType" })
+                                <span class="position-absolute top-50 end-0 translate-middle-y me-2">
+                                    <i class="fas fa-chevron-down text-secondary"></i>
+                                </span>
+                            </div>
                             @Html.ValidationMessageFor(m => m.CompetencyType, "", new { @class = "text-danger" })
                         </div>
                         
                         <div class="mb-3" id="annualPointDeductionSection" style="display: none;">
                             @Html.LabelFor(m => m.AnnualPointDeduction, "Points required per year", new { @class = "form-label" })
-                            @Html.TextBoxFor(m => m.AnnualPointDeduction, new { @class = "form-control", type = "number", min = "0", placeholder = "Enter required points per year" })
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.AnnualPointDeduction, new { @class = "form-control", type = "number", min = "0" })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter required points per year">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
                             @Html.ValidationMessageFor(m => m.AnnualPointDeduction, "", new { @class = "text-danger" })
                         </div>
                         
                         <div class="mt-4 d-flex justify-content-between">
-                            <a href="@Url.Action("Index", "Competency")" class="btn btn-outline-secondary">
+                            <a href="@Url.Action("Index", "UserCompetency")" class="btn btn-outline-secondary">
                                 <i class="fas fa-arrow-left me-2"></i>Back to List
                             </a>
                             <button type="submit" class="btn btn-primary">
@@ -63,9 +83,13 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
     <script>
         $(document).ready(function() {
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+            
             // Function to toggle Annual Point Deduction section visibility
             function toggleAnnualPointDeduction() {
                 var competencyType = $('#competencyType').val();

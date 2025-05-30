@@ -25,11 +25,14 @@ namespace EHS_PORTAL.Areas.CLIP.Models
         [Display(Name = "Document")]
         public string Document { get; set; }
 
-        [Display(Name = "CEP Points")]
-        public int? CEPPointsGained { get; set; }
+        [Display(Name = "ATOM CEP Points")]
+        public int? ATOM_CEP_Points { get; set; }
 
-        [Display(Name = "CPD Points")]
-        public int? CPDPointsGained { get; set; }
+        [Display(Name = "DOE CPD Points")]
+        public int? DOE_CPD_Points { get; set; }
+        
+        [Display(Name = "DOSH CEP Points")]
+        public int? DOSH_CEP_Points { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }

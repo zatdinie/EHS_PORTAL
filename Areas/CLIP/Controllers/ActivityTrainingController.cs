@@ -72,8 +72,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     ActivityName = model.ActivityName,
                     ActivityDate = model.ActivityDate,
                     Document = fileName,
-                    CEPPointsGained = model.CEPPointsGained ?? 0,
-                    CPDPointsGained = model.CPDPointsGained ?? 0
+                    ATOM_CEP_Points = model.ATOM_CEP_Points ?? 0,
+                    DOE_CPD_Points = model.DOE_CPD_Points ?? 0,
+                    DOSH_CEP_Points = model.DOSH_CEP_Points ?? 0
                 };
                 
                 db.ActivityTrainings.Add(activity);
@@ -82,14 +83,19 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 var user = db.Users.Find(userId);
                 if (user != null)
                 {
-                    if (model.CEPPointsGained.HasValue)
+                    if (model.ATOM_CEP_Points.HasValue)
                     {
-                        user.Atom_CEP = (user.Atom_CEP ?? 0) + (int)model.CEPPointsGained.Value;
+                        user.Atom_CEP = (user.Atom_CEP ?? 0) + model.ATOM_CEP_Points.Value;
                     }
                     
-                    if (model.CPDPointsGained.HasValue)
+                    if (model.DOE_CPD_Points.HasValue)
                     {
-                        user.DOE_CPD = (user.DOE_CPD ?? 0) + (int)model.CPDPointsGained.Value;
+                        user.DOE_CPD = (user.DOE_CPD ?? 0) + model.DOE_CPD_Points.Value;
+                    }
+                    
+                    if (model.DOSH_CEP_Points.HasValue)
+                    {
+                        user.Dosh_CEP = (user.Dosh_CEP ?? 0) + model.DOSH_CEP_Points.Value;
                     }
                 }
                 
@@ -138,10 +144,12 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             var viewModel = new ActivityTrainingViewModel
             {
+                Id = activity.Id,
                 ActivityName = activity.ActivityName,
                 ActivityDate = activity.ActivityDate,
-                CEPPointsGained = activity.CEPPointsGained,
-                CPDPointsGained = activity.CPDPointsGained
+                ATOM_CEP_Points = activity.ATOM_CEP_Points,
+                DOE_CPD_Points = activity.DOE_CPD_Points,
+                DOSH_CEP_Points = activity.DOSH_CEP_Points
             };
             
             ViewBag.CurrentDocumentName = activity.Document;
@@ -172,14 +180,17 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 }
                 
                 // Track point changes for updating user's total points
-                float? originalCEP = activity.CEPPointsGained;
-                float? originalCPD = activity.CPDPointsGained;
+                int? originalCEP = activity.ATOM_CEP_Points;
+                int? originalCPD = activity.DOE_CPD_Points;
+                int? originalDOSH = activity.DOSH_CEP_Points;
+
                 
                 // Update the activity properties
                 activity.ActivityName = model.ActivityName;
                 activity.ActivityDate = model.ActivityDate;
-                activity.CEPPointsGained = model.CEPPointsGained ?? 0;
-                activity.CPDPointsGained = model.CPDPointsGained ?? 0;
+                activity.ATOM_CEP_Points = model.ATOM_CEP_Points ?? 0;
+                activity.DOE_CPD_Points = model.DOE_CPD_Points ?? 0;
+                activity.DOSH_CEP_Points = model.DOSH_CEP_Points ?? 0;
                 
                 // Handle document upload if provided
                 if (model.DocumentFile != null && model.DocumentFile.ContentLength > 0)
@@ -218,14 +229,19 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 if (user != null)
                 {
                     // Update CEP points
-                    int oldPoints = (int)originalCEP;
-                    int newPoints = model.CEPPointsGained.HasValue ? (int)model.CEPPointsGained.Value : 0;
+                    int oldPoints = originalCEP ?? 0;
+                    int newPoints = model.ATOM_CEP_Points ?? 0;
                     user.Atom_CEP = (user.Atom_CEP ?? 0) - oldPoints + newPoints;
                     
                     // Update CPD points
-                    int oldPointsCPD = (int)originalCPD;
-                    int newPointsCPD = model.CPDPointsGained.HasValue ? (int)model.CPDPointsGained.Value : 0;
+                    int oldPointsCPD = originalCPD ?? 0;
+                    int newPointsCPD = model.DOE_CPD_Points ?? 0;
                     user.DOE_CPD = (user.DOE_CPD ?? 0) - oldPointsCPD + newPointsCPD;
+                    
+                    // Update DOSH CEP points
+                    int oldPointsDOSH = originalDOSH ?? 0;
+                    int newPointsDOSH = model.DOSH_CEP_Points ?? 0;
+                    user.Dosh_CEP = (user.Dosh_CEP ?? 0) - oldPointsDOSH + newPointsDOSH;
                 }
                 
                 db.SaveChanges();
@@ -258,11 +274,14 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 var user = db.Users.Find(userId);
                 if (user != null)
                 {
-                    user.Atom_CEP = (user.Atom_CEP ?? 0) - (int)activity.CEPPointsGained;
+                    user.Atom_CEP = (user.Atom_CEP ?? 0) - activity.ATOM_CEP_Points;
                     if (user.Atom_CEP < 0) user.Atom_CEP = 0;
                     
-                    user.DOE_CPD = (user.DOE_CPD ?? 0) - (int)activity.CPDPointsGained;
+                    user.DOE_CPD = (user.DOE_CPD ?? 0) - activity.DOE_CPD_Points;
                     if (user.DOE_CPD < 0) user.DOE_CPD = 0;
+                    
+                    user.Dosh_CEP = (user.Dosh_CEP ?? 0) - activity.DOSH_CEP_Points;
+                    if (user.Dosh_CEP < 0) user.Dosh_CEP = 0;
                 }
                 
                 // Delete file if exists

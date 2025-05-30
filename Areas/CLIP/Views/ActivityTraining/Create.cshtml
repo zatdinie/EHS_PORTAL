@@ -46,30 +46,41 @@
                 </div>
                 
                 <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.CEPPointsGained, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    @Html.LabelFor(model => model.ATOM_CEP_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
                     <div class="col-md-10">
                         <div class="input-group">
-                            @Html.EditorFor(model => model.CEPPointsGained, new { htmlAttributes = new { @class = "form-control", min = "0", step = "0.5" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="CEP Points gained from this activity">
+                            @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "ATOM CEP Points gained from this activity" } })
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="ATOM CEP Points gained from this activity">
                                 <i class="bi bi-info-circle"></i>
                             </span>
                         </div>
-                        @Html.ValidationMessageFor(model => model.CEPPointsGained, "", new { @class = "text-danger" })
-                        <small class="form-text text-muted">CEP Points gained from this activity</small>
+                        @Html.ValidationMessageFor(model => model.ATOM_CEP_Points, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 
                 <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.CPDPointsGained, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    @Html.LabelFor(model => model.DOE_CPD_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
                     <div class="col-md-10">
                         <div class="input-group">
-                            @Html.EditorFor(model => model.CPDPointsGained, new { htmlAttributes = new { @class = "form-control", min = "0", step = "0.5" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="CPD Points gained from this activity">
+                            @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOE CPD Points gained from this activity" } })
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="DOE CPD Points gained from this activity">
                                 <i class="bi bi-info-circle"></i>
                             </span>
                         </div>
-                        @Html.ValidationMessageFor(model => model.CPDPointsGained, "", new { @class = "text-danger" })
-                        <small class="form-text text-muted">CPD Points gained from this activity</small>
+                        @Html.ValidationMessageFor(model => model.DOE_CPD_Points, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.DOSH_CEP_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOSH CEP Points gained from this activity" } })
+                            <span class="input-group-text" data-bs-toggle="tooltip" title="DOSH CEP Points gained from this activity">
+                                <i class="bi bi-info-circle"></i>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.DOSH_CEP_Points, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 
