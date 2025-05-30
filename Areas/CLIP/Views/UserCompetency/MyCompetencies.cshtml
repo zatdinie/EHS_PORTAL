@@ -9,7 +9,28 @@
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>My Competencies</h1>
+        <div>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back
+            </a>
+        </div>
     </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
     @if (!Model.Any())
     {
@@ -22,8 +43,27 @@
         if (currentUser != null)
         {
             <div class="row mb-4">
-                <div class="col-md-12">
+                <div class="col-md-4">
                     <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">User Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <dl class="mb-0">
+                                <dt>Username</dt>
+                                <dd>@currentUser.UserName</dd>
+                                
+                                <dt>Employee ID</dt>
+                                <dd>@(string.IsNullOrEmpty(currentUser.EmpID) ? "Not set" : currentUser.EmpID)</dd>
+                                
+                                <dt>Email</dt>
+                                <dd>@currentUser.Email</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card shadow-sm mb-4">
                         <div class="card-header bg-light">
                             <h5 class="mb-0">Professional Development Points</h5>
                         </div>
@@ -31,20 +71,94 @@
                             <div class="row text-center">
                                 <div class="col-md-4">
                                     <div class="d-flex flex-column align-items-center">
-                                        <div class="display-2 text-primary fw-bold">@(ViewBag.ATOMCEPPoints ?? currentUser.Atom_CEP ?? 0)</div>
-                                        <span class="fs-5">ATOM CEP Points</span>
+                                        <div class="display-4 text-primary">@(ViewBag.ATOMCEPPoints ?? currentUser.Atom_CEP ?? 0)</div>
+                                        <span>ATOM CEP Points</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex flex-column align-items-center">
-                                        <div class="display-2 text-primary fw-bold">@(ViewBag.DOECPDPoints ?? currentUser.DOE_CPD ?? 0)</div>
-                                        <span class="fs-5">DOE CPD Points</span>
+                                        <div class="display-4 text-primary">@(ViewBag.DOECPDPoints ?? currentUser.DOE_CPD ?? 0)</div>
+                                        <span>DOE CPD Points</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex flex-column align-items-center">
-                                        <div class="display-2 text-primary fw-bold">@(ViewBag.DOSHCEPPoints ?? currentUser.Dosh_CEP ?? 0)</div>
-                                        <span class="fs-5">DOSH CEP Points</span>
+                                        <div class="display-4 text-primary">@(ViewBag.DOSHCEPPoints ?? currentUser.Dosh_CEP ?? 0)</div>
+                                        <span>DOSH CEP Points</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Competency Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4">@Model.Count()</div>
+                                        <span>Total</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4 text-success">@Model.Count(uc => uc.Status == "Active")</div>
+                                        <span>Active</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4 text-info">@Model.Count(uc => uc.Status == "Pending")</div>
+                                        <span>Pending</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4 text-danger">@Model.Count(uc => uc.Status == "Expired")</div>
+                                        <span>Expired</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">Competency Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4">@Model.Count()</div>
+                                        <span>Total</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4 text-success">@Model.Count(uc => uc.Status == "Active")</div>
+                                        <span>Active</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4 text-info">@Model.Count(uc => uc.Status == "Pending")</div>
+                                        <span>Pending</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="display-4 text-danger">@Model.Count(uc => uc.Status == "Expired")</div>
+                                        <span>Expired</span>
                                     </div>
                                 </div>
                             </div>
@@ -54,49 +168,11 @@
             </div>
         }
 
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">Competency Summary</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row text-center">
-                            <div class="col-md-3">
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="display-4">@Model.Count()</div>
-                                    <span>Total</span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="display-4 text-success">@Model.Count(uc => uc.Status == "Active")</div>
-                                    <span>Active</span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="display-4 text-info">@Model.Count(uc => uc.Status == "Pending")</div>
-                                    <span>Pending</span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="display-4 text-danger">@Model.Count(uc => uc.Status == "Expired")</div>
-                                    <span>Expired</span>
-                                </div>
-                            </div>
-                                                </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-light">
                 <div class="row">
                     <div class="col-md-6">
-                        <h5 class="mb-0">Active Competencies</h5>
+                        <h5 class="mb-0">Assigned Competencies</h5>
                     </div>
                     <div class="col-md-6">
                         <input type="text" id="searchInput" class="form-control" placeholder="Search by module or status...">
@@ -111,27 +187,31 @@
                             <th>Status</th>
                             <th>Completion Date</th>
                             <th>Expiry Date</th>
+                            <th>Remarks</th>
                             <th>Buildings</th>
                         </tr>
                     </thead>
                     <tbody id="competencyTableBody">
-                        @foreach (var item in Model.Where(c => c.Status != "Expired"))
+                        @foreach (var item in Model)
                         {
                             <tr data-module="@item.CompetencyModule.ModuleName" data-status="@item.Status">
                                 <td>
-                                    <div class="fw-bold fs-5">@item.CompetencyModule.ModuleName</div>
+                                    <div>@item.CompetencyModule.ModuleName</div>
                                 </td>
                                 <td>
                                     @switch (item.Status)
                                     {
-                                        case "Expired":
-                                            <span class="badge bg-secondary">Expired</span>
+                                        case "Active":
+                                            <span class="badge bg-success">Active</span>
                                             break;
                                         case "Pending":
                                             <span class="badge bg-info">Pending</span>
                                             break;
-                                        case "Active":
-                                            <span class="badge bg-success">Active</span>
+                                        case "Expired":
+                                            <span class="badge bg-danger">Expired</span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-secondary">@item.Status</span>
                                             break;
                                     }
                                 </td>
@@ -157,13 +237,14 @@
                                         <span>-</span>
                                     }
                                 </td>
+                                <td>@(string.IsNullOrEmpty(item.Remarks) ? "-" : item.Remarks)</td>
                                 <td>
                                     @if (!string.IsNullOrEmpty(item.Building))
                                     {
                                         var buildings = item.Building.Split(',');
                                         foreach (var building in buildings)
                                         {
-                                            <span class="badge bg-info text-dark me-1">@building</span>
+                                            <span class="badge bg-info text-black me-1">@building</span>
                                         }
                                     }
                                     else
@@ -177,71 +258,11 @@
                 </table>
             </div>
         </div>
-
-        @* Check for expired competencies *@
-        if (Model.Any(c => c.Status == "Expired"))
-        {
-            <div class="card shadow-sm">
-                <div class="card-header bg-light">
-                    <h5 class="mb-0">Expired Competencies</h5>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Competency Module</th>
-                                <th>Status</th>
-                                <th>Completion Date</th>
-                                <th>Expiry Date</th>
-                                <th>Buildings</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Where(c => c.Status == "Expired"))
-                            {
-                                <tr>
-                                    <td>
-                                        <div class="fw-bold fs-5">@item.CompetencyModule.ModuleName</div>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-danger">Expired</span>
-                                    </td>
-                                    <td>@(item.CompletionDate.HasValue ? item.CompletionDate.Value.ToShortDateString() : "-")</td>
-                                    <td>
-                                        @if (item.ExpiryDate.HasValue)
-                                        {
-                                            <span class="text-danger">@item.ExpiryDate.Value.ToShortDateString()</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="text-danger">-</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (!string.IsNullOrEmpty(item.Building))
-                                        {
-                                            var buildings = item.Building.Split(',');
-                                            foreach (var building in buildings)
-                                            {
-                                                <span class="badge bg-info text-dark me-1">@building</span>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <span class="text-muted">-</span>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        }
     }
 </div>
 
 @section scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script>
         $(document).ready(function () {
             // Search filtering
