@@ -118,8 +118,8 @@ FROM [CLIP].[dbo].[UserPlants];
 SET IDENTITY_INSERT [ESH].[CLIP].[UserPlants] OFF;
 
 -- Migrate ActivityTrainings
-INSERT INTO [ESH].[CLIP].[ActivityTrainings] ([Id], [UserId], [ActivityName], [ActivityDate], [Document], [CEPPointsGained], [CPDPointsGained])
-SELECT [Id], [UserId], [ActivityName], [ActivityDate], [Document], [CEPPointsGained], [CPDPointsGained]
+INSERT INTO [ESH].[CLIP].[ActivityTrainings] ([Id], [UserId], [ActivityName], [ActivityDate], [Document], [ATOM_CEP_Points], [DOE_CPD_Points], [DOSH_CEP_Points])
+SELECT [Id], [UserId], [ActivityName], [ActivityDate], [Document], [CEPPointsGained] AS [ATOM_CEP_Points], [CPDPointsGained] AS [DOE_CPD_Points], NULL AS [DOSH_CEP_Points]
 FROM [CLIP].[dbo].[ActivityTrainings];
 
 -- Migrate Monitoring
