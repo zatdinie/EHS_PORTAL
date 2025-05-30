@@ -143,7 +143,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // Get monitoring notifications for the current user
             ViewBag.Notifications = GetMonitoringNotifications();
             
-            // Group by Month for schedule view
+            // Group by Month for progress tracker
             var currentYear = DateTime.Now.Year;
             var result = query.ToList();
 
@@ -1430,7 +1430,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         }
     }
 
-    // View Model for Schedule view
+    // View Model for Progress Tracker
     public class PlantMonitoringViewModel
     {
         public int Id { get; set; }
