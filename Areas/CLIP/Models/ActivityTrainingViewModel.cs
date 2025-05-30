@@ -6,6 +6,8 @@ namespace EHS_PORTAL.Areas.CLIP.Models
 {
     public class ActivityTrainingViewModel
     {
+        public Guid Id { get; set; }
+        
         [Required]
         [Display(Name = "Activity Name")]
         public string ActivityName { get; set; }

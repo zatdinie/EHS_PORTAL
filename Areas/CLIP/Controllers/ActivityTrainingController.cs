@@ -144,6 +144,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             var viewModel = new ActivityTrainingViewModel
             {
+                Id = activity.Id,
                 ActivityName = activity.ActivityName,
                 ActivityDate = activity.ActivityDate,
                 ATOM_CEP_Points = activity.ATOM_CEP_Points,
