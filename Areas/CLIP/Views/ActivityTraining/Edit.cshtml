@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.ATOM_CEP_Points, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "0.5" } })
+                                    @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1" } })
                                     @Html.ValidationMessageFor(model => model.ATOM_CEP_Points, "", new { @class = "text-danger" })
                                     <p class="help-block">ATOM CEP Points gained from this activity</p>
                                 </div>
@@ -69,7 +69,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DOE_CPD_Points, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "0.5" } })
+                                    @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1" } })
                                     @Html.ValidationMessageFor(model => model.DOE_CPD_Points, "", new { @class = "text-danger" })
                                     <p class="help-block">DOE CPD Points gained from this activity</p>
                                 </div>
@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DOSH_CEP_Points, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "0.5" } })
+                                    @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1" } })
                                     @Html.ValidationMessageFor(model => model.DOSH_CEP_Points, "", new { @class = "text-danger" })
                                     <p class="help-block">DOSH CEP Points gained from this activity</p>
                                 </div>

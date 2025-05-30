@@ -76,7 +76,7 @@ namespace EHS_PORTAL
                 }
                 
                 // Redirect to a custom error page
-                Response.Redirect("~/Error.aspx");
+                // Response.Redirect("~/Error.cshtml");
                 
                 // Clear the error
                 Server.ClearError();

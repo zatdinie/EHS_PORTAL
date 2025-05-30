@@ -12,3 +12,1457 @@ Stack Trace:    at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance
    at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
 --------------------------------------------------
 
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 2:59:08 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: The controller for path '/Error' was not found or does not implement IController.
+Stack Trace:    at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:39 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:40 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:41 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:42 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:42 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:42 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:42 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:47 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:48 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:48 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:00:48 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:18 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:01:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:02:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+
+----------------- Error Details -----------------
+Date/Time: 30/5/2025 3:07:19 PM
+URL: http://localhost:58882/Error.cshtml
+User IP: ::1
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36
+Error Message: Path '/Error.cshtml' is forbidden.
+Stack Trace:    at System.Web.HttpForbiddenHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--------------------------------------------------
+

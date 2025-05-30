@@ -71,20 +71,23 @@
                             <div class="row text-center">
                                 <div class="col-md-4">
                                     <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-leaf mb-2 text-success" style="font-size: 1.5rem;"></i>
+                                        <div class="display-4 text-success">@(ViewBag.DOECPDPoints ?? currentUser.DOE_CPD ?? 0)</div>
+                                        <span>DOE CPD</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-hard-hat mb-2 text-warning" style="font-size: 1.5rem;"></i>
+                                        <div class="display-4 text-warning">@(ViewBag.DOSHCEPPoints ?? currentUser.Dosh_CEP ?? 0)</div>
+                                        <span>DOSH CEP</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-atom mb-2 text-primary" style="font-size: 1.5rem;"></i>
                                         <div class="display-4 text-primary">@(ViewBag.ATOMCEPPoints ?? currentUser.Atom_CEP ?? 0)</div>
-                                        <span>ATOM CEP Points</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <div class="display-4 text-primary">@(ViewBag.DOECPDPoints ?? currentUser.DOE_CPD ?? 0)</div>
-                                        <span>DOE CPD Points</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <div class="display-4 text-primary">@(ViewBag.DOSHCEPPoints ?? currentUser.Dosh_CEP ?? 0)</div>
-                                        <span>DOSH CEP Points</span>
+                                        <span>ATOM CEP</span>
                                     </div>
                                 </div>
                             </div>
