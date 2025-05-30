@@ -5,102 +5,105 @@
     Layout = "~/Areas/CLIP/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Log Training Activity</h1>
-
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        @using (Html.BeginForm("Create", "ActivityTraining", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.ActivityName, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ActivityName, "", new { @class = "text-danger" })
-                    </div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">Log Training Activity</h4>
                 </div>
-                
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.ActivityDate, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.ActivityDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                        @Html.ValidationMessageFor(model => model.ActivityDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.DocumentFile, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            <input type="file" name="DocumentFile" id="DocumentFile" class="form-control file-upload" />
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting documents (certificates, presentations, etc.)">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
+                <div class="card-body">
+                    @using (Html.BeginForm("Create", "ActivityTraining", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.ActivityName, new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter activity name" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter the name of the training activity">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ActivityName, "", new { @class = "text-danger" })
                         </div>
-                        <small class="form-text text-muted">Upload supporting documents (certificates, presentations, etc.)</small>
-                    </div>
-                </div>
-                
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.ATOM_CEP_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "ATOM CEP Points gained from this activity" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="ATOM CEP Points gained from this activity">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.ActivityDate, new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.ActivityDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Select the date when the training activity occurred">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ActivityDate, "", new { @class = "text-danger" })
                         </div>
-                        @Html.ValidationMessageFor(model => model.ATOM_CEP_Points, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.DOE_CPD_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOE CPD Points gained from this activity" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="DOE CPD Points gained from this activity">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.DocumentFile, new { @class = "form-label" })
+                            <div class="input-group">
+                                <input type="file" name="DocumentFile" id="DocumentFile" class="form-control file-upload" />
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting documents (certificates, presentations, etc.)">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            <p class="form-text text-muted">Upload supporting documents (certificates, presentations, etc.)</p>
                         </div>
-                        @Html.ValidationMessageFor(model => model.DOE_CPD_Points, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.DOSH_CEP_Points, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOSH CEP Points gained from this activity" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="DOSH CEP Points gained from this activity">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.ATOM_CEP_Points, new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "ATOM CEP Points gained from this activity" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="ATOM CEP Points gained from this activity">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ATOM_CEP_Points, "", new { @class = "text-danger" })
                         </div>
-                        @Html.ValidationMessageFor(model => model.DOSH_CEP_Points, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                
-                <div class="form-group row">
-                    <div class="offset-md-2 col-md-10">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save"></i> Save Activity
-                        </button>
-                        <a href="@Url.Action("Index")" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left"></i> Back to List
-                        </a>
-                    </div>
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.DOE_CPD_Points, new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOE CPD Points gained from this activity" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="DOE CPD Points gained from this activity">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.DOE_CPD_Points, "", new { @class = "text-danger" })
+                        </div>
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.DOSH_CEP_Points, new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOSH CEP Points gained from this activity" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="DOSH CEP Points gained from this activity">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.DOSH_CEP_Points, "", new { @class = "text-danger" })
+                        </div>
+                        
+                        <div class="mt-4 d-flex justify-content-between">
+                            <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Save Activity
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
-        }
+        </div>
     </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <script>
         $(function () {
             $('[data-bs-toggle="tooltip"]').tooltip();
