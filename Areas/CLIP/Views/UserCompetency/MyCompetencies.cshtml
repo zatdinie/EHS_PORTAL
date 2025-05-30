@@ -31,19 +31,19 @@
                             <div class="row text-center">
                                 <div class="col-md-4">
                                     <div class="d-flex flex-column align-items-center">
-                                        <div class="display-2 text-primary fw-bold">@(currentUser.Atom_CEP ?? 0)</div>
+                                        <div class="display-2 text-primary fw-bold">@(ViewBag.ATOMCEPPoints ?? currentUser.Atom_CEP ?? 0)</div>
                                         <span class="fs-5">ATOM CEP Points</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex flex-column align-items-center">
-                                        <div class="display-2 text-primary fw-bold">@(currentUser.DOE_CPD ?? 0)</div>
+                                        <div class="display-2 text-primary fw-bold">@(ViewBag.DOECPDPoints ?? currentUser.DOE_CPD ?? 0)</div>
                                         <span class="fs-5">DOE CPD Points</span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex flex-column align-items-center">
-                                        <div class="display-2 text-primary fw-bold">@(currentUser.Dosh_CEP ?? 0)</div>
+                                        <div class="display-2 text-primary fw-bold">@(ViewBag.DOSHCEPPoints ?? currentUser.Dosh_CEP ?? 0)</div>
                                         <span class="fs-5">DOSH CEP Points</span>
                                     </div>
                                 </div>
