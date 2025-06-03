@@ -173,7 +173,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     }
 
                     // Create folder if it doesn't exist
-                    string uploadFolder = Server.MapPath("~/Views/CertificateOfFitness/Uploads");
+                    string uploadFolder = Server.MapPath("~/Areas/CLIP/Uploads/CertificateOfFitness");
                     if (!Directory.Exists(uploadFolder))
                     {
                         Directory.CreateDirectory(uploadFolder);
@@ -249,7 +249,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     }
 
                     // Create folder if it doesn't exist
-                    string uploadFolder = Server.MapPath("~/Views/CertificateOfFitness/Uploads");
+                    string uploadFolder = Server.MapPath("~/Areas/CLIP/Uploads/CertificateOfFitness");
                     if (!Directory.Exists(uploadFolder))
                     {
                         Directory.CreateDirectory(uploadFolder);
@@ -311,7 +311,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // Delete the associated PDF file if it exists
             if (!string.IsNullOrEmpty(certificateOfFitness.DocumentPath))
             {
-                string filePath = Path.Combine(Server.MapPath("~/Views/CertificateOfFitness/Uploads"), certificateOfFitness.DocumentPath);
+                string filePath = Path.Combine(Server.MapPath("~/Areas/CLIP/Uploads/CertificateOfFitness"), certificateOfFitness.DocumentPath);
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
@@ -337,7 +337,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return HttpNotFound();
             }
             
-            string filePath = Path.Combine(Server.MapPath("~/Views/CertificateOfFitness/Uploads"), certificate.DocumentPath);
+            string filePath = Path.Combine(Server.MapPath("~/Areas/CLIP/Uploads/CertificateOfFitness"), certificate.DocumentPath);
             if (!System.IO.File.Exists(filePath))
             {
                 return HttpNotFound();
