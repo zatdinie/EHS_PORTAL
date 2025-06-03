@@ -178,14 +178,9 @@
                                                     <a href="@Url.Action("Edit", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-outline-primary">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    @using (Html.BeginForm("Delete", "UserCompetency", new { id = userCompetency.Id }, FormMethod.Post, new { style = "display:inline;" }))
-                                                    {
-                                                        @Html.AntiForgeryToken()
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger" 
-                                                                onclick="return confirm('Are you sure you want to remove this competency assignment? This action cannot be undone.');">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    }
+                                                    <a href="@Url.Action("DeleteConfirm", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         }

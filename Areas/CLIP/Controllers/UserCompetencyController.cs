@@ -259,29 +259,62 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             return View(model);
         }
 
+        // GET: UserCompetency/DeleteConfirm/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfirm(int id)
+        {
+            var db = new ApplicationDbContext();
+            var userCompetency = db.UserCompetencies
+                .Include(uc => uc.User)
+                .Include(uc => uc.CompetencyModule)
+                .FirstOrDefault(uc => uc.Id == id);
+                
+            if (userCompetency == null)
+            {
+                TempData["ErrorMessage"] = "User competency not found.";
+                return RedirectToAction("Index");
+            }
+            
+            return View(userCompetency);
+        }
+
         // POST: UserCompetency/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            var db = new ApplicationDbContext();
-            var userCompetency = db.UserCompetencies.Find(id);
-            
-            if (userCompetency != null)
+            try
             {
-                // Delete associated document if exists
-                if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
+                var db = new ApplicationDbContext();
+                var userCompetency = db.UserCompetencies.Find(id);
+                
+                if (userCompetency != null)
                 {
-                    string filePath = Server.MapPath(userCompetency.DocumentPath);
-                    if (System.IO.File.Exists(filePath))
+                    // Delete associated document if exists
+                    if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
                     {
-                        System.IO.File.Delete(filePath);
+                        string filePath = Server.MapPath(userCompetency.DocumentPath);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
                     }
-                }
 
-                db.UserCompetencies.Remove(userCompetency);
-                db.SaveChanges();
-                TempData["SuccessMessage"] = "User competency removed successfully.";
+                    db.UserCompetencies.Remove(userCompetency);
+                    db.SaveChanges();
+                    TempData["SuccessMessage"] = "User competency removed successfully.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "User competency not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                System.Diagnostics.Debug.WriteLine("Error deleting user competency: " + ex.Message);
+                TempData["ErrorMessage"] = "An error occurred while deleting the competency: " + ex.Message;
             }
             
             return RedirectToAction("Index");
