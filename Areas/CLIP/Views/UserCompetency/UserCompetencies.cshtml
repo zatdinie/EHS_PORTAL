@@ -224,7 +224,7 @@
                                     @if (!string.IsNullOrEmpty(item.DocumentPath))
                                     {
                                         <a href="@Url.Action("DownloadDocument", "UserCompetency", new { id = item.Id })" target="_blank" class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-file-download me-1"></i>View
+                                            <i class="fas fa-file-download me-1"></i>
                                         </a>
                                     }
                                     else
@@ -235,12 +235,14 @@
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <td>
-                                        <a href="@Url.Action("Edit", "UserCompetency", new { id = item.Id })" class="btn btn-sm btn-outline-primary me-2">
-                                            <i class="fas fa-edit me-1"></i>Edit
-                                        </a>
-                                        <a href="@Url.Action("DeleteConfirm", "UserCompetency", new { id = item.Id })" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash me-1"></i>Remove
-                                        </a>
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("Edit", "UserCompetency", new { id = item.Id })" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="@Url.Action("DeleteConfirm", "UserCompetency", new { id = item.Id })" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 }
                             </tr>
@@ -256,6 +258,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script>
         $(document).ready(function () {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
             // Search filtering
             $("#searchInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();

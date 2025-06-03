@@ -19,9 +19,9 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
                         
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.ActivityName, new { @class = "form-label" })
+                            @Html.LabelFor(model => model.ActivityName, new { @class = "form-label fw-bold" })
                             <div class="input-group">
-                                @Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter activity name" } })
+                                @Html.EditorFor(model => model.ActivityName, new { htmlAttributes = new { @class = "form-control"} })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Enter the name of the training activity">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
@@ -30,7 +30,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.ActivityDate, new { @class = "form-label" })
+                            @Html.LabelFor(model => model.ActivityDate, new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 @Html.EditorFor(model => model.ActivityDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Select the date when the training activity occurred">
@@ -41,7 +41,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.DocumentFile, new { @class = "form-label" })
+                            @Html.LabelFor(model => model.DocumentFile, new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 <input type="file" name="DocumentFile" id="DocumentFile" class="form-control file-upload" />
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting documents (certificates, presentations, etc.)">
@@ -52,9 +52,9 @@
                         </div>
                         
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.ATOM_CEP_Points, new { @class = "form-label" })
+                            @Html.LabelFor(model => model.ATOM_CEP_Points, new { @class = "form-label fw-bold" })
                             <div class="input-group">
-                                @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "ATOM CEP Points gained from this activity" } })
+                                @Html.EditorFor(model => model.ATOM_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1"} })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="ATOM CEP Points gained from this activity">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
@@ -63,9 +63,9 @@
                         </div>
                         
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.DOE_CPD_Points, new { @class = "form-label" })
+                            @Html.LabelFor(model => model.DOE_CPD_Points, new { @class = "form-label fw-bold" })
                             <div class="input-group">
-                                @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOE CPD Points gained from this activity" } })
+                                @Html.EditorFor(model => model.DOE_CPD_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1"} })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="DOE CPD Points gained from this activity">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
@@ -74,9 +74,9 @@
                         </div>
                         
                         <div class="mb-3">
-                            @Html.LabelFor(model => model.DOSH_CEP_Points, new { @class = "form-label" })
+                            @Html.LabelFor(model => model.DOSH_CEP_Points, new { @class = "form-label fw-bold" })
                             <div class="input-group">
-                                @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1", placeholder = "DOSH CEP Points gained from this activity" } })
+                                @Html.EditorFor(model => model.DOSH_CEP_Points, new { htmlAttributes = new { @class = "form-control", min = "0", step = "1"} })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="DOSH CEP Points gained from this activity">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
