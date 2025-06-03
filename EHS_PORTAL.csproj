@@ -433,6 +433,7 @@
     <Compile Include="Areas\CLIP\Models\PlantMonitoring.cs" />
     <Compile Include="Areas\CLIP\Models\UserCompetency.cs" />
     <Compile Include="Areas\CLIP\Models\UserPlant.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -581,7 +582,6 @@
   <ItemGroup>
     <Folder Include="Areas\CLIP\Views\Dashboard\" />
     <Folder Include="Areas\CLIP\Views\TrainingActivity\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Uploads\Maps\" />
   </ItemGroup>
   <ItemGroup>
