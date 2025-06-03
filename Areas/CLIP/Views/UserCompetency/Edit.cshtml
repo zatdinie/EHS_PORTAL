@@ -28,12 +28,13 @@
                         </div>
                     </div>
 
-                    @using (Html.BeginForm("Edit", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    @using (Html.BeginForm("Edit", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", enctype = "multipart/form-data", novalidate = "novalidate" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.UserId)
                         @Html.HiddenFor(model => model.CompetencyModuleId)
+                        @Html.HiddenFor(model => model.DocumentPath)
 
                         <div class="mb-3">
                             <label for="Status" class="form-label">Status</label>
@@ -88,6 +89,28 @@
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Document</label>
+                            @if (!string.IsNullOrEmpty(Model.DocumentPath))
+                            {
+                                <div class="mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-file-alt me-2 text-primary"></i>
+                                        <a href="@Url.Action("DownloadDocument", "UserCompetency", new { id = Model.Id })" target="_blank" class="text-decoration-none">
+                                            View Current Document
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting document or certificate">
+                                    <i class="bi bi-file-earmark"></i>
+                                </span>
+                            </div>
+                            <small class="text-muted">Upload a new document to replace the existing one. Leave empty to keep the current document.</small>
                         </div>
 
                         <div class="mb-3">

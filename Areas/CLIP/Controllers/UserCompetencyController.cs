@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -39,7 +40,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         // POST: UserCompetency/Assign
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Assign(UserCompetency model, string[] Building)
+        public ActionResult Assign(UserCompetency model, string[] Building, HttpPostedFileBase documentFile)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +75,27 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 if (selectedBuildings != null && selectedBuildings.Length > 0)
                 {
                     model.Building = string.Join(",", selectedBuildings);
+                }
+
+                // Process document upload if provided
+                if (documentFile != null && documentFile.ContentLength > 0)
+                {
+                    // Create directory if it doesn't exist
+                    string uploadsFolder = Server.MapPath("~/Uploads/CompetencyDocuments");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Generate a unique filename
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(documentFile.FileName);
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    
+                    // Save the file
+                    documentFile.SaveAs(filePath);
+                    
+                    // Store the relative path in the database
+                    model.DocumentPath = "~/Uploads/CompetencyDocuments/" + uniqueFileName;
                 }
                 
                 db.UserCompetencies.Add(model);
@@ -130,7 +152,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         // POST: UserCompetency/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(UserCompetency model, string[] Building)
+        public ActionResult Edit(UserCompetency model, string[] Building, HttpPostedFileBase documentFile)
         {
             if (ModelState.IsValid)
             {
@@ -178,6 +200,37 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 {
                     userCompetency.CompletionDate = DateTime.Today;
                 }
+
+                // Process document upload if provided
+                if (documentFile != null && documentFile.ContentLength > 0)
+                {
+                    // Create directory if it doesn't exist
+                    string uploadsFolder = Server.MapPath("~/Uploads/CompetencyDocuments");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Delete old file if exists
+                    if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
+                    {
+                        string oldFilePath = Server.MapPath(userCompetency.DocumentPath);
+                        if (System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                    }
+
+                    // Generate a unique filename
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(documentFile.FileName);
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    
+                    // Save the file
+                    documentFile.SaveAs(filePath);
+                    
+                    // Store the relative path in the database
+                    userCompetency.DocumentPath = "~/Uploads/CompetencyDocuments/" + uniqueFileName;
+                }
                 
                 db.SaveChanges();
                 
@@ -216,12 +269,70 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             if (userCompetency != null)
             {
+                // Delete associated document if exists
+                if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
+                {
+                    string filePath = Server.MapPath(userCompetency.DocumentPath);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+
                 db.UserCompetencies.Remove(userCompetency);
                 db.SaveChanges();
                 TempData["SuccessMessage"] = "User competency removed successfully.";
             }
             
             return RedirectToAction("Index");
+        }
+
+        // GET: UserCompetency/DownloadDocument/5
+        public ActionResult DownloadDocument(int id)
+        {
+            var db = new ApplicationDbContext();
+            var userCompetency = db.UserCompetencies.Find(id);
+            
+            if (userCompetency == null || string.IsNullOrEmpty(userCompetency.DocumentPath))
+            {
+                TempData["ErrorMessage"] = "Document not found.";
+                return RedirectToAction("Index");
+            }
+            
+            // Get the file path
+            string filePath = Server.MapPath(userCompetency.DocumentPath);
+            if (!System.IO.File.Exists(filePath))
+            {
+                TempData["ErrorMessage"] = "Document file not found.";
+                return RedirectToAction("Index");
+            }
+            
+            // Get file info
+            var fileInfo = new FileInfo(filePath);
+            
+            // Return the file
+            return File(filePath, GetContentType(fileInfo.Extension), Path.GetFileName(filePath));
+        }
+
+        // Helper method to determine content type
+        private string GetContentType(string fileExtension)
+        {
+            switch (fileExtension.ToLower())
+            {
+                case ".pdf":
+                    return "application/pdf";
+                case ".doc":
+                    return "application/msword";
+                case ".docx":
+                    return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                case ".jpg":
+                case ".jpeg":
+                    return "image/jpeg";
+                case ".png":
+                    return "image/png";
+                default:
+                    return "application/octet-stream";
+            }
         }
 
         // GET: UserCompetency/UserCompetencies/userId

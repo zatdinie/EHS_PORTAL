@@ -93,6 +93,7 @@
                                     <th>Completion Date</th>
                                     <th>Expiry Date</th>
                                     <th>Buildings</th>
+                                    <th>Document</th>
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <th class="text-end pe-3">Actions</th>
@@ -152,6 +153,18 @@
                                                 {
                                                     <span class="badge bg-info text-dark rounded-pill me-1">@building.Trim()</span>
                                                 }
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
+                                            {
+                                                <a href="@Url.Action("DownloadDocument", "UserCompetency", new { id = userCompetency.Id })" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-file-download"></i>
+                                                </a>
                                             }
                                             else
                                             {

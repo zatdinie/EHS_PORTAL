@@ -19,7 +19,7 @@
                         </div>
                     }
 
-                    @using (Html.BeginForm("Assign", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    @using (Html.BeginForm("Assign", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", enctype = "multipart/form-data", novalidate = "novalidate" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="mb-3">
@@ -96,6 +96,17 @@
                                 </span>
                             </div>
                             <small class="text-muted">Enter the certification expiry date manually.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="documentFile" class="form-label">Upload Document</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting document or certificate">
+                                    <i class="bi bi-file-earmark"></i>
+                                </span>
+                            </div>
+                            <small class="text-muted">Accepted formats: PDF, Word, JPG, PNG</small>
                         </div>
 
                         <div class="mb-3">
