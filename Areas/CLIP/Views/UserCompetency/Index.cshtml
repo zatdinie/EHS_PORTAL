@@ -175,10 +175,10 @@
                                         {
                                             <td class="text-end pe-3">
                                                 <div class="btn-group">
-                                                    <a href="@Url.Action("Edit", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-outline-primary">
+                                                    <a href="@Url.Action("Edit", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a href="@Url.Action("DeleteConfirm", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-outline-danger">
+                                                    <a href="@Url.Action("DeleteConfirm", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -339,6 +339,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script>
         $(document).ready(function () {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
             // Search filtering
             $("#searchInput").on("keyup", function () {
                 filterModules();
