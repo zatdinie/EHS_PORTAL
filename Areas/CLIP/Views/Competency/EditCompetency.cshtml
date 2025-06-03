@@ -57,7 +57,7 @@
                         </div>
                         
                         <div class="mb-3" id="annualPointDeductionSection" style="display: @(Model.CompetencyType == "Safety" ? "block" : "none");">
-                            @Html.LabelFor(m => m.AnnualPointDeduction, "Points required per year", new { @class = "form-label" })
+                            @Html.LabelFor(m => m.AnnualPointDeduction, "Points required per year", new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 @Html.TextBoxFor(m => m.AnnualPointDeduction, new { @class = "form-control", type = "number", min = "0", placeholder = "Enter required points per year" })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Number of points required annually for Safety competency type">

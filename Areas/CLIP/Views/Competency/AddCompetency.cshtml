@@ -55,7 +55,7 @@
                         </div>
                         
                         <div class="mb-3" id="annualPointDeductionSection" style="display: none;">
-                            @Html.LabelFor(m => m.AnnualPointDeduction, "Points required per year", new { @class = "form-label" })
+                            @Html.LabelFor(m => m.AnnualPointDeduction, "Points required per year", new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 @Html.TextBoxFor(m => m.AnnualPointDeduction, new { @class = "form-control", type = "number", min = "0" })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Enter required points per year">
