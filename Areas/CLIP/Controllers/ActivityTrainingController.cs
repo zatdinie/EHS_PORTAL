@@ -48,7 +48,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 // Handle document upload if provided
                 if (model.DocumentFile != null && model.DocumentFile.ContentLength > 0)
                 {
-                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/uploads/ActivityTraining");
+                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/ActivityTraining");
                     
                     // Create directory if it doesn't exist
                     if (!Directory.Exists(uploadsFolder))
@@ -195,7 +195,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 // Handle document upload if provided
                 if (model.DocumentFile != null && model.DocumentFile.ContentLength > 0)
                 {
-                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/uploads/ActivityTraining");
+                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/ActivityTraining");
                     
                     // Create directory if it doesn't exist
                     if (!Directory.Exists(uploadsFolder))
@@ -287,7 +287,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 // Delete file if exists
                 if (!string.IsNullOrEmpty(activity.Document))
                 {
-                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/uploads/ActivityTraining");
+                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/ActivityTraining");
                     string filePath = Path.Combine(uploadsFolder, activity.Document);
                     if (System.IO.File.Exists(filePath))
                     {
@@ -314,7 +314,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return RedirectToAction("Index");
             }
             
-            string uploadsFolder = Server.MapPath("~/Areas/CLIP/uploads/ActivityTraining");
+            string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/ActivityTraining");
             string filePath = Path.Combine(uploadsFolder, activity.Document);
             
             if (!System.IO.File.Exists(filePath))

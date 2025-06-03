@@ -663,13 +663,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
                     string fileName = Path.GetFileName(quoteDocument.FileName);
                     string uniqueFileName = $"Quote_{id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
-                    string path = Path.Combine(Server.MapPath("~/uploads/Monitoring"), uniqueFileName);
+                    string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
                     
                     // Ensure directory exists
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
                     
                     quoteDocument.SaveAs(path);
-                    plantMonitoring.QuoteDoc = "~/uploads/Monitoring/" + uniqueFileName;
+                    plantMonitoring.QuoteDoc = "~/Uploads/Monitoring/" + uniqueFileName;
                 }
 
                 if (eprDocument != null && eprDocument.ContentLength > 0)
@@ -694,13 +694,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
                     string fileName = Path.GetFileName(eprDocument.FileName);
                     string uniqueFileName = $"EPR_{id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
-                    string path = Path.Combine(Server.MapPath("~/uploads/Monitoring"), uniqueFileName);
+                    string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
                     
                     // Ensure directory exists
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
                     
                     eprDocument.SaveAs(path);
-                    plantMonitoring.EprDoc = "~/uploads/Monitoring/" + uniqueFileName;
+                    plantMonitoring.EprDoc = "~/Uploads/Monitoring/" + uniqueFileName;
                 }
 
                 if (workDocument != null && workDocument.ContentLength > 0)
@@ -725,13 +725,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
                     string fileName = Path.GetFileName(workDocument.FileName);
                     string uniqueFileName = $"Work_{id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
-                    string path = Path.Combine(Server.MapPath("~/uploads/Monitoring"), uniqueFileName);
+                    string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
                     
                     // Ensure directory exists
                     Directory.CreateDirectory(Path.GetDirectoryName(path));
                     
                     workDocument.SaveAs(path);
-                    plantMonitoring.WorkDoc = "~/uploads/Monitoring/" + uniqueFileName;
+                    plantMonitoring.WorkDoc = "~/Uploads/Monitoring/" + uniqueFileName;
                 }
 
                 db.Entry(plantMonitoring).State = EntityState.Modified;
@@ -911,13 +911,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
                 string fileName = Path.GetFileName(quoteDocument.FileName);
                 string uniqueFileName = $"Quote_{id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
-                string path = Path.Combine(Server.MapPath("~/uploads/Monitoring"), uniqueFileName);
+                string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
                 
                 // Ensure directory exists
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
                 
                 quoteDocument.SaveAs(path);
-                plantMonitoring.QuoteDoc = "~/uploads/Monitoring/" + uniqueFileName;
+                plantMonitoring.QuoteDoc = "~/Uploads/Monitoring/" + uniqueFileName;
             }
             
             // Calculate statuses after update
@@ -1000,13 +1000,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
                 string fileName = Path.GetFileName(eprDocument.FileName);
                 string uniqueFileName = $"EPR_{id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
-                string path = Path.Combine(Server.MapPath("~/uploads/Monitoring"), uniqueFileName);
+                string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
                 
                 // Ensure directory exists
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
                 
                 eprDocument.SaveAs(path);
-                plantMonitoring.EprDoc = "~/uploads/Monitoring/" + uniqueFileName;
+                plantMonitoring.EprDoc = "~/Uploads/Monitoring/" + uniqueFileName;
             }
             
             // Calculate statuses after update
@@ -1093,13 +1093,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
                 string fileName = Path.GetFileName(workDocument.FileName);
                 string uniqueFileName = $"Work_{id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
-                string path = Path.Combine(Server.MapPath("~/uploads/Monitoring"), uniqueFileName);
+                string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
                 
                 // Ensure directory exists
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
                 
                 workDocument.SaveAs(path);
-                plantMonitoring.WorkDoc = "~/uploads/Monitoring/" + uniqueFileName;
+                plantMonitoring.WorkDoc = "~/Uploads/Monitoring/" + uniqueFileName;
             }
             
             // Calculate statuses after update
