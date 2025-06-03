@@ -28,15 +28,16 @@
                         </div>
                     </div>
 
-                    @using (Html.BeginForm("Edit", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    @using (Html.BeginForm("Edit", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", enctype = "multipart/form-data", novalidate = "novalidate" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.UserId)
                         @Html.HiddenFor(model => model.CompetencyModuleId)
+                        @Html.HiddenFor(model => model.DocumentPath)
 
                         <div class="mb-3">
-                            <label for="Status" class="form-label">Status</label>
+                            <label for="Status" class="form-label"><strong>Status</strong></label>
                             <div class="input-group">
                                 <select id="Status" name="Status" class="form-select" required>
                                     @foreach (var status in ViewBag.Statuses)
@@ -54,7 +55,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="CompletionDate" class="form-label">Completion Date</label>
+                            <label for="CompletionDate" class="form-label"><strong>Completion Date</strong></label>
                             <div class="input-group">
                                 <input type="date" class="form-control" id="CompletionDate" name="CompletionDate" 
                                        value="@(Model.CompletionDate.HasValue ? Model.CompletionDate.Value.ToString("yyyy-MM-dd") : "")">
@@ -81,7 +82,7 @@
                         }
 
                         <div class="mb-3">
-                            <label for="Remarks" class="form-label">Remarks</label>
+                            <label for="Remarks" class="form-label"><strong>Remarks</strong></label>
                             <div class="input-group">
                                 <textarea class="form-control" id="Remarks" name="Remarks" rows="3">@Model.Remarks</textarea>
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Additional notes or comments about this competency">
@@ -91,7 +92,29 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Assigned Buildings</label>
+                            <label class="form-label"><strong>Document</strong></label>
+                            @if (!string.IsNullOrEmpty(Model.DocumentPath))
+                            {
+                                <div class="mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-file-alt me-2 text-primary"></i>
+                                        <a href="@Url.Action("DownloadDocument", "UserCompetency", new { id = Model.Id })" target="_blank" class="text-decoration-none">
+                                            View Current Document
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting document or certificate">
+                                    <i class="bi bi-file-earmark"></i>
+                                </span>
+                            </div>
+                            <small class="text-muted">Upload a new document to replace the existing one. Leave empty to keep the current document.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Assigned Buildings</strong></label>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -251,7 +274,7 @@
                             <small class="text-muted">Select all buildings that apply</small>
                         </div>
 
-                        <div class="alert alert-info">
+                        @* <div class="alert alert-info">
                             <i class="fas fa-info-circle me-2"></i>
                             <small>
                                 @if (Model.CompetencyModule.CompetencyType != "Environment")
@@ -263,7 +286,7 @@
                                     <span>When status is set to "Active", you should provide a completion date. No expiry date is required for Environment type competencies.</span>
                                 }
                             </small>
-                        </div>
+                        </div> *@
 
                         <div class="mt-4 d-flex justify-content-between">
                             <a href="@Url.Action("Index", "UserCompetency")" class="btn btn-outline-secondary">

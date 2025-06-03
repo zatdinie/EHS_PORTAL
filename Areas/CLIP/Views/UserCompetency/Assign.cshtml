@@ -19,14 +19,14 @@
                         </div>
                     }
 
-                    @using (Html.BeginForm("Assign", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    @using (Html.BeginForm("Assign", "UserCompetency", FormMethod.Post, new { @class = "needs-validation", enctype = "multipart/form-data", novalidate = "novalidate" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="mb-3">
-                            <label for="UserId" class="form-label">User</label>
+                            <label for="UserId" class="form-label"><strong>User</strong></label>
                             <div class="input-group">
                                 <select id="UserId" name="UserId" class="form-select" required>
-                                    <option value="">Select a user</option>
+                                    <option value="" class="text-muted" disabled selected>-- Select User --</option>
                                     @foreach (var user in ViewBag.Users)
                                     {
                                         <option value="@user.Id">@(string.IsNullOrEmpty(user.EmpID) ? user.UserName : user.EmpID + " - " + user.UserName)</option>
@@ -42,10 +42,10 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="CompetencyModuleId" class="form-label">Competency Module</label>
+                            <label for="CompetencyModuleId" class="form-label"><strong>Competency Module</strong></label>
                             <div class="input-group">
                                 <select id="CompetencyModuleId" name="CompetencyModuleId" class="form-select" required>
-                                    <option value="">Select a competency module</option>
+                                    <option value="" class="text-muted" disabled selected>-- Select Competency Module --</option>
                                     @foreach (var module in ViewBag.CompetencyModules)
                                     {
                                         <option value="@module.Id" data-type="@module.CompetencyType">@module.ModuleName</option>
@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="Status" class="form-label">Status</label>
+                            <label for="Status" class="form-label"><strong>Status</strong></label>
                             <div class="input-group">
                                 <select id="Status" name="Status" class="form-select" required>
                                     <option value="Pending">Pending</option>
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="CompletionDate" class="form-label">Completion Date (if already completed)</label>
+                            <label for="CompletionDate" class="form-label"><strong>Completion Date (if already completed)</strong></label>
                             <div class="input-group">
                                 <input type="date" class="form-control" id="CompletionDate" name="CompletionDate">
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the competency was completed">
@@ -88,29 +88,38 @@
                         </div>
 
                         <div class="mb-3" id="expiryDateSection">
-                            <label for="ExpiryDate" class="form-label">Expiry Date</label>
+                            <label for="ExpiryDate" class="form-label"><strong>Expiry Date</strong></label>
                             <div class="input-group">
                                 <input type="date" class="form-control" id="ExpiryDate" name="ExpiryDate">
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the competency certification expires">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
-                            <small class="text-muted">Enter the certification expiry date manually.</small>
                         </div>
 
                         <div class="mb-3">
-                            <label for="Remarks" class="form-label">Remarks</label>
+                            <label for="documentFile" class="form-label"><strong>Upload Document</strong></label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Upload supporting document or certificate">
+                                    <i class="bi bi-file-earmark"></i>
+                                </span>
+                            </div>
+                            <small class="text-muted">Accepted formats: PDF, Word, JPG, PNG</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Remarks" class="form-label"><strong>Remarks</strong></label>
                             <div class="input-group">
                                 <textarea class="form-control" id="Remarks" name="Remarks" rows="3"></textarea>
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Additional notes or comments about this competency">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
-                            <small class="text-muted">Optional notes about this competency assignment.</small>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Assign Buildings to User</label>
+                            <label class="form-label"><strong>Building(s)</strong></label>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">

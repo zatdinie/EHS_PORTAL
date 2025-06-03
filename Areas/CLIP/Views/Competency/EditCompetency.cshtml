@@ -18,7 +18,7 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
                         
                         <div class="mb-3">
-                            @Html.LabelFor(m => m.ModuleName, new { @class = "form-label" })
+                            @Html.LabelFor(m => m.ModuleName, "Module Name", new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 @Html.TextBoxFor(m => m.ModuleName, new { @class = "form-control", placeholder = "Enter module name" })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Enter the name of the competency module">
@@ -29,7 +29,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                            @Html.LabelFor(m => m.Description, new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter module description", rows = 3 })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Provide a detailed description of the competency module">
@@ -40,18 +40,15 @@
                         </div>
                         
                         <div class="mb-3">
-                            @Html.LabelFor(m => m.CompetencyType, "Competency Type", new { @class = "form-label" })
+                            @Html.LabelFor(m => m.CompetencyType, "Competency Type", new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 @Html.DropDownListFor(m => m.CompetencyType, 
-                                    new List<SelectListItem> { 
-                                        new SelectListItem { Text = "Continuing Professional Development (CPD)", Value = "CPD" },
-                                        new SelectListItem { Text = "Continuing Education Program (CEP)", Value = "CEP" },
-                                        new SelectListItem { Text = "General Certification", Value = "General" },
+                                    new List<SelectListItem> {
                                         new SelectListItem { Text = "Environment", Value = "Environment" },
                                         new SelectListItem { Text = "Safety", Value = "Safety" },
                                         new SelectListItem { Text = "Others", Value = "Others" }
                                     },
-                                    "Select competency type", new { @class = "form-control", id = "competencyType" })
+                                    "-- Select competency type --", new { @class = "form-control", id = "competencyType" })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Select the type of competency module. Safety type requires annual point deduction.">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
@@ -60,7 +57,7 @@
                         </div>
                         
                         <div class="mb-3" id="annualPointDeductionSection" style="display: @(Model.CompetencyType == "Safety" ? "block" : "none");">
-                            @Html.LabelFor(m => m.AnnualPointDeduction, "Points required per year", new { @class = "form-label" })
+                            @Html.LabelFor(m => m.AnnualPointDeduction, "Points required per year", new { @class = "form-label fw-bold" })
                             <div class="input-group">
                                 @Html.TextBoxFor(m => m.AnnualPointDeduction, new { @class = "form-control", type = "number", min = "0", placeholder = "Enter required points per year" })
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Number of points required annually for Safety competency type">

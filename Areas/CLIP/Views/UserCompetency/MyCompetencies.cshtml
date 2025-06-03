@@ -192,6 +192,7 @@
                             <th>Expiry Date</th>
                             <th>Remarks</th>
                             <th>Buildings</th>
+                            <th>Document</th>
                         </tr>
                     </thead>
                     <tbody id="competencyTableBody">
@@ -249,6 +250,18 @@
                                         {
                                             <span class="badge bg-info text-black me-1">@building</span>
                                         }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.DocumentPath))
+                                    {
+                                        <a href="@Url.Action("DownloadDocument", "UserCompetency", new { id = item.Id })" target="_blank" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-file-download me-1"></i>
+                                        </a>
                                     }
                                     else
                                     {

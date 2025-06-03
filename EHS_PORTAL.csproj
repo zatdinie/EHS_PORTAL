@@ -213,6 +213,8 @@
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Areas\CLIP\Scripts\modernizr-2.8.3.js" />
+    <Content Include="Areas\CLIP\uploads\ActivityTraining\6f309fc1-3306-42c1-a297-4342acae9bdf.png" />
+    <Content Include="Areas\CLIP\uploads\ActivityTraining\73a7ccbb-e117-47e5-bb0b-85c10d328858.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -267,6 +269,7 @@
     <Content Include="Areas\CLIP\Views\ActivityTraining\Details.cshtml" />
     <Content Include="Areas\CLIP\Views\ActivityTraining\Edit.cshtml" />
     <Content Include="Areas\CLIP\Views\ActivityTraining\Index.cshtml" />
+    <Content Include="Areas\CLIP\uploads\UserCompetency\467cb2b1-2e1e-4c89-805d-3f0fa8943c0d_pdf.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -580,6 +583,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\CLIP\uploads\CertificateOfFitness\" />
     <Folder Include="Areas\CLIP\Views\Dashboard\" />
     <Folder Include="Areas\CLIP\Views\TrainingActivity\" />
     <Folder Include="Uploads\Maps\" />

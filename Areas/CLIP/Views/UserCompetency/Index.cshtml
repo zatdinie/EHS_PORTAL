@@ -93,6 +93,7 @@
                                     <th>Completion Date</th>
                                     <th>Expiry Date</th>
                                     <th>Buildings</th>
+                                    <th class="text-center">Document</th>
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <th class="text-end pe-3">Actions</th>
@@ -158,21 +159,28 @@
                                                 <span class="text-muted">-</span>
                                             }
                                         </td>
+                                        <td class="text-center">
+                                            @if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
+                                            {
+                                                <a href="@Url.Action("DownloadDocument", "UserCompetency", new { id = userCompetency.Id })" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-file-download"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
                                         @if (User.IsInRole("Admin"))
                                         {
                                             <td class="text-end pe-3">
                                                 <div class="btn-group">
-                                                    <a href="@Url.Action("Edit", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-outline-primary">
+                                                    <a href="@Url.Action("Edit", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    @using (Html.BeginForm("Delete", "UserCompetency", new { id = userCompetency.Id }, FormMethod.Post, new { style = "display:inline;" }))
-                                                    {
-                                                        @Html.AntiForgeryToken()
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger" 
-                                                                onclick="return confirm('Are you sure you want to remove this competency assignment? This action cannot be undone.');">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    }
+                                                    <a href="@Url.Action("DeleteConfirm", "UserCompetency", new { id = userCompetency.Id })" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         }
@@ -273,7 +281,7 @@
                 <div class="category-section" id="environment-section">
                     <div class="category-header bg-success bg-opacity-10 p-3 border-top border-bottom">
                         <h3 class="mb-0 d-flex align-items-center">
-                            <i class="fas fa-leaf text-success me-2"></i> Environment Competencies
+                            <i class="fas fa-leaf text-success me-2"></i> ENVIRONMENT
                         </h3>
                     </div>
                     
@@ -292,7 +300,7 @@
                 <div class="category-section" id="safety-section">
                     <div class="category-header bg-warning bg-opacity-10 p-3 border-top border-bottom">
                         <h3 class="mb-0 d-flex align-items-center">
-                            <i class="fas fa-hard-hat text-warning me-2"></i> Safety Competencies
+                            <i class="fas fa-hard-hat text-warning me-2"></i> SAFETY
                         </h3>
                     </div>
                     
@@ -311,7 +319,7 @@
                 <div class="category-section" id="others-section">
                     <div class="category-header bg-info bg-opacity-10 p-3 border-top border-bottom">
                         <h3 class="mb-0 d-flex align-items-center">
-                            <i class="fas fa-clipboard-list text-info me-2"></i> Other Competencies
+                            <i class="fas fa-clipboard-list text-info me-2"></i> OTHERS
                         </h3>
                     </div>
                     
@@ -331,6 +339,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script>
         $(document).ready(function () {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
             // Search filtering
             $("#searchInput").on("keyup", function () {
                 filterModules();

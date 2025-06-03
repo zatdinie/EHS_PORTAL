@@ -74,15 +74,18 @@
                             }
                         </td>
                         <td>
-                            <a href="@Url.Action("Details", new { id = activity.Id })" class="btn btn-info btn-sm">
-                                <i class="bi bi-info-circle"></i> Details
-                            </a>
-                            <a href="@Url.Action("Edit", new { id = activity.Id })" class="btn btn-warning btn-sm">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal@(activity.Id)">
-                                <i class="bi bi-trash"></i> Delete
-                            </button>
+                            <div class="btn-group">
+                                <a href="@Url.Action("Details", new { id = activity.Id })" class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Details">
+                                    <i class="bi bi-info-circle"></i>
+                                </a>
+                                <a href="@Url.Action("Edit", new { id = activity.Id })" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" 
+                                        onclick="$('#deleteModal@(activity.Id)').modal('show')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
                             
                             <!-- Delete Confirmation Modal -->
                             <div class="modal fade" id="deleteModal@(activity.Id)" tabindex="-1" aria-labelledby="deleteModalLabel@(activity.Id)" aria-hidden="true">
@@ -117,6 +120,12 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
             $('table').DataTable({
                 "order": [[1, "desc"]]
             });
