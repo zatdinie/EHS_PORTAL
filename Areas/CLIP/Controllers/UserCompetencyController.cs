@@ -81,7 +81,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 if (documentFile != null && documentFile.ContentLength > 0)
                 {
                     // Create directory if it doesn't exist
-                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/CompetencyDocuments");
+                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/UserCompetency");
                     if (!Directory.Exists(uploadsFolder))
                     {
                         Directory.CreateDirectory(uploadsFolder);
@@ -95,7 +95,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     documentFile.SaveAs(filePath);
                     
                     // Store the relative path in the database
-                    model.DocumentPath = "~/Areas/CLIP/Uploads/CompetencyDocuments/" + uniqueFileName;
+                    model.DocumentPath = "~/Areas/CLIP/Uploads/UserCompetency/" + uniqueFileName;
                 }
                 
                 db.UserCompetencies.Add(model);
@@ -205,7 +205,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 if (documentFile != null && documentFile.ContentLength > 0)
                 {
                     // Create directory if it doesn't exist
-                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/CompetencyDocuments");
+                    string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/UserCompetency");
                     if (!Directory.Exists(uploadsFolder))
                     {
                         Directory.CreateDirectory(uploadsFolder);
@@ -229,7 +229,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     documentFile.SaveAs(filePath);
                     
                     // Store the relative path in the database
-                    userCompetency.DocumentPath = "~/Areas/CLIP/Uploads/CompetencyDocuments/" + uniqueFileName;
+                    userCompetency.DocumentPath = "~/Areas/CLIP/Uploads/UserCompetency/" + uniqueFileName;
                 }
                 
                 db.SaveChanges();
