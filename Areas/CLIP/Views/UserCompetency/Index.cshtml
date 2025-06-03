@@ -93,7 +93,7 @@
                                     <th>Completion Date</th>
                                     <th>Expiry Date</th>
                                     <th>Buildings</th>
-                                    <th>Document</th>
+                                    <th class="text-center">Document</th>
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <th class="text-end pe-3">Actions</th>
@@ -159,7 +159,7 @@
                                                 <span class="text-muted">-</span>
                                             }
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             @if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
                                             {
                                                 <a href="@Url.Action("DownloadDocument", "UserCompetency", new { id = userCompetency.Id })" target="_blank" class="btn btn-sm btn-outline-primary">
@@ -281,7 +281,7 @@
                 <div class="category-section" id="environment-section">
                     <div class="category-header bg-success bg-opacity-10 p-3 border-top border-bottom">
                         <h3 class="mb-0 d-flex align-items-center">
-                            <i class="fas fa-leaf text-success me-2"></i> Environment Competencies
+                            <i class="fas fa-leaf text-success me-2"></i> ENVIRONMENT
                         </h3>
                     </div>
                     
@@ -300,7 +300,7 @@
                 <div class="category-section" id="safety-section">
                     <div class="category-header bg-warning bg-opacity-10 p-3 border-top border-bottom">
                         <h3 class="mb-0 d-flex align-items-center">
-                            <i class="fas fa-hard-hat text-warning me-2"></i> Safety Competencies
+                            <i class="fas fa-hard-hat text-warning me-2"></i> SAFETY
                         </h3>
                     </div>
                     
@@ -319,7 +319,7 @@
                 <div class="category-section" id="others-section">
                     <div class="category-header bg-info bg-opacity-10 p-3 border-top border-bottom">
                         <h3 class="mb-0 d-flex align-items-center">
-                            <i class="fas fa-clipboard-list text-info me-2"></i> Other Competencies
+                            <i class="fas fa-clipboard-list text-info me-2"></i> OTHERS
                         </h3>
                     </div>
                     
