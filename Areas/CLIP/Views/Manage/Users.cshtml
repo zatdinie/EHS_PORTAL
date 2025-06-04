@@ -71,11 +71,11 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="stat-label">Active Users</div>
-                                <div class="stat-value">@Model.Count(u => !string.IsNullOrEmpty(u.Email))</div>
+                                <div class="stat-label fw-bold">Average DOE CPD Points</div>
+                                <div class="stat-value">@(Model.Any() ? Math.Round(Model.Average(u => u.DOE_CPD ?? 0), 1) : 0)</div>
                             </div>
                             <div class="stat-icon">
-                                <i class="fas fa-user-check fa-3x"></i>
+                                <i class="fas fa-leaf fa-3x"></i>
                             </div>
                         </div>
                     </div>
@@ -86,11 +86,11 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="stat-label">Avg. CEP Points</div>
-                                <div class="stat-value">@(Model.Any() ? Math.Round(Model.Average(u => u.Atom_CEP ?? 0), 1) : 0)</div>
+                                <div class="stat-label fw-bold">Average DOSH CEP Points</div>
+                                <div class="stat-value">@(Model.Any() ? Math.Round(Model.Average(u => u.Dosh_CEP ?? 0), 1) : 0)</div>
                             </div>
                             <div class="stat-icon">
-                                <i class="fas fa-award fa-3x"></i>
+                                <i class="fas fa-hard-hat fa-3x"></i>
                             </div>
                         </div>
                     </div>
@@ -101,11 +101,11 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="stat-label">Avg. CPD Points</div>
-                                <div class="stat-value">@(Model.Any() ? Math.Round(Model.Average(u => u.DOE_CPD ?? 0), 1) : 0)</div>
+                                <div class="stat-label fw-bold">Average ATOM CEP Points</div>
+                                <div class="stat-value">@(Model.Any() ? Math.Round(Model.Average(u => u.Atom_CEP ?? 0), 1) : 0)</div>
                             </div>
                             <div class="stat-icon">
-                                <i class="fas fa-star fa-3x"></i>
+                                <i class="fas fa-cog fa-3x"></i>
                             </div>
                         </div>
                     </div>
@@ -128,8 +128,9 @@
                                         <th>Username</th>
                                         <th>Email</th>
                                         <th>Employee ID</th>
-                                        <th class="text-center">CEP Points</th>
-                                        <th class="text-center">CPD Points</th>
+                                        <th class="text-center">DOE CPD</th>
+                                        <th class="text-center">DOSH CEP</th>
+                                        <th class="text-center">ATOM CEP</th>
                                         <th class="text-center">Phone Number</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
@@ -152,8 +153,9 @@
                                                 </span>
                                             </td>
                                             <td>@(string.IsNullOrEmpty(user.EmpID) ? "Not set" : user.EmpID)</td>
-                                            <td class="text-center"><span class="badge bg-success rounded-pill">@(user.Atom_CEP ?? 0)</span></td>
-                                            <td class="text-center"><span class="badge bg-info rounded-pill">@(user.DOE_CPD ?? 0)</span></td>
+                                            <td class="text-center"><span class="badge bg-success rounded-pill">@(user.DOE_CPD ?? 0)</span></td>
+                                            <td class="text-center"><span class="badge bg-warning rounded-pill">@(user.Dosh_CEP ?? 0)</span></td>
+                                            <td class="text-center"><span class="badge bg-primary rounded-pill">@(user.Atom_CEP ?? 0)</span></td>
                                             <td class="text-center">@(string.IsNullOrEmpty(user.PhoneNumber) ? "Not set" : user.PhoneNumber)</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
@@ -246,16 +248,22 @@
                                                 </div>
                                             </div>
                                             <div class="row g-2 mt-3">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="p-2 border rounded text-center">
-                                                        <div class="small text-muted">CEP Points</div>
-                                                        <div class="fs-5 fw-bold text-success">@(user.Atom_CEP ?? 0)</div>
+                                                        <div class="small text-muted">DOE CPD</div>
+                                                        <div class="fs-5 fw-bold text-success">@(user.DOE_CPD ?? 0)</div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="p-2 border rounded text-center">
-                                                        <div class="small text-muted">CPD Points</div>
-                                                        <div class="fs-5 fw-bold text-info">@(user.DOE_CPD ?? 0)</div>
+                                                        <div class="small text-muted">DOSH CEP</div>
+                                                        <div class="fs-5 fw-bold text-warning">@(user.Dosh_CEP ?? 0)</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="p-2 border rounded text-center">
+                                                        <div class="small text-muted">ATOM CEP</div>
+                                                        <div class="fs-5 fw-bold text-primary">@(user.Atom_CEP ?? 0)</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -368,8 +376,8 @@
                     "info": "Showing _START_ to _END_ of _TOTAL_ users"
                 },
                 "columnDefs": [
-                    { "targets": [3, 4], "className": "text-center" },
-                    { "targets": 6, "orderable": false }
+                    { "targets": [3, 4, 5], "className": "text-center" },
+                    { "targets": 7, "orderable": false }
                 ],
                 "autoWidth": false,
                 "responsive": true,
@@ -601,18 +609,6 @@
                 $('.alert-dismissible').alert('close');
             }, 5000);
             
-            // Hover effect for user cards
-            $('.user-card').hover(
-                function() { $(this).addClass('card-hover'); },
-                function() { $(this).removeClass('card-hover'); }
-            );
-            
-            // Table row hover effect
-            $('.user-row').hover(
-                function() { $(this).addClass('row-hover'); },
-                function() { $(this).removeClass('row-hover'); }
-            );
-            
             // Handle DataTable search box to sync with our custom search
             $('.dataTables_filter input').on('keyup', function() {
                 $('#userSearch').val($(this).val());
@@ -658,12 +654,6 @@
     .stat-card {
         border-radius: 0.5rem;
         overflow: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
     
     .stat-label {
@@ -678,12 +668,6 @@
     
     .stat-icon {
         opacity: 0.6;
-        transition: all 0.3s ease;
-    }
-    
-    .stat-card:hover .stat-icon {
-        opacity: 0.9;
-        transform: scale(1.1);
     }
     
     /* User Avatar */
@@ -741,12 +725,6 @@
     
     .user-row {
         vertical-align: middle;
-        transition: all 0.2s ease;
-    }
-    
-    .row-hover {
-        background-color: rgba(0, 123, 255, 0.05);
-        transform: translateX(5px);
     }
     
     /* Action buttons */
@@ -762,15 +740,10 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s ease;
-    }
-    
-    .action-btn:hover {
-        transform: translateY(-3px);
     }
     
     /* Responsive adjustments for action buttons on small screens */
-     media (max-width: 768px) {
+    media (max-width: 768px) {
         .action-buttons {
             display: flex;
             justify-content: flex-end;
@@ -788,12 +761,6 @@
     .user-card {
         border: none;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    
-    .user-card.card-hover {
-        transform: translateY(-7px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     }
     
     /* Text truncation */
@@ -809,7 +776,7 @@
         position: relative;
     }
     
-     media (max-width: 576px) {
+    media (max-width: 576px) {
         .search-wrapper {
             min-width: 100%;
             margin-bottom: 1rem;
@@ -818,13 +785,8 @@
     
     /* View toggle buttons */
     .view-toggle {
-        transition: all 0.3s ease;
         position: relative;
         z-index: 1;
-    }
-    
-    .view-toggle:hover {
-        transform: translateY(-2px);
     }
     
     .view-toggle.active {
@@ -869,7 +831,7 @@
     }
     
     /* Improve card display on small screens */
-     media (max-width: 576px) {
+    media (max-width: 576px) {
         .user-card .card-body {
             padding: 0.75rem;
         }
