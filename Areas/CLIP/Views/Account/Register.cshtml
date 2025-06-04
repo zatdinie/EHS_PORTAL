@@ -20,8 +20,8 @@
                         <div class="mb-3">
                             <label for="Email" class="form-label"><strong>@Html.LabelFor(m => m.Email)</strong></label>
                             <div class="input-group">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter your email address">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control"})
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter user's email address">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -30,8 +30,8 @@
                         <div class="mb-3">
                             <label for="UserName" class="form-label"><strong>@Html.LabelFor(m => m.UserName)</strong></label>
                             <div class="input-group">
-                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Choose a username" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Choose your username">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control"})
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Add Username">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -40,8 +40,8 @@
                         <div class="mb-3">
                             <label for="EmpID" class="form-label"><strong>@Html.LabelFor(m => m.EmpID)</strong></label>
                             <div class="input-group">
-                                @Html.TextBoxFor(m => m.EmpID, new { @class = "form-control", placeholder = "Enter your Employee ID" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter your Employee ID">
+                                @Html.TextBoxFor(m => m.EmpID, new { @class = "form-control"})
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter user's Employee ID">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -51,8 +51,8 @@
                         <div class="mb-3">
                             <label for="DOE_CPD" class="form-label"><strong>@Html.LabelFor(m => m.DOE_CPD)</strong></label>
                             <div class="input-group">
-                                @Html.TextBoxFor(m => m.DOE_CPD, new { @class = "form-control", type = "number", placeholder = "Enter DOE CPD Points" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter your DOE CPD Points">
+                                @Html.TextBoxFor(m => m.DOE_CPD, new { @class = "form-control", type = "number"})
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter user's current DOE CPD Points">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -62,8 +62,8 @@
                         <div class="mb-3">
                             <label for="Dosh_CEP" class="form-label"><strong>@Html.LabelFor(m => m.Dosh_CEP)</strong></label>
                             <div class="input-group">
-                                @Html.TextBoxFor(m => m.Dosh_CEP, new { @class = "form-control", type = "number", placeholder = "Enter DOSH CEP Points" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter your DOSH CEP Points">
+                                @Html.TextBoxFor(m => m.Dosh_CEP, new { @class = "form-control", type = "number"})
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter user's current DOSH CEP Points">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -73,8 +73,8 @@
                         <div class="mb-3">
                             <label for="Atom_CEP" class="form-label"><strong>@Html.LabelFor(m => m.Atom_CEP)</strong></label>
                             <div class="input-group">
-                                @Html.TextBoxFor(m => m.Atom_CEP, new { @class = "form-control", type = "number", placeholder = "Enter ATOM CEP Points" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter your ATOM CEP Points">
+                                @Html.TextBoxFor(m => m.Atom_CEP, new { @class = "form-control", type = "number"})
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter user's current ATOM CEP Points">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -84,7 +84,7 @@
                         <div class="mb-3">
                             <label for="Password" class="form-label"><strong>@Html.LabelFor(m => m.Password)</strong></label>
                             <div class="input-group">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Create a password" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control"})
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Create a secure password">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
@@ -94,8 +94,8 @@
                         <div class="mb-3">
                             <label for="ConfirmPassword" class="form-label"><strong>@Html.LabelFor(m => m.ConfirmPassword)</strong></label>
                             <div class="input-group">
-                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm your password" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Confirm your password">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control"})
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Confirm user's password">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -105,7 +105,7 @@
                             <label for="Role" class="form-label"><strong>@Html.LabelFor(m => m.Role)</strong></label>
                             <div class="input-group">
                                 @Html.DropDownListFor(m => m.Role, Model.RolesList, "-- Select Role --", new { @class = "form-select" })
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Select your role">
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Select role">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
@@ -137,8 +137,8 @@
                         </div>
                         
                         <div class="mt-4 d-flex justify-content-between">
-                            <a href="@Url.Action("Login", "Account")" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>Back to Login
+                            <a href="@Url.Action("Users", "Manage")" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to User Management
                             </a>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-user-plus me-2"></i>Create account
