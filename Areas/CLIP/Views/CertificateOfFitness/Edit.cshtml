@@ -74,14 +74,16 @@
                         <div class="mb-3">
                             <label for="Status" class="form-label"><strong>Status</strong></label>
                             <div class="input-group">
-                                <div class="form-control bg-light">
-                                    <span class="badge bg-secondary">@Model.Status</span>
-                                </div>
-                                <span class="input-group-text" data-bs-toggle="tooltip" title="Status is determined by the expiry date">
+                                <select id="Status" name="Status" class="form-select">
+                                    <option value="Active" @(Model.Status == "Active" ? "selected" : "")>Active</option>
+                                    <option value="Expired" @(Model.Status == "Expired" ? "selected" : "")>Expired</option>
+                                    <option value="Expiring Soon" @(Model.Status == "Expiring Soon" ? "selected" : "")>Expiring Soon</option>
+                                </select>
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Select the status of the certificate">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
                             </div>
-                            <small class="text-muted">Status updates automatically based on expiry date</small>
+                            <small class="text-muted">Select the appropriate status based on certificate validity</small>
                         </div>
 
                         <div class="mb-3">
