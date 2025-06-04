@@ -892,6 +892,62 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             return View(model);
         }
 
+        // GET: /Manage/EditProfile
+        public async Task<ActionResult> EditProfile()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+            
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            
+            var model = new EditProfileViewModel
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                EmpID = user.EmpID,
+                PhoneNumber = user.PhoneNumber
+            };
+            
+            return View(model);
+        }
+        
+        // POST: /Manage/EditProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditProfile(EditProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+            
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            
+            // Update user information
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.EmpID = model.EmpID;
+            user.PhoneNumber = model.PhoneNumber;
+            
+            var result = await UserManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                AddErrors(result);
+                return View(model);
+            }
+            
+            return RedirectToAction("Index", new { Message = ManageMessageId.ProfileUpdateSuccess });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
