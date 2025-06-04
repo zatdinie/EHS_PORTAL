@@ -4,170 +4,200 @@
     ViewBag.Title = "Edit Certificate of Fitness";
 }
 
-<h1>Edit Certificate of Fitness</h1>
-
-<div class="card shadow-sm mb-4">
-    <div class="card-body">
-        @using (Html.BeginForm("Edit", "CertificateOfFitness", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.DocumentPath)
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.PlantId, "Plant", new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("PlantId", null, new { @class = "form-select" })
-                        @Html.ValidationMessageFor(model => model.PlantId, "", new { @class = "text-danger" })
-                    </div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">Edit Certificate of Fitness</h4>
                 </div>
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.RegistrationNo, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.RegistrationNo, new { htmlAttributes = new { @class = "form-control" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Registration Number must be unique across all certificates">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        @Html.ValidationMessageFor(model => model.RegistrationNo, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                    }
 
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.MachineName, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.MachineName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.MachineName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.ExpiryDate, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Status will be updated automatically based on expiry date">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.Status, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
+                    @using (Html.BeginForm("Edit", "CertificateOfFitness", FormMethod.Post, new { @class = "needs-validation", enctype = "multipart/form-data", novalidate = "novalidate" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.DocumentPath)
                         @Html.HiddenFor(model => model.Status)
-                        <div>Current status: <span class="badge bg-secondary">@Model.Status</span></div>
-                    </div>
-                </div>
 
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.Location, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter current location of the machine" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Optional: Physical location where the machine is placed">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.Department, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter department name" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Optional: Department responsible for the machine">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.HostInfo, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.HostInfo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter original owner info" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Optional: First time machine registered owner">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.HostInfo, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.ResidentInfo, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            @Html.EditorFor(model => model.ResidentInfo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter current owner info" } })
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Optional: Machine current location">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.ResidentInfo, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    @Html.LabelFor(model => model.Remarks, new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", rows = 3 })
-                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row mb-3">
-                    <label class="col-md-2 col-form-label">PDF Document</label>
-                    <div class="col-md-10">
-                        <div class="input-group">
-                            <input type="file" name="pdfDocument" class="form-control file-upload" accept=".pdf" data-max-size="20" />
-                            <span class="input-group-text" data-bs-toggle="tooltip" title="Upload a new PDF document of the certificate (Max size: 20MB)">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
-                        </div>
-                        <small class="form-text text-muted">Max file size: 20MB</small>
-                        @if (!string.IsNullOrEmpty(Model.DocumentPath))
-                        {
-                            <div class="mt-2">
-                                <a href="@Url.Content(Model.DocumentPath)" target="_blank" class="btn btn-sm btn-info">
-                                    <i class="bi bi-file-earmark-pdf"></i> View Current Document
-                                </a>
+                        <div class="mb-3">
+                            <label for="PlantId" class="form-label"><strong>Plant</strong></label>
+                            <div class="input-group">
+                                @Html.DropDownList("PlantId", null, new { @class = "form-select", required = "required" })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Select the plant location">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
                             </div>
-                        }
-                    </div>
-                </div>
+                            @Html.ValidationMessageFor(model => model.PlantId, "", new { @class = "invalid-feedback" })
+                        </div>
 
-                <div class="form-group row">
-                    <div class="offset-md-2 col-md-10">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save"></i> Save
-                        </button>
-                        <a href="@Url.Action("Index", "CertificateOfFitness")" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left"></i> Back to List
-                        </a>
-                    </div>
+                        <div class="mb-3">
+                            <label for="RegistrationNo" class="form-label"><strong>Registration Number</strong></label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.RegistrationNo, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Registration Number must be unique across all certificates">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.RegistrationNo, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="MachineName" class="form-label"><strong>Machine Name</strong></label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.MachineName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter the name of the machine">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MachineName, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ExpiryDate" class="form-label"><strong>Expiry Date</strong></label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Status will be updated automatically based on expiry date">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Status" class="form-label"><strong>Status</strong></label>
+                            <div class="input-group">
+                                <div class="form-control bg-light">
+                                    <span class="badge bg-secondary">@Model.Status</span>
+                                </div>
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Status is determined by the expiry date">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            <small class="text-muted">Status updates automatically based on expiry date</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Location" class="form-label"><strong>Location</strong></label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter current location of the machine" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Physical location where the machine is placed">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Location, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Department" class="form-label"><strong>Department</strong></label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter department name" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Department responsible for the machine">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="HostInfo" class="form-label"><strong>Host Information</strong></label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.HostInfo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter original owner info" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="First time machine registered owner">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.HostInfo, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ResidentInfo" class="form-label"><strong>Resident Information</strong></label>
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.ResidentInfo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter current owner info" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Machine current location">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ResidentInfo, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Remarks" class="form-label"><strong>Remarks</strong></label>
+                            <div class="input-group">
+                                @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", rows = 3 })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Additional notes about this certificate">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="pdfDocument" class="form-label"><strong>PDF Document</strong></label>
+                            <div class="input-group">
+                                <input type="file" name="pdfDocument" id="pdfDocument" class="form-control file-upload" accept=".pdf" data-max-size="20" />
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Upload a new PDF document of the certificate (Max size: 20MB)">
+                                    <i class="bi bi-file-earmark"></i>
+                                </span>
+                            </div>
+                            <small class="text-muted">Max file size: 20MB</small>
+                            @if (!string.IsNullOrEmpty(Model.DocumentPath))
+                            {
+                                <div class="mt-2">
+                                    <a href="@Url.Content(Model.DocumentPath)" target="_blank" class="btn btn-sm btn-info">
+                                        <i class="bi bi-file-earmark-pdf"></i> View Current Document
+                                    </a>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-between">
+                            <a href="@Url.Action("Index", "CertificateOfFitness")" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
-        }
+        </div>
     </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <script>
         $(function () {
+            // Initialize tooltips
             $('[data-bs-toggle="tooltip"]').tooltip();
+            
+            // Bootstrap form validation
+            (function () {
+                'use strict'
+                var forms = document.querySelectorAll('.needs-validation')
+                Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
             
             // File size validation
             $('.file-upload').on('change', function() {
