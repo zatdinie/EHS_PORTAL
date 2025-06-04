@@ -276,6 +276,8 @@
     <Content Include="Areas\CLIP\Views\Manage\UserDetails.cshtml" />
     <Content Include="Areas\CLIP\Views\Manage\Users.cshtml" />
     <Content Include="Areas\CLIP\Views\Manage\EditProfile.cshtml" />
+    <Content Include="Areas\CLIP\Views\Shared\_MonitoringNotifications.cshtml" />
+    <Content Include="Areas\CLIP\Views\UserCompetency\DeleteConfirm.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -591,7 +593,6 @@
   <ItemGroup>
     <Folder Include="Areas\CLIP\uploads\CertificateOfFitness\" />
     <Folder Include="Areas\CLIP\Views\Dashboard\" />
-    <Folder Include="Areas\CLIP\Views\TrainingActivity\" />
     <Folder Include="Uploads\Maps\" />
   </ItemGroup>
   <ItemGroup>
