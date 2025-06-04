@@ -4,6 +4,7 @@
     ViewBag.Title = "Delete User";
 }
 
+<br />
 <h1>Delete User</h1>
 
 <div class="card shadow-sm mb-4">
@@ -19,9 +20,6 @@
             </div>
             <div class="col-md-9">
                 <div class="d-flex align-items-center">
-                    <div class="avatar-circle me-2">
-                        @(string.IsNullOrEmpty(Model.UserName) ? "?" : Model.UserName.Substring(0, 1).ToUpper())
-                    </div>
                     @Html.DisplayFor(model => model.UserName)
                 </div>
             </div>
@@ -56,19 +54,28 @@
 
         <div class="row mb-3">
             <div class="col-md-3 fw-bold">
-                CEP Points
+                DOE CPD Points
             </div>
             <div class="col-md-9">
-                <span class="badge bg-success rounded-pill">@(Model.Atom_CEP ?? 0)</span>
+                <span class="badge bg-success rounded-pill">@(Model.DOE_CPD ?? 0)</span>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-3 fw-bold">
-                CPD Points
+                DOSH CEP Points
             </div>
             <div class="col-md-9">
-                <span class="badge bg-info rounded-pill">@(Model.DOE_CPD ?? 0)</span>
+                <span class="badge bg-warning rounded-pill">@(Model.Dosh_CEP ?? 0)</span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3 fw-bold">
+                ATOM CEP Points
+            </div>
+            <div class="col-md-9">
+                <span class="badge bg-primary rounded-pill">@(Model.Atom_CEP ?? 0)</span>
             </div>
         </div>
 
@@ -81,7 +88,7 @@
                 {
                     foreach (var role in ViewBag.UserRoles)
                     {
-                        <span class="badge bg-primary me-1">@role</span>
+                        <span class="badge bg-secondary me-1">@role</span>
                     }
                 }
                 else
@@ -123,10 +130,10 @@
                         @foreach (var competency in ViewBag.UserCompetencies)
                         {
                             <li class="mb-1">
-                                <i class="fas fa-award me-2 text-secondary"></i>
-                                @competency.CompetencyModule.Name
+                                <i class="fas fa-award me-2 text-info"></i>
+                                @competency.CompetencyModule.ModuleName
                                 @{
-                                    string statusClass = "bg-secondary";
+                                    string statusClass = "bg-info";
                                     if (competency.Status == "Completed") { statusClass = "bg-success"; }
                                     else if (competency.Status == "In Progress") { statusClass = "bg-warning"; }
                                     else if (competency.Status == "Expired") { statusClass = "bg-danger"; }

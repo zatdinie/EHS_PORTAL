@@ -199,7 +199,8 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     Email = model.Email, 
                     EmpID = model.EmpID,
                     Atom_CEP = model.Atom_CEP,
-                    DOE_CPD = model.DOE_CPD
+                    DOE_CPD = model.DOE_CPD,
+                    Dosh_CEP = model.Dosh_CEP
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

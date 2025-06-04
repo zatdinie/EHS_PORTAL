@@ -1,895 +1,116 @@
 ﻿@model EHS_PORTAL.Areas.CLIP.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage Your Account";
+    ViewBag.Title = "My Profile";
 }
 
-<main aria-labelledby="title">
-    <div class="container-fluid px-4">
-        <!-- Title and notification area -->
-        <div class="row mb-4">
-            <div class="col">
-                <h2 id="title" class="mt-4 mb-2">@ViewBag.Title</h2>
-                @if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
-                {
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check-circle me-2"></i>@ViewBag.StatusMessage
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                }
-            </div>
-        </div>
-        
-        <!-- Admin quick actions -->
-    @if (User.IsInRole("Admin"))
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>My Profile</h1>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
     {
-            <div class="row mb-4">
-                <div class="col">
-                    <div class="card bg-light border-0 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title"><i class="fas fa-tools me-2"></i>Admin Quick Actions</h5>
-                            <div class="d-flex gap-2 flex-wrap">
-            <a href="@Url.Action("Register", "Account")" class="btn btn-primary">
-                <i class="fas fa-user-plus me-2"></i>Register New User
-            </a>
-                                <a href="@Url.Action("Users")" class="btn btn-info text-white">
-                                    <i class="fas fa-users-cog me-2"></i>User Management
-                                </a>
-                                <a href="@Url.Action("Index", "PlantMonitoring")" class="btn btn-primary">
-                                    <i class="fas fa-chart-line me-1"></i>Monitoring
-                                </a>
-                                <a href="@Url.Action("Index", "UserCompetency")" class="btn btn-success">
-                                    <i class="fas fa-users-cog me-1"></i>Competencies
-                                </a>
-                                <a href="@Url.Action("Index", "CertificateOfFitness")" class="btn btn-warning">
-                                    <i class="fas fa-certificate me-1"></i>Certificates
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
-    
-        <!-- Main content area -->
-        <div class="row">
-            <!-- Left column (profile) -->
-            <div class="col-lg-8">
-                <!-- Basic Information -->
-                <div class="card shadow-sm mb-4 border-0 card-expandable">
-                    <div class="card-header bg-primary bg-gradient text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0"><i class="fas fa-id-card me-2"></i>Basic Information</h4>
-                        <button type="button" class="btn btn-sm btn-light card-toggle" data-bs-toggle="tooltip" title="Toggle Section">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="card-body card-content">
-                        @using (Html.BeginForm("Index", "Manage", FormMethod.Post, new { @class = "needs-validation", id = "basicInfoForm" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.HiddenFor(m => m.UserId)
-                            
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        @Html.LabelFor(m => m.UserName, new { @class = "form-label" })
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-primary text-white"><i class="fas fa-user"></i></span>
-                                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", form = "basicInfoForm" })
-                                        </div>
-                                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-primary text-white"><i class="fas fa-envelope"></i></span>
-                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", form = "basicInfoForm" })
-                                        </div>
-                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        @Html.LabelFor(m => m.EmpID, new { @class = "form-label" })
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-primary text-white"><i class="fas fa-id-badge"></i></span>
-                                            @Html.TextBoxFor(m => m.EmpID, new { @class = "form-control", form = "basicInfoForm" })
-                                        </div>
-                                        @Html.ValidationMessageFor(m => m.EmpID, "", new { @class = "text-danger" })
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        @Html.LabelFor(m => m.PhoneNumber, new { @class = "form-label" })
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-primary text-white"><i class="fas fa-phone"></i></span>
-                                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", form = "basicInfoForm" })
-                                        </div>
-                                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="d-flex justify-content-end mt-3">
-                                <button type="submit" name="section" value="basic" class="btn btn-primary" form="basicInfoForm">
-                                    <i class="fas fa-save me-2"></i>Save Basic Information
-                                </button>
-                            </div>
-                        }
-                    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">User Details</h5>
                 </div>
-                
-                <!-- Additional Information -->
-                <div class="card shadow-sm mb-4 border-0 card-expandable">
-                    <div class="card-header bg-info bg-gradient text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0"><i class="fas fa-info-circle me-2"></i>Additional Information</h4>
-                        <button type="button" class="btn btn-sm btn-light card-toggle" data-bs-toggle="tooltip" title="Toggle Section">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="card-body card-content">
-                        @using (Html.BeginForm("Index", "Manage", FormMethod.Post, new { @class = "needs-validation", id = "pointsForm" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.HiddenFor(m => m.UserId)
-                            
-                            <div class="row g-4">
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(m => m.Atom_CEP, new { @class = "form-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text bg-info text-white"><i class="fas fa-star"></i></span>
-                                                @Html.TextBoxFor(m => m.Atom_CEP, new { @class = "form-control", form = "pointsForm" })
-                                            </div>
-                                            @Html.ValidationMessageFor(m => m.Atom_CEP, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(m => m.DOE_CPD, new { @class = "form-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text bg-info text-white"><i class="fas fa-award"></i></span>
-                                                @Html.TextBoxFor(m => m.DOE_CPD, new { @class = "form-control", form = "pointsForm" })
-                                            </div>
-                                            @Html.ValidationMessageFor(m => m.DOE_CPD, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            @Html.LabelFor(m => m.Dosh_CEP, new { @class = "form-label" })
-                                            <div class="input-group">
-                                                <span class="input-group-text bg-info text-white"><i class="fas fa-certificate"></i></span>
-                                                @Html.TextBoxFor(m => m.Dosh_CEP, new { @class = "form-control", form = "pointsForm" })
-                                            </div>
-                                            @Html.ValidationMessageFor(m => m.Dosh_CEP, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-12 mt-3">
-                                        <button type="submit" name="section" value="points" class="btn btn-info text-white float-end" form="pointsForm">
-                                            <i class="fas fa-save me-2"></i>Save Points Information
-                                        </button>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-4">
-                                        <div class="card bg-light border-0 h-100">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">ATOM CEP Points</h5>
-                                                <div class="display-4 my-3 fw-bold text-info">
-                                                    @(Model.Atom_CEP ?? 0)
-                                                </div>
-                                                <div class="text-center">
-                                                    <i class="fas fa-star text-warning fa-2x"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                        <div class="card bg-light border-0 h-100">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">DOE CPD Points</h5>
-                                                <div class="display-4 my-3 fw-bold text-info">
-                                                    @(Model.DOE_CPD ?? 0)
-                                                </div>
-                                                <div class="text-center">
-                                                    <i class="fas fa-award text-info fa-2x"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                        <div class="card bg-light border-0 h-100">
-                                            <div class="card-body text-center">
-                                                <h5 class="card-title">DOSH CEP Points</h5>
-                                                <div class="display-4 my-3 fw-bold text-info">
-                                                    @(Model.Dosh_CEP ?? 0)
-                                                </div>
-                                                <div class="text-center">
-                                                    <i class="fas fa-certificate text-success fa-2x"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
+                <div class="card-body">
+                    <dl class="mb-0">
+                        <dt>Username</dt>
+                        <dd>@Model.UserName</dd>
+                        
+                        <dt>Employee ID</dt>
+                        <dd>@(string.IsNullOrEmpty(Model.EmpID) ? "Not set" : Model.EmpID)</dd>
+                        
+                        <dt>Email</dt>
+                        <dd>@Model.Email</dd>
+                        
+                        <dt>Phone Number</dt>
+                        <dd>@(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not set" : Model.PhoneNumber)</dd>
+                    </dl>
+                </div>
+                <div class="card-footer bg-light">
+                    <a href="@Url.Action("EditProfile", "Manage")" class="btn btn-primary">
+                        <i class="fas fa-edit me-2"></i>Edit Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Professional Development Points</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-leaf mb-2 text-success" style="font-size: 1.5rem;"></i>
+                                <div class="display-4 text-success">@(Model.DOE_CPD ?? 0)</div>
+                                <span>DOE CPD</span>
                             </div>
-                        }
-                            
-                        <div class="mt-4">
-                            <div class="card bg-light border-0">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fas fa-user-tag me-2 text-info"></i>Role
-                                    </h5>
-                                    <div class="p-3 mt-3 bg-white rounded border text-center">
-                                        @if (Model.UserRoles != null && Model.UserRoles.Any())
-                                        {
-                                            foreach (var role in Model.UserRoles)
-                                            {
-                                                <span class="badge bg-primary p-2 px-3 fs-6">
-                                                    <i class="fas fa-user-tag me-1"></i>@role
-                                                </span>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary p-2 px-3 fs-6">
-                                                <i class="fas fa-exclamation-triangle me-1"></i>No Role Assigned
-                                            </span>
-                                        }
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-hard-hat mb-2 text-warning" style="font-size: 1.5rem;"></i>
+                                <div class="display-4 text-warning">@(Model.Dosh_CEP ?? 0)</div>
+                                <span>DOSH CEP</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex flex-column align-items-center">
+                                <i class="fas fa-atom mb-2 text-primary" style="font-size: 1.5rem;"></i>
+                                <div class="display-4 text-primary">@(Model.Atom_CEP ?? 0)</div>
+                                <span>ATOM CEP</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Plant Assignments -->
-                @if (User.IsInRole("Admin"))
-                {
-                    <div class="card shadow-sm mb-4 border-0 card-expandable">
-                        <div class="card-header bg-success bg-gradient text-white d-flex justify-content-between align-items-center">
-                            <h4 class="mb-0"><i class="fas fa-industry me-2"></i>Plant Assignments</h4>
-                            <button type="button" class="btn btn-sm btn-light card-toggle" data-bs-toggle="tooltip" title="Toggle Section">
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                        </div>
-                        <div class="card-body card-content">
-                            @using (Html.BeginForm("Index", "Manage", FormMethod.Post, new { @class = "needs-validation", id = "plantsForm" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                @Html.HiddenFor(m => m.UserId)
-                                
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="mb-4">
-                                            <label class="form-label fw-bold">Select Plants to Assign</label>
-                                            <div class="plant-selector border rounded p-3 bg-light">
-                                                <div class="row g-3">
-                                                    @if (Model.PlantsList != null && Model.PlantsList.Any())
-                                                    {
-                                                        for (int i = 0; i < Model.PlantsList.Count(); i++)
-                                                        {
-                                                            var plant = Model.PlantsList.ElementAt(i);
-                                                            <div class="col-md-4">
-                                                                <div class="form-check custom-control">
-                                                                    <input type="checkbox"
-                                                                        id="plant_@plant.Value"
-                                                                        name="SelectedPlantIds"
-                                                                        value="@plant.Value"
-                                                                        @(plant.Selected ? "checked" : "")
-                                                                        class="form-check-input" 
-                                                                        form="plantsForm" />
-                                                                    <label class="form-check-label" for="plant_@plant.Value">
-                                                                        <i class="fas fa-building me-2 text-success"></i>@plant.Text
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="col-12">
-                                                            <div class="alert alert-info mb-0">
-                                                                <i class="fas fa-info-circle me-2"></i>No plants available to assign.
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="d-flex justify-content-end mt-3">
-                                            <button type="submit" name="section" value="plants" class="btn btn-success" form="plantsForm">
-                                                <i class="fas fa-save me-2"></i>Save Plant Assignments
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
-                else if (Model.UserPlants != null && Model.UserPlants.Any())
-                {
-                    <div class="card shadow-sm mb-4 border-0 card-expandable">
-                        <div class="card-header bg-success bg-gradient text-white d-flex justify-content-between align-items-center">
-                            <h4 class="mb-0"><i class="fas fa-industry me-2"></i>Your Plant Assignments</h4>
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-light text-dark rounded-pill me-2">@Model.UserPlants.Count()</span>
-                                <button type="button" class="btn btn-sm btn-light card-toggle" data-bs-toggle="tooltip" title="Toggle Section">
-                                    <i class="fas fa-chevron-down"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body card-content p-4">
-                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 plant-gallery">
-                                @foreach (var plant in Model.UserPlants)
-                                {
-                                    <div class="col plant-item">
-                                        <div class="card h-100 border-0 shadow-sm plant-card">
-                                            <div class="card-body text-center">
-                                                <div class="plant-icon mb-3">
-                                                    <i class="fas fa-industry fa-3x text-success"></i>
-                                                </div>
-                                                <h5 class="card-title">@plant.PlantName</h5>
-                                                <div class="plant-overlay">
-                                                    <a href="#" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Details</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                        }
-                            </div>
-                        </div>
-                    </div>
-                }
             </div>
             
-            <!-- Right column (security settings, competencies) -->
-            <div class="col-lg-4">
-                <!-- Security Settings -->
-                <div class="card shadow-sm mb-4 border-0 card-expandable">
-                    <div class="card-header bg-warning bg-gradient text-dark d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Security Settings</h4>
-                        <button type="button" class="btn btn-sm btn-light card-toggle" data-bs-toggle="tooltip" title="Toggle Section">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="card-body p-0 card-content">
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item d-flex flex-column p-3 security-item">
-                                <h6 class="mb-3"><i class="fas fa-key me-2 text-warning"></i>Password</h6>
-                                <div class="security-action">
-                                    @if (Model.HasPassword)
-                                    {
-                                        <a href="@Url.Action("ChangePassword")" class="btn btn-warning d-inline-flex align-items-center">
-                                            <i class="fas fa-exchange-alt me-2"></i>Change your password
-                                            <span class="security-button-hover"></span>
-                                        </a>
-                    }
-                    else
-                    {
-                                        <a href="@Url.Action("SetPassword")" class="btn btn-warning d-inline-flex align-items-center">
-                                            <i class="fas fa-plus-circle me-2"></i>Create password
-                                            <span class="security-button-hover"></span>
-                                        </a>
-                                    }
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Account Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-shield-alt mb-2 text-primary" style="font-size: 1.5rem;"></i>
+                                    <h5>Security</h5>
+                                    <a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-outline-primary btn-sm mt-2">
+                                        Change Password
+                                    </a>
                                 </div>
                             </div>
-                            
-                            <div class="list-group-item d-flex flex-column p-3 security-item">
-                                <h6 class="mb-3"><i class="fas fa-external-link-alt me-2 text-warning"></i>External Logins</h6>
-                                <div class="security-action">
-                                    <a href="@Url.Action("ManageLogins")" class="btn btn-outline-warning d-inline-flex align-items-center">
-                                        <i class="fas fa-cog me-2"></i>Manage External Logins
-                                        <span class="badge bg-warning text-dark ms-2 login-counter">@(Model.Logins != null ? Model.Logins.Count : 0)</span>
-                                        <span class="security-button-hover"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-clipboard-check mb-2 text-success" style="font-size: 1.5rem;"></i>
+                                    <h5>Competencies</h5>
+                                    <a href="@Url.Action("MyCompetencies", "UserCompetency")" class="btn btn-outline-success btn-sm mt-2">
+                                        View My Competencies
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Competencies (if any) -->
-                @if (Model.UserCompetencies != null && Model.UserCompetencies.Any())
-                        {
-                    <div class="card shadow-sm mb-4 border-0 card-expandable">
-                        <div class="card-header bg-success bg-gradient text-white d-flex justify-content-between align-items-center">
-                            <h4 class="mb-0"><i class="fas fa-certificate me-2"></i>Your Competencies</h4>
-                            <div class="d-flex align-items-center">
-                                <span class="badge bg-light text-dark rounded-pill competency-counter me-2">@Model.UserCompetencies.Count()</span>
-                                <button type="button" class="btn btn-sm btn-light card-toggle" data-bs-toggle="tooltip" title="Toggle Section">
-                                    <i class="fas fa-chevron-down"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body p-0 card-content">
-                            <div class="list-group list-group-flush competency-list">
-                                @foreach (var competency in Model.UserCompetencies)
-                                {
-                                    <div class="list-group-item p-3 competency-item">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="competency-name">
-                                                <span class="certificate-icon">
-                                                    <i class="fas fa-certificate text-success"></i>
-                                                </span>
-                                                <strong>@competency.CompetencyModule.ModuleName</strong>
-                                            </div>
-                                            <span class="badge bg-primary rounded-pill px-3 competency-date">
-                                                @if(competency.CompletionDate.HasValue)
-                                                {
-                                                    <i class="far fa-calendar-check me-1"></i>
-                                                    @competency.CompletionDate.Value.ToString("yyyy-MM-dd")
-                                                }
-                                                else
-                                                {
-                                                    <i class="far fa-calendar-times me-1"></i>
-                                                    @:N/A
-                                                }
-                                            </span>
-                                        </div>
-                                        <div class="competency-details mt-2 collapse">
-                                            <div class="bg-light p-2 rounded">
-                                                <small class="text-muted">Click to view more details about this competency.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
             </div>
         </div>
     </div>
-</main>
+</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $(document).ready(function() {
-            // Auto-dismiss alerts after 5 seconds
-            setTimeout(function() {
-                $('.alert-dismissible').alert('close');
-            }, 5000);
-            
-            // Enable tooltips
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-            
-            // Handle form validations separately for points form
-            $('#pointsForm').on('submit', function(e) {
-                // Only validate Atom_CEP and DOE_CPD fields
-                var isValid = true;
-                
-                // For Points form, we don't need to validate other fields
-                // Clear any validation errors from fields outside this form
-                $('input:not([form="pointsForm"]), select:not([form="pointsForm"])').each(function() {
-                    $(this).removeClass('input-validation-error');
-                });
-                
-                return true;
-            });
-            
-            // Handle form validations separately for plants form
-            $('#plantsForm').on('submit', function(e) {
-                // For Plants form, we don't need to validate other fields
-                // Clear any validation errors from fields outside this form
-                $('input:not([form="plantsForm"]), select:not([form="plantsForm"])').each(function() {
-                    $(this).removeClass('input-validation-error');
-                });
-                
-                return true;
-            });
-            
-            // Card expansion toggle functionality
-            $('.card-toggle').on('click', function() {
-                const $card = $(this).closest('.card-expandable');
-                const $content = $card.find('.card-content');
-                const $icon = $(this).find('i');
-                
-                $content.slideToggle(300);
-                $icon.toggleClass('fa-chevron-down fa-chevron-up');
-                $card.toggleClass('card-expanded');
-            });
-            
-            // Disable validation for the points form and plants form fields when the basic form is submitted
-            $('#basicInfoForm').on('submit', function() {
-                // Remove validation from other forms' fields
-                $('input[form="pointsForm"], input[form="plantsForm"]').each(function() {
-                    $(this).removeClass('input-validation-error');
-                });
-            });
-            
-            // Enhanced hover effects for plant cards
-            $('.plant-card').hover(
-                function() { 
-                    $(this).addClass('shadow-lg'); 
-                    $(this).find('.plant-icon').addClass('plant-icon-active');
-                    $(this).find('.plant-overlay').addClass('show-overlay');
-                },
-                function() { 
-                    $(this).removeClass('shadow-lg'); 
-                    $(this).find('.plant-icon').removeClass('plant-icon-active');
-                    $(this).find('.plant-overlay').removeClass('show-overlay');
-                }
-            );
-            
-            // Competency item expandable details
-            $('.competency-item').click(function() {
-                $(this).find('.competency-details').slideToggle(200);
-                $(this).toggleClass('competency-expanded');
-            });
-            
-            // Add pulse effect to save buttons
-            $('.btn-primary, .btn-success, .btn-info, .btn-warning').not('.card-toggle').hover(
-                function() { $(this).addClass('btn-pulse'); },
-                function() { $(this).removeClass('btn-pulse'); }
-            );
-            
-            // Add custom checkbox animation
-            $('.form-check-input').change(function() {
-                if($(this).is(':checked')) {
-                    $(this).closest('.custom-control').addClass('custom-control-selected');
-                } else {
-                    $(this).closest('.custom-control').removeClass('custom-control-selected');
-                }
-            });
-            
-            // Trigger initial state for checkboxes
-            $('.form-check-input:checked').closest('.custom-control').addClass('custom-control-selected');
-            
-            // Add staggered entrance animations for cards on load
-            const cards = document.querySelectorAll('.card');
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.classList.add('card-visible');
-                }, 100 * index);
-            });
-            
-            // Security button hover effect
-            $('.security-action .btn').hover(
-                function() {
-                    $(this).find('.security-button-hover').addClass('active');
-                },
-                function() {
-                    $(this).find('.security-button-hover').removeClass('active');
-                }
-            );
-            
-            // Plant gallery filter
-            $('.plant-filter-btn').click(function() {
-                const filter = $(this).data('filter');
-                $('.plant-filter-btn').removeClass('active');
-                $(this).addClass('active');
-                
-                if (filter === 'all') {
-                    $('.plant-item').fadeIn(300);
-                } else {
-                    $('.plant-item').hide();
-                    $(`.plant-item[data-type="${filter}"]`).fadeIn(300);
-                }
-            });
-            
-            // Counter animation
-            $('.competency-counter, .login-counter').each(function () {
-                const $this = $(this);
-                const countTo = parseInt($this.text());
-                
-                $({ countNum: 0 }).animate({
-                    countNum: countTo
-                }, {
-                    duration: 1000,
-                    easing: 'swing',
-                    step: function() {
-                        $this.text(Math.floor(this.countNum));
-                    },
-                    complete: function() {
-                        $this.text(this.countNum);
-                    }
-                });
-            });
-            
-            // Form field animation
-            $('.form-control').focus(function() {
-                $(this).closest('.mb-3').addClass('input-focused');
-            }).blur(function() {
-                $(this).closest('.mb-3').removeClass('input-focused');
-            });
-            
-            // Scroll animation for sections
-            $(window).scroll(function() {
-                const windowBottom = $(this).scrollTop() + $(this).innerHeight();
-                
-                $(".card").each(function() {
-                    const objectBottom = $(this).offset().top + $(this).outerHeight() * 0.3;
-                    
-                    if (objectBottom < windowBottom) {
-                        if (!$(this).hasClass('card-visible')) {
-                            $(this).addClass('card-visible');
-                        }
-                    }
-                });
-            }).scroll();
-        });
-    </script>
+@section scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 }
-
-<style>
-    /* Base transitions and animations */
-    .card, .btn, .form-control, .input-group, .badge, .list-group-item, .custom-control {
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    
-    /* Card animations and expandable functionality */
-    .card-expandable {
-        margin-bottom: 1rem;
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    
-    .card-visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .card-toggle {
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        padding: 0;
-        transition: all 0.2s ease;
-    }
-    
-    .card-toggle:hover {
-        transform: scale(1.1);
-    }
-    
-    .card-expanded {
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    }
-    
-    /* Plant cards enhanced styling */
-    .plant-card {
-        overflow: hidden;
-        position: relative;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    
-    .plant-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-    
-    .plant-icon {
-        background-color: rgba(25, 135, 84, 0.1);
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-        transition: all 0.4s ease;
-    }
-    
-    .plant-icon-active {
-        background-color: rgba(25, 135, 84, 0.2);
-        transform: scale(1.1);
-    }
-    
-    .plant-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(25, 135, 84, 0.8);
-        padding: 10px;
-        opacity: 0;
-        transform: translateY(100%);
-        transition: all 0.3s ease;
-    }
-    
-    .show-overlay {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    .plant-filter-btn {
-        border-radius: 20px;
-        padding: 5px 15px;
-        margin-right: 5px;
-        background-color: transparent;
-        border: 1px solid #198754;
-        color: #198754;
-        transition: all 0.3s ease;
-    }
-    
-    .plant-filter-btn.active,
-    .plant-filter-btn:hover {
-        background-color: #198754;
-        color: white;
-    }
-    
-    .plant-gallery {
-        min-height: 200px;
-        position: relative;
-    }
-    
-    .plant-item {
-        transition: all 0.4s ease;
-    }
-    
-    /* Button pulse effect */
-    .btn-pulse {
-        animation: btnPulse 1.5s infinite;
-    }
-    
-    /* CSS keyframes need to be in style block */
-    @@keyframes btnPulse {
-        0% {
-            box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4);
-        }
-        70% {
-            box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
-        }
-        100% {
-            box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
-        }
-    }
-    
-    /* Form control enhancements */
-    .form-control {
-        transition: all 0.3s ease;
-    }
-    
-    .form-control:focus {
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-        transform: translateY(-2px);
-    }
-    
-    .input-focused {
-        transform: translateY(-3px);
-    }
-    
-    /* Checkbox styled controls */
-    .custom-control {
-        padding: 10px;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        border: 1px solid transparent;
-    }
-    
-    .custom-control:hover {
-        background-color: rgba(25, 135, 84, 0.1);
-    }
-    
-    .custom-control-selected {
-        background-color: rgba(25, 135, 84, 0.15);
-        border: 1px solid rgba(25, 135, 84, 0.3);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
-    
-    /* Security settings enhancements */
-    .security-item {
-        transition: all 0.3s ease;
-        border-left: 3px solid transparent;
-    }
-    
-    .security-item:hover {
-        border-left: 3px solid #ffc107;
-        background-color: rgba(255, 193, 7, 0.05);
-        padding-left: 1.5rem;
-    }
-    
-    .security-action {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .security-button-hover {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-        transform: translateX(-100%);
-        transition: all 0.5s ease;
-    }
-    
-    .security-button-hover.active {
-        transform: translateX(100%);
-    }
-    
-    /* Competency items styling */
-    .competency-item {
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border-left: 3px solid transparent;
-    }
-    
-    .competency-item:hover {
-        border-left: 3px solid #198754;
-        background-color: rgba(25, 135, 84, 0.05);
-    }
-    
-    .competency-expanded {
-        background-color: rgba(25, 135, 84, 0.05);
-    }
-    
-    .competency-details {
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .competency-date {
-        transition: all 0.3s ease;
-    }
-    
-    .competency-item:hover .competency-date {
-        transform: scale(1.05);
-        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    }
-    
-    .certificate-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        background-color: rgba(25, 135, 84, 0.1);
-        border-radius: 50%;
-        margin-right: 10px;
-        transition: all 0.3s ease;
-    }
-    
-    .competency-item:hover .certificate-icon {
-        transform: rotate(15deg) scale(1.1);
-        background-color: rgba(25, 135, 84, 0.2);
-    }
-    
-    .certificate-icon i {
-        font-size: 16px;
-    }
-    
-    /* Badge animations */
-    .badge {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .badge::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        bottom: -50%;
-        left: -50%;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
-        transform: rotate(30deg);
-        transition: all 0.5s;
-        opacity: 0;
-    }
-    
-    .badge:hover::after {
-        opacity: 1;
-        transform: rotate(30deg) translate(-30%, -100%);
-    }
-</style>

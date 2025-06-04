@@ -270,6 +270,12 @@
     <Content Include="Areas\CLIP\Views\ActivityTraining\Edit.cshtml" />
     <Content Include="Areas\CLIP\Views\ActivityTraining\Index.cshtml" />
     <Content Include="Areas\CLIP\uploads\UserCompetency\467cb2b1-2e1e-4c89-805d-3f0fa8943c0d_pdf.pdf" />
+    <Content Include="Areas\CLIP\Views\Manage\EditUser.cshtml" />
+    <Content Include="Areas\CLIP\Views\Manage\DeleteUser.cshtml" />
+    <Content Include="Areas\CLIP\Views\Manage\ResetUserPassword.cshtml" />
+    <Content Include="Areas\CLIP\Views\Manage\UserDetails.cshtml" />
+    <Content Include="Areas\CLIP\Views\Manage\Users.cshtml" />
+    <Content Include="Areas\CLIP\Views\Manage\EditProfile.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />

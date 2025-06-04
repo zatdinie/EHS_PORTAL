@@ -22,7 +22,7 @@
                     <h4 class="mb-0"><i class="fas fa-user me-2"></i>User Details: @Model.UserName</h4>
                     <div>
                         <a href="@Url.Action("Users")" class="btn btn-light btn-sm me-2">
-                            <i class="fas fa-arrow-left me-1"></i>Back to Users
+                            <i class="fas fa-arrow-left me-1"></i>Back to User Management
                         </a>
                         <a href="@Url.Action("EditUser", new { id = Model.Id })" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit me-1"></i>Edit User
@@ -61,14 +61,6 @@
                                 <div class="col-md-4 fw-bold">Email:</div>
                                 <div class="col-md-8">
                                     @Model.Email
-                                    @if (Model.EmailConfirmed)
-                                    {
-                                        <span class="badge bg-success ms-2">Verified</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-warning ms-2">Not Verified</span>
-                                    }
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -80,10 +72,6 @@
                                 <div class="col-md-8">@Model.EmpID</div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-4 fw-bold">ATOM CEP Points:</div>
-                                <div class="col-md-8">@(Model.Atom_CEP ?? 0)</div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="col-md-4 fw-bold">DOE CPD Points:</div>
                                 <div class="col-md-8">@(Model.DOE_CPD ?? 0)</div>
                             </div>
@@ -92,33 +80,13 @@
                                 <div class="col-md-8">@(Model.Dosh_CEP ?? 0)</div>
                             </div>
                             <div class="row mb-3">
+                                <div class="col-md-4 fw-bold">ATOM CEP Points:</div>
+                                <div class="col-md-8">@(Model.Atom_CEP ?? 0)</div>
+                            </div>
+                            <div class="row mb-3">
                                 <div class="col-md-4 fw-bold">Phone Number:</div>
                                 <div class="col-md-8">
                                     @(string.IsNullOrEmpty(Model.PhoneNumber) ? "Not set" : Model.PhoneNumber)
-                                    @if (Model.PhoneNumber != null)
-                                    {
-                                        if (Model.PhoneNumberConfirmed)
-                                        {
-                                            <span class="badge bg-success ms-2">Verified</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-warning ms-2">Not Verified</span>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-4 fw-bold">Two-Factor Auth:</div>
-                                <div class="col-md-8">
-                                    @if (Model.TwoFactorEnabled)
-                                    {
-                                        <span class="badge bg-success">Enabled</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge bg-secondary">Disabled</span>
-                                    }
                                 </div>
                             </div>
                             <div class="row mb-3">
