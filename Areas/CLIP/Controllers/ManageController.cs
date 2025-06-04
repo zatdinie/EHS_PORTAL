@@ -857,6 +857,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.User = user;
             return View(new SetPasswordViewModel());
         }
 
