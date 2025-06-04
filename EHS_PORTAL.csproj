@@ -213,8 +213,6 @@
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Areas\CLIP\Scripts\modernizr-2.8.3.js" />
-    <Content Include="Areas\CLIP\uploads\ActivityTraining\6f309fc1-3306-42c1-a297-4342acae9bdf.png" />
-    <Content Include="Areas\CLIP\uploads\ActivityTraining\73a7ccbb-e117-47e5-bb0b-85c10d328858.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -269,7 +267,6 @@
     <Content Include="Areas\CLIP\Views\ActivityTraining\Details.cshtml" />
     <Content Include="Areas\CLIP\Views\ActivityTraining\Edit.cshtml" />
     <Content Include="Areas\CLIP\Views\ActivityTraining\Index.cshtml" />
-    <Content Include="Areas\CLIP\uploads\UserCompetency\467cb2b1-2e1e-4c89-805d-3f0fa8943c0d_pdf.pdf" />
     <Content Include="Areas\CLIP\Views\Manage\EditUser.cshtml" />
     <Content Include="Areas\CLIP\Views\Manage\DeleteUser.cshtml" />
     <Content Include="Areas\CLIP\Views\Manage\ResetUserPassword.cshtml" />
@@ -516,7 +513,6 @@
     <Content Include="Areas\CLIP\Scripts\bootstrap.min.js.map" />
     <Content Include="Areas\CLIP\Scripts\jquery-3.7.0.min.map" />
     <Content Include="Areas\CLIP\Scripts\jquery-3.7.0.slim.min.map" />
-    <Content Include="Areas\CLIP\uploads\Monitoring\Quote_2_20250430162618_Competency.xlsx" />
     <Content Include="Areas\CLIP\Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Areas\CLIP\Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Areas\CLIP\Views\Account\ExternalLoginFailure.cshtml" />
@@ -534,7 +530,6 @@
     <Content Include="Areas\CLIP\Views\CertificateOfFitness\Details.cshtml" />
     <Content Include="Areas\CLIP\Views\CertificateOfFitness\Edit.cshtml" />
     <Content Include="Areas\CLIP\Views\CertificateOfFitness\Index.cshtml" />
-    <Content Include="Areas\CLIP\Views\CertificateOfFitness\UPLOADS\20250429153512_CF - PMA-PP_22 98629.pdf" />
     <Content Include="Areas\CLIP\Views\Competency\AddCompetency.cshtml" />
     <Content Include="Areas\CLIP\Views\Competency\Competency.cshtml" />
     <Content Include="Areas\CLIP\Views\Competency\EditCompetency.cshtml" />
@@ -582,7 +577,6 @@
     <None Include="Areas\FETS\Properties\PublishProfiles\FolderProfile4.pubxml" />
     <None Include="Areas\FETS\Properties\PublishProfiles\FolderProfile5.pubxml" />
     <None Include="Areas\FETS\Properties\PublishProfiles\FolderProfile6.pubxml" />
-    <Content Include="Views\CertificateOfFitness\Uploads\20250520103109_dummy.pdf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -591,7 +585,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\CLIP\uploads\ActivityTraining\" />
     <Folder Include="Areas\CLIP\uploads\CertificateOfFitness\" />
+    <Folder Include="Areas\CLIP\uploads\Monitoring\" />
+    <Folder Include="Areas\CLIP\uploads\UserCompetency\" />
     <Folder Include="Areas\CLIP\Views\Dashboard\" />
     <Folder Include="Uploads\Maps\" />
   </ItemGroup>
