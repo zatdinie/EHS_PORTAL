@@ -15,6 +15,12 @@
                 <li>
                     @Html.ActionLink("Profile", "Index", "Manage", new { area = "CLIP" }, new { title = "Manage", @class = "dropdown-item" })
                 </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>
+                        @Html.ActionLink("Manage Users", "Users", "Manage", new { area = "CLIP" }, new { @class = "dropdown-item" })
+                    </li>
+                }
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     <a class="dropdown-item text-danger" href="javascript:document.getElementById('logoutForm').submit()">

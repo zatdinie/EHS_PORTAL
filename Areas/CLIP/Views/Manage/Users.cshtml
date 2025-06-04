@@ -38,14 +38,6 @@
                                 <input type="text" id="userSearch" class="form-control" placeholder="Search users...">
                                 <i class="fas fa-search position-absolute top-50 end-0 translate-middle-y me-2 text-muted"></i>
                             </div>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-outline-primary view-toggle active" data-view="table">
-                                    <i class="fas fa-table me-1"></i>Table
-                                </button>
-                                <button type="button" class="btn btn-outline-primary view-toggle" data-view="cards">
-                                    <i class="fas fa-th-large me-1"></i>Cards
-                                </button>
-                            </div>
                         </div>
                         <div>
                             <a href="@Url.Action("Register", "Account")" class="btn btn-primary">
@@ -164,17 +156,17 @@
                                             <td class="text-center"><span class="badge bg-info rounded-pill">@(user.DOE_CPD ?? 0)</span></td>
                                             <td>@(string.IsNullOrEmpty(user.PhoneNumber) ? "Not set" : user.PhoneNumber)</td>
                                             <td>
-                                                <div class="action-buttons text-end">
-                                                    <a href="@Url.Action("UserDetails", new { id = user.Id })" class="btn btn-sm btn-outline-info action-btn" data-bs-toggle="tooltip" title="View Details">
+                                                <div class="btn-group">
+                                                    <a href="@Url.Action("UserDetails", new { id = user.Id })" class="btn btn-sm btn-info" title="View Details" data-bs-toggle="tooltip">
                                                         <i class="fas fa-info-circle"></i>
                                                     </a>
-                                                    <a href="@Url.Action("EditUser", new { id = user.Id })" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="tooltip" title="Edit User">
+                                                    <a href="@Url.Action("EditUser", new { id = user.Id })" class="btn btn-sm btn-primary" title="Edit User" data-bs-toggle="tooltip">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a href="@Url.Action("ResetUserPassword", new { id = user.Id })" class="btn btn-sm btn-outline-warning action-btn" data-bs-toggle="tooltip" title="Reset Password">
+                                                    <a href="@Url.Action("ResetUserPassword", new { id = user.Id })" class="btn btn-sm btn-warning" title="Reset Password" data-bs-toggle="tooltip">
                                                         <i class="fas fa-key"></i>
                                                     </a>
-                                                    <a href="@Url.Action("DeleteUser", new { id = user.Id, area = "CLIP" })" class="btn btn-sm btn-outline-danger action-btn" data-bs-toggle="tooltip" title="Delete User">
+                                                    <a href="@Url.Action("DeleteUser", new { id = user.Id })" class="btn btn-sm btn-danger" title="Delete User" data-bs-toggle="tooltip">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -230,7 +222,7 @@
                                                         </li>
                                                         <li><hr class="dropdown-divider"></li>
                                                         <li>
-                                                            <a class="dropdown-item text-danger" href="@Url.Action("DeleteUser", new { id = user.Id, area = "CLIP" })">
+                                                            <a class="dropdown-item text-danger" href="@Url.Action("DeleteUser", new { id = user.Id })">
                                                                 <i class="fas fa-trash me-2"></i>Delete User
                                                             </a>
                                                         </li>
@@ -271,7 +263,7 @@
                                         <div class="card-footer bg-white d-grid gap-2 p-2">
                                             <div class="row g-2">
                                                 <div class="col-6">
-                                                    <a href="@Url.Action("UserDetails", new { id = user.Id })" class="btn btn-sm btn-light w-100">
+                                                    <a href="@Url.Action("UserDetails", new { id = user.Id })" class="btn btn-sm btn-info w-100">
                                                         <i class="fas fa-info-circle me-1"></i>Details
                                                     </a>
                                                 </div>
