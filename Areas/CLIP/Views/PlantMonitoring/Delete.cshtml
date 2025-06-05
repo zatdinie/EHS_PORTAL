@@ -62,9 +62,9 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
+        @Html.ActionLink("Cancel", "Details", new { id = Model.Id }, new { @class = "btn btn-secondary" })
         <button type="submit" class="btn btn-danger">
             <i class="fa fa-trash"></i> Confirm Delete
         </button>
-        @Html.ActionLink("Cancel", "Details", new { id = Model.Id }, new { @class = "btn btn-secondary" })
     </div>
 } 
