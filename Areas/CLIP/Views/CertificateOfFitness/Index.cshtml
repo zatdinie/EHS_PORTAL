@@ -37,23 +37,23 @@
             <div class="d-flex flex-wrap gap-2">
                 <a href="@Url.Action("Index", "CertificateOfFitness", new { plantFilter = "", searchString = ViewBag.CurrentSearch, sortOrder = ViewBag.CurrentSort })"
                     class="btn @(ViewBag.CurrentPlantFilter == null ? "btn-primary" : "btn-outline-primary")">
-                    All Plants
+                    <i class="bi bi-buildings"></i> All Plants
                 </a>
                 <a href="@Url.Action("Index", "CertificateOfFitness", new { plantFilter = "135", searchString = ViewBag.CurrentSearch, sortOrder = ViewBag.CurrentSort })"
                     class="btn @(ViewBag.CurrentPlantFilter != null && ViewBag.CurrentPlantFilter.ToString() == "135" ? "btn-primary" : "btn-outline-primary")">
-                    P1, P3, P5
+                    <i class="bi bi-buildings"></i> P1, P3, P5
                 </a>
                 <a href="@Url.Action("Index", "CertificateOfFitness", new { plantFilter = "21", searchString = ViewBag.CurrentSearch, sortOrder = ViewBag.CurrentSort })"
                     class="btn @(ViewBag.CurrentPlantFilter != null && ViewBag.CurrentPlantFilter.ToString() == "21" ? "btn-primary" : "btn-outline-primary")">
-                    P21
+                    <i class="bi bi-buildings"></i> P21
                 </a>
                 <a href="@Url.Action("Index", "CertificateOfFitness", new { plantFilter = "13,55", searchString = ViewBag.CurrentSearch, sortOrder = ViewBag.CurrentSort })"
                     class="btn @(ViewBag.CurrentPlantFilter != null && ViewBag.CurrentPlantFilter.ToString() == "13,55" ? "btn-primary" : "btn-outline-primary")">
-                    P13, P55
+                    <i class="bi bi-buildings"></i> P13, P55
                 </a>
                 <a href="@Url.Action("Index", "CertificateOfFitness", new { plantFilter = "34", searchString = ViewBag.CurrentSearch, sortOrder = ViewBag.CurrentSort })"
                     class="btn @(ViewBag.CurrentPlantFilter != null && ViewBag.CurrentPlantFilter.ToString() == "34" ? "btn-primary" : "btn-outline-primary")">
-                    P34
+                    <i class="bi bi-buildings"></i> P34
                 </a>
             </div>
         </div>
