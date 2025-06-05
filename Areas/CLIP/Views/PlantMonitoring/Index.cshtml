@@ -24,7 +24,7 @@
 
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Monitoring Dashboard</h1>
+        <h1 class="h3 mb-0">Monitoring</h1>
         <div class="d-flex gap-2">
             @if (User.IsInRole("Admin"))
             {
@@ -239,10 +239,10 @@
                                     }
                                 </td>
                                 <td>
-                                    <span class="badge @item.ProcStatusCssClass">@item.ProcStatus</span>
+                                    <span class="badge text-black @item.ProcStatusCssClass">@item.ProcStatus</span>
                                 </td>
                                 <td>
-                                    <span class="badge @item.ExpStatusCssClass">@item.ExpStatus</span>
+                                    <span class="badge text-white @item.ExpStatusCssClass">@item.ExpStatus</span>
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
