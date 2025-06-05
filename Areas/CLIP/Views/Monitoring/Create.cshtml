@@ -4,68 +4,106 @@
     ViewBag.Title = "Create Monitoring Type";
 }
 
-<h2>Create Monitoring Type</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.MonitoringName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MonitoringName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MonitoringName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MonitoringCategory, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.MonitoringCategory, (SelectList)ViewBag.CategoryList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MonitoringCategory, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MonitoringFreq, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.MonitoringFreq, (SelectList)ViewBag.FrequencyList, new { @class = "form-control", id = "frequencyDropdown" })
-                <div id="customFrequencyContainer" style="display: none; margin-top: 10px;">
-                    <div class="input-group">
-                        <input type="number" id="customFrequency" class="form-control" min="1" max="120" placeholder="Enter number of months" />
-                        <div class="input-group-append">
-                            <span class="input-group-text">months</span>
-                        </div>
-                    </div>
-                    <small class="text-muted">Enter a value between 1 and 120 months (10 years)</small>
-                    <div id="customFrequencyNotice" class="alert alert-info mt-2" style="display: none;">
-                        <i class="fas fa-info-circle"></i> Custom frequency will be saved as <span id="customFrequencyValue"></span> months.
-                    </div>
-                    <div id="customFrequencyError" class="alert alert-danger mt-2" style="display: none;">
-                        <i class="fas fa-exclamation-triangle"></i> Please enter a valid frequency between 1 and 120 months.
-                    </div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">Create Monitoring Type</h4>
                 </div>
-                @Html.ValidationMessageFor(model => model.MonitoringFreq, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Create", "Monitoring", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.MonitoringName, htmlAttributes: new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.MonitoringName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Enter the name of the monitoring type">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MonitoringName, "", new { @class = "invalid-feedback" })
+                        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.MonitoringCategory, htmlAttributes: new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.DropDownListFor(model => model.MonitoringCategory, (SelectList)ViewBag.CategoryList, new { @class = "form-select", required = "required" })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Select the monitoring category">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MonitoringCategory, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.MonitoringFreq, htmlAttributes: new { @class = "form-label" })
+                            <div class="input-group">
+                                @Html.DropDownListFor(model => model.MonitoringFreq, (SelectList)ViewBag.FrequencyList, new { @class = "form-select", id = "frequencyDropdown", required = "required" })
+                                <span class="input-group-text" data-bs-toggle="tooltip" title="Select the monitoring frequency">
+                                    <i class="bi bi-info-circle"></i>
+                                </span>
+                            </div>
+                            <div id="customFrequencyContainer" style="display: none; margin-top: 10px;">
+                                <div class="input-group mt-2">
+                                    <input type="number" id="customFrequency" class="form-control" min="1" max="120" placeholder="Enter number of months" />
+                                    <span class="input-group-text">months</span>
+                                </div>
+                                <small class="text-muted">Enter a value between 1 and 120 months (10 years)</small>
+                                <div id="customFrequencyNotice" class="alert alert-info mt-2" style="display: none;">
+                                    <i class="fas fa-info-circle"></i> Custom frequency will be saved as <span id="customFrequencyValue"></span> months.
+                                </div>
+                                <div id="customFrequencyError" class="alert alert-danger mt-2" style="display: none;">
+                                    <i class="fas fa-exclamation-triangle"></i> Please enter a valid frequency between 1 and 120 months.
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MonitoringFreq, "", new { @class = "invalid-feedback" })
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-between">
+                            <a href="@Url.Action("Index", "Monitoring")" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Create
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-}
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <script>
-        $(document).ready(function () {
+        $(function () {
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+            
+            // Bootstrap form validation
+            (function () {
+                'use strict'
+                var forms = document.querySelectorAll('.needs-validation')
+                Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
+
             // Handle custom frequency dropdown
             $('#frequencyDropdown').change(function () {
                 if ($(this).val() === 'custom') {
