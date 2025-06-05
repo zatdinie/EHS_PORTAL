@@ -57,250 +57,113 @@
         </div>
     }
 
-    <!-- Stats Cards Row -->
-    <div class="row mb-4">
-        <!-- Total Records Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-start border-4 border-primary shadow h-100">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="text-uppercase text-primary fw-bold text-xs mb-1">Total Records</div>
-                            <div class="h5 mb-0 fw-bold">@recordCount</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-clipboard-data fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Completed Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-start border-4 border-success shadow h-100">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="text-uppercase text-success fw-bold text-xs mb-1">Completed</div>
-                            <div class="h5 mb-0 fw-bold">@completedCount</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-check-circle fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Expiring Soon Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-start border-4 border-warning shadow h-100">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="text-uppercase text-warning fw-bold text-xs mb-1">Expiring Soon</div>
-                            <div class="h5 mb-0 fw-bold">@expiringCount</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-clock fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Expired Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-start border-4 border-danger shadow h-100">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="text-uppercase text-danger fw-bold text-xs mb-1">Expired</div>
-                            <div class="h5 mb-0 fw-bold">@expiredCount</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-exclamation-circle fs-2 text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Status Overview Cards -->
-    <div class="row mb-4">
-        <!-- Process Status Overview -->
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header py-3 bg-light">
-                    <h6 class="m-0 fw-bold">Process Status Overview</h6>
-                </div>
-                <div class="card-body">
-                    <h6 class="small fw-bold">Completed <span class="float-end">@completedCount (@completedPercent%)</span></h6>
-                    <div class="progress mb-4" style="height: 10px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: @completedPercent%" 
-                             aria-valuenow="@completedPercent" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h6 class="small fw-bold">Work In Progress <span class="float-end">@workInProgressCount</span></h6>
-                    <div class="progress mb-4" style="height: 10px;">
-                        <div class="progress-bar bg-warning" role="progressbar" 
-                             style="width: @(recordCount > 0 ? (int)Math.Round((double)workInProgressCount / recordCount * 100) : 0)%" 
-                             aria-valuenow="@(recordCount > 0 ? (int)Math.Round((double)workInProgressCount / recordCount * 100) : 0)" 
-                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h6 class="small fw-bold">ePR Raised <span class="float-end">@eprRaisedCount</span></h6>
-                    <div class="progress mb-4" style="height: 10px;">
-                        <div class="progress-bar bg-info" role="progressbar" 
-                             style="width: @(recordCount > 0 ? (int)Math.Round((double)eprRaisedCount / recordCount * 100) : 0)%" 
-                             aria-valuenow="@(recordCount > 0 ? (int)Math.Round((double)eprRaisedCount / recordCount * 100) : 0)" 
-                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h6 class="small fw-bold">Quotation Requested <span class="float-end">@quotationRequestedCount</span></h6>
-                    <div class="progress mb-4" style="height: 10px;">
-                        <div class="progress-bar bg-primary" role="progressbar" 
-                             style="width: @(recordCount > 0 ? (int)Math.Round((double)quotationRequestedCount / recordCount * 100) : 0)%" 
-                             aria-valuenow="@(recordCount > 0 ? (int)Math.Round((double)quotationRequestedCount / recordCount * 100) : 0)" 
-                             aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h6 class="small fw-bold">Not Started <span class="float-end">@notStartedCount (@notStartedPercent%)</span></h6>
-                    <div class="progress" style="height: 10px;">
-                        <div class="progress-bar bg-secondary" role="progressbar" style="width: @notStartedPercent%" 
-                             aria-valuenow="@notStartedPercent" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Expiry Status Overview -->
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header py-3 bg-light">
-                    <h6 class="m-0 fw-bold">Expiry Status Overview</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <div class="d-flex justify-content-center">
-                            <div class="position-relative" style="width: 200px; height: 200px;">
-                                <div class="position-absolute top-50 start-50 translate-middle text-center">
-                                    <span class="d-block h3 mb-0">@validPercent%</span>
-                                    <p class="text-muted mb-0">Active</p>
-                                </div>
-                                <div class="position-relative">
-                                    <svg viewBox="0 0 36 36" class="circular-chart">
-                                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                        <path class="circle" stroke-dasharray="@validPercent, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 text-center small">
-                            <span class="me-2">
-                                <i class="bi bi-circle-fill text-success me-1"></i> Active (@validCount)
-                            </span>
-                            <span class="me-2">
-                                <i class="bi bi-circle-fill text-warning me-1"></i> Expiring Soon (@expiringCount)
-                            </span>
-                            <span>
-                                <i class="bi bi-circle-fill text-danger me-1"></i> Expired (@expiredCount)
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Filters Card -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center bg-light">
-            <h6 class="m-0 fw-bold">
-                <i class="bi bi-funnel me-1"></i> Filter Records
-            </h6>
-            <button class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
-                <i class="bi bi-chevron-down"></i>
-            </button>
-        </div>
-        <div class="collapse show" id="filterCollapse">
-            <div class="card-body">
-                <form method="get" class="row g-3">
-                    <div class="col-md-4 mb-3">
-                        <label for="category" class="form-label">Category</label>
-                        <select id="category" name="category" class="form-select">
-                            <option value="">All Categories</option>
-                            @foreach (var category in ViewBag.Categories)
-                            {
-                                <option value="@category" @(ViewBag.SelectedCategory == category ? "selected" : "")>@category</option>
-                            }
-                        </select>
+    <div class="card mb-4">
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "PlantMonitoring", FormMethod.Get, new { @class = "row g-3" }))
+            {
+                <div class="col-md-10">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select id="category" name="category" class="form-select">
+                                <option value="">All Categories</option>
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@category" @(ViewBag.SelectedCategory == category ? "selected" : "")>@category</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="monitoringType" class="form-label">Monitoring Type</label>
+                            <select id="monitoringType" name="monitoringType" class="form-select">
+                                <option value="">All Types</option>
+                                @foreach (var type in ViewBag.MonitoringTypes ?? new List<string>())
+                                {
+                                    <option value="@type" @(ViewBag.SelectedMonitoringType == type ? "selected" : "")>@type</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="frequency" class="form-label">Frequency</label>
+                            <select id="frequency" name="frequency" class="form-select">
+                                <option value="">All Frequencies</option>
+                                <option value="1" @(ViewBag.SelectedFrequency == 1 ? "selected" : "")>Monthly</option>
+                                <option value="2" @(ViewBag.SelectedFrequency == 2 ? "selected" : "")>Bi-Monthly</option>
+                                <option value="3" @(ViewBag.SelectedFrequency == 3 ? "selected" : "")>Quarterly</option>
+                                <option value="4" @(ViewBag.SelectedFrequency == 4 ? "selected" : "")>4 Months</option>
+                                <option value="6" @(ViewBag.SelectedFrequency == 6 ? "selected" : "")>Half-Yearly</option>
+                                <option value="8" @(ViewBag.SelectedFrequency == 8 ? "selected" : "")>8 Months</option>
+                                <option value="12" @(ViewBag.SelectedFrequency == 12 ? "selected" : "")>Yearly</option>
+                                <option value="15" @(ViewBag.SelectedFrequency == 15 ? "selected" : "")>15 Months</option>
+                                <option value="18" @(ViewBag.SelectedFrequency == 18 ? "selected" : "")>18 Months</option>
+                                <option value="24" @(ViewBag.SelectedFrequency == 24 ? "selected" : "")>Every 2 Years</option>
+                                <option value="36" @(ViewBag.SelectedFrequency == 36 ? "selected" : "")>Every 3 Years</option>
+                                <option value="48" @(ViewBag.SelectedFrequency == 48 ? "selected" : "")>Every 4 Years</option>
+                                <option value="60" @(ViewBag.SelectedFrequency == 60 ? "selected" : "")>Every 5 Years</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status" name="status" class="form-select">
+                                <option value="">All Status</option>
+                                <optgroup label="Process Status">
+                                    <option value="Completed" @(ViewBag.SelectedStatus == "Completed" ? "selected" : "")>Completed</option>
+                                    <option value="Work In Progress" @(ViewBag.SelectedStatus == "Work In Progress" || ViewBag.SelectedStatus == "In Progress" ? "selected" : "")>Work In Progress</option>
+                                    <option value="ePR Raised" @(ViewBag.SelectedStatus == "ePR Raised" || ViewBag.SelectedStatus == "In Preparation" ? "selected" : "")>ePR Raised</option>
+                                    <option value="Quotation Requested" @(ViewBag.SelectedStatus == "Quotation Requested" || ViewBag.SelectedStatus == "In Quotation" ? "selected" : "")>Quotation Requested</option>
+                                    <option value="Not Started" @(ViewBag.SelectedStatus == "Not Started" ? "selected" : "")>Not Started</option>
+                                </optgroup>
+                                <optgroup label="Expiration Status">
+                                    <option value="Active" @(ViewBag.SelectedStatus == "Active" ? "selected" : "")>Active</option>
+                                    <option value="Expiring Soon" @(ViewBag.SelectedStatus == "Expiring Soon" ? "selected" : "")>Expiring Soon</option>
+                                    <option value="Expired" @(ViewBag.SelectedStatus == "Expired" ? "selected" : "")>Expired</option>
+                                    <option value="No Expiry" @(ViewBag.SelectedStatus == "No Expiry" ? "selected" : "")>No Expiry</option>
+                                </optgroup>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="monitoringType" class="form-label">Monitoring Type</label>
-                        <select id="monitoringType" name="monitoringType" class="form-select">
-                            <option value="">All Types</option>
-                            @foreach (var type in ViewBag.MonitoringTypes ?? new List<string>())
-                            {
-                                <option value="@type" @(ViewBag.SelectedMonitoringType == type ? "selected" : "")>@type</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="frequency" class="form-label">Frequency</label>
-                        <select id="frequency" name="frequency" class="form-select">
-                            <option value="">All Frequencies</option>
-                            <option value="1" @(ViewBag.SelectedFrequency == 1 ? "selected" : "")>Monthly</option>
-                            <option value="2" @(ViewBag.SelectedFrequency == 2 ? "selected" : "")>Bi-Monthly</option>
-                            <option value="3" @(ViewBag.SelectedFrequency == 3 ? "selected" : "")>Quarterly</option>
-                            <option value="4" @(ViewBag.SelectedFrequency == 4 ? "selected" : "")>4 Months</option>
-                            <option value="6" @(ViewBag.SelectedFrequency == 6 ? "selected" : "")>Half-Yearly</option>
-                            <option value="8" @(ViewBag.SelectedFrequency == 8 ? "selected" : "")>8 Months</option>
-                            <option value="12" @(ViewBag.SelectedFrequency == 12 ? "selected" : "")>Yearly</option>
-                            <option value="15" @(ViewBag.SelectedFrequency == 15 ? "selected" : "")>15 Months</option>
-                            <option value="18" @(ViewBag.SelectedFrequency == 18 ? "selected" : "")>18 Months</option>
-                            <option value="24" @(ViewBag.SelectedFrequency == 24 ? "selected" : "")>Every 2 Years</option>
-                            <option value="36" @(ViewBag.SelectedFrequency == 36 ? "selected" : "")>Every 3 Years</option>
-                            <option value="48" @(ViewBag.SelectedFrequency == 48 ? "selected" : "")>Every 4 Years</option>
-                            <option value="60" @(ViewBag.SelectedFrequency == 60 ? "selected" : "")>Every 5 Years</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="plantId" class="form-label">Plant</label>
-                        <select id="plantId" name="plantId" class="form-select">
-                            <option value="">All Plants</option>
-                            @foreach (var plant in ViewBag.Plants)
-                            {
-                                <option value="@plant.Id" @(ViewBag.SelectedPlantId == plant.Id ? "selected" : "")>@plant.PlantName</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select id="status" name="status" class="form-select">
-                            <option value="">All Status</option>
-                            <optgroup label="Process Status">
-                                <option value="Completed" @(ViewBag.SelectedStatus == "Completed" ? "selected" : "")>Completed</option>
-                                <option value="Work In Progress" @(ViewBag.SelectedStatus == "Work In Progress" || ViewBag.SelectedStatus == "In Progress" ? "selected" : "")>Work In Progress</option>
-                                <option value="ePR Raised" @(ViewBag.SelectedStatus == "ePR Raised" || ViewBag.SelectedStatus == "In Preparation" ? "selected" : "")>ePR Raised</option>
-                                <option value="Quotation Requested" @(ViewBag.SelectedStatus == "Quotation Requested" || ViewBag.SelectedStatus == "In Quotation" ? "selected" : "")>Quotation Requested</option>
-                                <option value="Not Started" @(ViewBag.SelectedStatus == "Not Started" ? "selected" : "")>Not Started</option>
-                            </optgroup>
-                            <optgroup label="Expiration Status">
-                                <option value="Active" @(ViewBag.SelectedStatus == "Active" ? "selected" : "")>Active</option>
-                                <option value="Expiring Soon" @(ViewBag.SelectedStatus == "Expiring Soon" ? "selected" : "")>Expiring Soon</option>
-                                <option value="Expired" @(ViewBag.SelectedStatus == "Expired" ? "selected" : "")>Expired</option>
-                                <option value="No Expiry" @(ViewBag.SelectedStatus == "No Expiry" ? "selected" : "")>No Expiry</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="col-12 text-end">
-                        <a href="@Url.Action("Index")" class="btn btn-outline-secondary me-2">
-                            <i class="bi bi-arrow-counterclockwise"></i> Reset
-                        </a>
-                        <button type="submit" class="btn btn-primary">
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-outline-primary">
                             <i class="bi bi-search"></i> Apply Filters
                         </button>
                     </div>
-                </form>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    @if (!string.IsNullOrEmpty(ViewBag.SelectedCategory) || !string.IsNullOrEmpty(ViewBag.SelectedPlantFilter) || 
+                        !string.IsNullOrEmpty(ViewBag.SelectedStatus) || !string.IsNullOrEmpty(ViewBag.SelectedMonitoringType) || 
+                        ViewBag.SelectedFrequency > 0)
+                    {
+                        <a href="@Url.Action("Index", "PlantMonitoring")" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i> Clear Filters
+                        </a>
+                    }
+                </div>
+            }
+
+            <div class="mt-3">
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == null || ViewBag.SelectedPlantFilter == "" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> All Plants
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "135", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "135" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P1, P3, P5
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "21", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "21" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P21
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "13,55", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "13,55" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P13, P55
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "34", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "34" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P34
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -309,7 +172,7 @@
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 fw-bold">
                 <i class="bi bi-table me-1"></i> Monitoring Records 
-                @if(!string.IsNullOrEmpty(ViewBag.SelectedCategory) || ViewBag.SelectedPlantId > 0 || 
+                @if(!string.IsNullOrEmpty(ViewBag.SelectedCategory) || !string.IsNullOrEmpty(ViewBag.SelectedPlantFilter) || 
                     !string.IsNullOrEmpty(ViewBag.SelectedStatus) || !string.IsNullOrEmpty(ViewBag.SelectedMonitoringType) || 
                     ViewBag.SelectedFrequency > 0)
                 {
@@ -466,7 +329,7 @@
             });
             
             // Auto-submit form when select fields change
-            $("#category, #plantId, #status, #monitoringType, #frequency").change(function() {
+            $("#category, #plantFilter, #status, #monitoringType, #frequency").change(function() {
                 $(this).closest("form").submit();
             });
             

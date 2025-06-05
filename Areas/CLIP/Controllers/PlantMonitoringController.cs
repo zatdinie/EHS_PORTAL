@@ -22,7 +22,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: PlantMonitoring
-        public ActionResult Index(string category = null, int? plantId = null, string status = null, string monitoringType = null, int? frequency = null)
+        public ActionResult Index(string category = null, string plantFilter = null, string status = null, string monitoringType = null, int? frequency = null)
         {
             System.Diagnostics.Debug.WriteLine("========================================");
             System.Diagnostics.Debug.WriteLine($"INDEX ACTION CALLED - User: {User.Identity.Name}");
@@ -53,10 +53,37 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 ViewBag.SelectedCategory = category;
             }
 
-            if (plantId.HasValue)
+            // Apply plant filter
+            if (!string.IsNullOrEmpty(plantFilter))
             {
-                query = query.Where(p => p.PlantID == plantId.Value);
-                ViewBag.SelectedPlantId = plantId.Value;
+                ViewBag.SelectedPlantFilter = plantFilter;
+                
+                switch (plantFilter)
+                {
+                    case "135":
+                        query = query.Where(c => c.Plant.PlantName == "Plant 1" || 
+                                                c.Plant.PlantName == "Plant 3" || 
+                                                c.Plant.PlantName == "Plant 5");
+                        break;
+                    case "21":
+                        query = query.Where(c => c.Plant.PlantName == "Plant 21");
+                        break;
+                    case "13,55":
+                        query = query.Where(c => c.Plant.PlantName == "Plant 13" || 
+                                                c.Plant.PlantName == "Plant 55");
+                        break;
+                    case "34":
+                        query = query.Where(c => c.Plant.PlantName == "Plant 34");
+                        break;
+                    default:
+                        // Try to parse as normal plant ID if it doesn't match any of the special filters
+                        int plantId;
+                        if (int.TryParse(plantFilter, out plantId))
+                        {
+                            query = query.Where(c => c.PlantID == plantId);
+                        }
+                        break;
+                }
             }
 
             if (!string.IsNullOrEmpty(status))
