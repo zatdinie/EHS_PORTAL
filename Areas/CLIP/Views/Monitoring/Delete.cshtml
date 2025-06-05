@@ -4,43 +4,53 @@
     ViewBag.Title = "Delete Monitoring Type";
 }
 
-<h2>Delete Monitoring Type</h2>
+<h1>Delete Monitoring Type</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MonitoringName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MonitoringName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MonitoringCategory)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MonitoringCategory)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MonitoringFreq)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MonitoringFreq)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" />
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="alert alert-danger mb-4">
+            <h5><i class="bi bi-exclamation-triangle"></i> Are you sure you want to delete this?</h5>
+            <p class="mb-0">This action cannot be undone.</p>
         </div>
-    }
+        
+        <div class="row mb-3">
+            <div class="col-md-3 fw-bold">
+                @Html.DisplayNameFor(model => model.MonitoringName)
+            </div>
+            <div class="col-md-9">
+                @Html.DisplayFor(model => model.MonitoringName)
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3 fw-bold">
+                @Html.DisplayNameFor(model => model.MonitoringCategory)
+            </div>
+            <div class="col-md-9">
+                @Html.DisplayFor(model => model.MonitoringCategory)
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3 fw-bold">
+                @Html.DisplayNameFor(model => model.MonitoringFreq)
+            </div>
+            <div class="col-md-9">
+                @Html.DisplayFor(model => model.MonitoringFreq)
+            </div>
+        </div>
+
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+                <a href="@Url.Action("Index", "Monitoring")" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+            </div>
+        }
+    </div>
 </div> 
