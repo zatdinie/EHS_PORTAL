@@ -21,24 +21,13 @@
     }
 }
 
-<h2>Update Monitoring Status</h2>
-
-<div class="row mb-3">
-    <div class="col-md-12">
-        <div class="alert alert-info">
-            <strong>Monitoring:</strong> @Model.Monitoring.MonitoringName |
-            <strong>Plant:</strong> @Model.Plant.PlantName |
-            <strong>Area:</strong> @(string.IsNullOrEmpty(Model.Area) ? "N/A" : Model.Area) |
-            <strong>Process Status:</strong> <span class="badge @Model.ProcStatusCssClass">@Model.ProcStatus</span> |
-            <strong>Expiration Status:</strong> <span class="badge @Model.ExpStatusCssClass">@Model.ExpStatus</span>
-        </div>
-    </div>
-</div>
+<br/>
+<h1>Update Monitoring Status</h1>
 
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
-        <strong>Error:</strong> @TempData["ErrorMessage"]
+        <i class="fas fa-exclamation-circle me-2"></i> @TempData["ErrorMessage"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
@@ -51,45 +40,9 @@
     </div>
 }
 
-<!-- Expiry Date & Remarks Form -->
-@using (Html.BeginForm("UpdateExpiry", "PlantMonitoring", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.Id)
-
-    <div class="row">
-        <div class="col-md-12 mb-4">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Expiry Date & Remarks</h5>
-                    <button type="submit" class="btn btn-sm btn-primary" title="Save Expiry & Remarks">
-                        <i class="fas fa-save"></i> Save
-                    </button>
-                </div>
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Expiry Date:</label>
-                        <div class="col-sm-4">
-                            @Html.TextBoxFor(model => model.ExpDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-                            <small class="form-text text-muted">Will be automatically set based on monitoring frequency when work is completed.</small>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Remarks:</label>
-                        <div class="col-sm-10">
-                            @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", rows = 3 })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
 <!-- Phase Navigation Tabs -->
-<div class="row mb-3">
-    <div class="col-md-12">
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
         <ul class="nav nav-tabs" id="phasesTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link @(activeTab == "quotation" ? "active" : "")" 
@@ -150,7 +103,7 @@
 <div class="tab-content" id="phasesContent">
     <!-- Quotation Phase Tab -->
     <div class="tab-pane fade @(activeTab == "quotation" ? "show active" : "")" id="quotation" role="tabpanel" aria-labelledby="quotation-tab">
-        <div class="card border-primary mb-4 shadow-sm">
+        <div class="card shadow-sm mb-4">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="fas fa-file-invoice-dollar me-2"></i> Quotation Phase</h5>
                 <span class="badge bg-light text-primary">Step 1 of 3</span>
@@ -177,33 +130,42 @@
                     </div>
                 </div>
                 
-                @using (Html.BeginForm("UpdateQuotation", "PlantMonitoring", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("UpdateQuotation", "PlantMonitoring", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", novalidate = "novalidate" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Id)
                     
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="quoteDate">Quotation Date</label>
-                                <input type="datetime-local" class="form-control" id="quoteDate" name="QuoteDate" 
-                                       value="@(Model.QuoteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Quotation Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    <input type="datetime-local" class="form-control" id="quoteDate" name="QuoteDate" 
+                                           value="@(Model.QuoteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="quoteSubmitDate">Submit Date</label>
-                                <input type="datetime-local" class="form-control" id="quoteSubmitDate" name="QuoteSubmitDate" 
-                                       value="@(Model.QuoteSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Submit Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                    <input type="datetime-local" class="form-control" id="quoteSubmitDate" name="QuoteSubmitDate" 
+                                           value="@(Model.QuoteSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="quoteCompleteDate">Complete Date</label>
-                                <input type="datetime-local" class="form-control" id="quoteCompleteDate" name="QuoteCompleteDate" 
-                                       value="@(Model.QuoteCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                            <div class="form-group mb-3">
+                                <label class="form-label fw-bold">Complete Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                    <input type="datetime-local" class="form-control" id="quoteCompleteDate" name="QuoteCompleteDate" 
+                                           value="@(Model.QuoteCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                </div>
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label class="form-label">Assigned To</label>
+                                <label class="form-label fw-bold">Assigned To</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     @if (isAdmin)
@@ -219,7 +181,7 @@
                             </div>
                             
                             <div class="form-group mb-3">
-                                <label class="form-label">Document</label>
+                                <label class="form-label fw-bold">Document</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
                                     <input type="file" name="quoteDocument" class="form-control file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png" data-max-size="20" />
@@ -266,7 +228,7 @@
 
     <!-- ePR Phase Tab -->
     <div class="tab-pane fade @(activeTab == "epr" ? "show active" : "")" id="epr" role="tabpanel" aria-labelledby="epr-tab">
-        <div class="card border-warning mb-4 shadow-sm">
+        <div class="card shadow-sm mb-4">
             <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="fas fa-file-contract me-2"></i> Raise ePR Phase</h5>
                 <span class="badge bg-light text-warning">Step 2 of 3</span>
@@ -301,33 +263,42 @@
                         </div>
                     </div>
                     
-                    using (Html.BeginForm("UpdateEpr", "PlantMonitoring", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    using (Html.BeginForm("UpdateEpr", "PlantMonitoring", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", novalidate = "novalidate" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
                         
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="eprDate">EPR Date</label>
-                                    <input type="datetime-local" class="form-control" id="eprDate" name="EprDate" 
-                                        value="@(Model.EprDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold">EPR Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        <input type="datetime-local" class="form-control" id="eprDate" name="EprDate" 
+                                            value="@(Model.EprDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="eprSubmitDate">Submit Date</label>
-                                    <input type="datetime-local" class="form-control" id="eprSubmitDate" name="EprSubmitDate" 
-                                        value="@(Model.EprSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold">Submit Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                        <input type="datetime-local" class="form-control" id="eprSubmitDate" name="EprSubmitDate" 
+                                            value="@(Model.EprSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="eprCompleteDate">Complete Date</label>
-                                    <input type="datetime-local" class="form-control" id="eprCompleteDate" name="EprCompleteDate" 
-                                        value="@(Model.EprCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold">Complete Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                        <input type="datetime-local" class="form-control" id="eprCompleteDate" name="EprCompleteDate" 
+                                            value="@(Model.EprCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    </div>
                                 </div>
                             </div>
                             
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="form-label">Assigned To</label>
+                                    <label class="form-label fw-bold">Assigned To</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         @if (isAdmin)
@@ -343,7 +314,7 @@
                                 </div>
                                 
                                 <div class="form-group mb-3">
-                                    <label class="form-label">Document</label>
+                                    <label class="form-label fw-bold">Document</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
                                         <input type="file" name="eprDocument" class="form-control file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png" data-max-size="20" />
@@ -394,7 +365,7 @@
 
     <!-- Work Execution Phase Tab -->
     <div class="tab-pane fade @(activeTab == "work" ? "show active" : "")" id="work" role="tabpanel" aria-labelledby="work-tab">
-        <div class="card border-success mb-4 shadow-sm">
+        <div class="card shadow-sm mb-4">
             <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="fas fa-tools me-2"></i> Work Execution Phase</h5>
                 <span class="badge bg-light text-success">Step 3 of 3</span>
@@ -429,34 +400,43 @@
                         </div>
                     </div>
                     
-                    using (Html.BeginForm("UpdateWork", "PlantMonitoring", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    using (Html.BeginForm("UpdateWork", "PlantMonitoring", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", novalidate = "novalidate" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
                         
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="workDate">Work Date</label>
-                                    <input type="datetime-local" class="form-control" id="workDate" name="WorkDate" 
-                                        value="@(Model.WorkDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold">Work Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        <input type="datetime-local" class="form-control" id="workDate" name="WorkDate" 
+                                            value="@(Model.WorkDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="workSubmitDate">Submit Date</label>
-                                    <input type="datetime-local" class="form-control" id="workSubmitDate" name="WorkSubmitDate" 
-                                        value="@(Model.WorkSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold">Submit Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                        <input type="datetime-local" class="form-control" id="workSubmitDate" name="WorkSubmitDate" 
+                                            value="@(Model.WorkSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="workCompleteDate">Complete Date</label>
-                                    <input type="datetime-local" class="form-control" id="workCompleteDate" name="WorkCompleteDate" 
-                                        value="@(Model.WorkCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                <div class="form-group mb-3">
+                                    <label class="form-label fw-bold">Complete Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
+                                        <input type="datetime-local" class="form-control" id="workCompleteDate" name="WorkCompleteDate" 
+                                            value="@(Model.WorkCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    </div>
                                     <small class="form-text text-muted">When completed, renewal date will be set based on monitoring frequency.</small>
                                 </div>
                             </div>
                             
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="form-label">Assigned To</label>
+                                    <label class="form-label fw-bold">Assigned To</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         @if (isAdmin)
@@ -472,7 +452,7 @@
                                 </div>
                                 
                                 <div class="form-group mb-3">
-                                    <label class="form-label">Document</label>
+                                    <label class="form-label fw-bold">Document</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
                                         <input type="file" name="workDocument" class="form-control file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png" data-max-size="20" />
@@ -523,9 +503,10 @@
 
     <!-- Summary Tab -->
     <div class="tab-pane fade @(activeTab == "summary" ? "show active" : "")" id="summary" role="tabpanel" aria-labelledby="summary-tab">
-        <div class="card border-info mb-4">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Monitoring Summary</h5>
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-clipboard-check me-2"></i> Monitoring Summary</h5>
+                <span class="badge bg-light text-info">Completed</span>
             </div>
             <div class="card-body">
                 @if (!isWorkCompleted)
@@ -611,16 +592,11 @@
     </div>
 </div>
 
-<div class="row mb-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <a href="@Url.Action("Details", new { id = Model.Id })" class="btn btn-secondary" title="Back to Details">
-                    <i class="fas fa-arrow-left"></i> Back to Details
-                </a>
-            </div>
-        </div>
-    </div>
+<!-- Page Footer with Back Button -->
+    <div class="card-body">
+        <a href="@Url.Action("")" class="btn btn-secondary" title="Back to Plant Monitoring">
+            <i class="fas fa-arrow-left me-1"></i> Back to Plant Monitoring
+        </a>
 </div>
 
 @section Scripts {
@@ -867,7 +843,7 @@
             // Set up notifications for auto-filled dates when a phase is saved
             @if (TempData["SuccessMessage"] != null)
             {
-                <script>
+                <text>
                     // Check if dates were auto-filled
                     var autofillNotifications = [];
                     
@@ -891,7 +867,7 @@
                             });
                         }, 500);
                     });
-                </script>
+                </text>
             }
         });
         
@@ -920,5 +896,4 @@
             }
         }
     </script>
-} 
-} 
+}

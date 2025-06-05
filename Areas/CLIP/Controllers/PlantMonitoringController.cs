@@ -22,7 +22,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: PlantMonitoring
-        public ActionResult Index(string category = null, int? plantId = null, string status = null, string monitoringType = null, int? frequency = null)
+        public ActionResult Index(string category = null, string plantFilter = null, string status = null, string monitoringType = null, int? frequency = null)
         {
             System.Diagnostics.Debug.WriteLine("========================================");
             System.Diagnostics.Debug.WriteLine($"INDEX ACTION CALLED - User: {User.Identity.Name}");
@@ -53,10 +53,22 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 ViewBag.SelectedCategory = category;
             }
 
-            if (plantId.HasValue)
+            // Apply plant filter
+            if (!string.IsNullOrEmpty(plantFilter))
             {
-                query = query.Where(p => p.PlantID == plantId.Value);
-                ViewBag.SelectedPlantId = plantId.Value;
+                // Handle both old (concatenated) and new (comma-separated) formats
+                var plantIds = plantFilter.Split(',').Select(p => int.TryParse(p, out int id) ? id : -1).Where(id => id != -1).ToList();
+                
+                if (plantIds.Any())
+                {
+                    query = query.Where(p => plantIds.Contains(p.PlantID));
+                    ViewBag.SelectedPlantFilter = plantFilter;
+                }
+                else
+                {
+                    // If we couldn't parse any IDs, store the original filter string
+                    ViewBag.SelectedPlantFilter = plantFilter;
+                }
             }
 
             if (!string.IsNullOrEmpty(status))
@@ -151,8 +163,15 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         }
 
         // GET: PlantMonitoring/Schedule
-        public ActionResult Schedule()
+        public ActionResult Schedule(string plantFilter = null)
         {
+            // Set the selected plant filter in ViewBag
+            ViewBag.SelectedPlantFilter = plantFilter;
+            
+            System.Diagnostics.Debug.WriteLine("========================================");
+            System.Diagnostics.Debug.WriteLine($"SCHEDULE ACTION CALLED - Plant Filter: {plantFilter}");
+            System.Diagnostics.Debug.WriteLine("========================================");
+            
             // Get all monitoring types
             var monitoringTypes = db.Monitorings
                 .OrderBy(m => m.MonitoringCategory)
@@ -190,6 +209,27 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     .ToList();
                 
                 plantMonitoringsQuery = plantMonitoringsQuery.Where(p => userPlantIds.Contains(p.PlantID));
+            }
+
+            // Apply plant filter if provided
+            if (!string.IsNullOrEmpty(plantFilter))
+            {
+                var plantIds = plantFilter.Split(',').Select(p => int.TryParse(p, out int id) ? id : -1).Where(id => id != -1).ToList();
+                System.Diagnostics.Debug.WriteLine($"Parsed plant IDs: {string.Join(", ", plantIds)}");
+                
+                // Count records before filtering
+                var beforeCount = plantMonitoringsQuery.Count();
+                System.Diagnostics.Debug.WriteLine($"Records before filtering: {beforeCount}");
+                
+                if (plantIds.Any())
+                {
+                    plantMonitoringsQuery = plantMonitoringsQuery.Where(p => plantIds.Contains(p.PlantID));
+                    System.Diagnostics.Debug.WriteLine($"Filtered query to include only plants: {string.Join(", ", plantIds)}");
+                    
+                    // Count records after filtering
+                    var afterCount = plantMonitoringsQuery.Count();
+                    System.Diagnostics.Debug.WriteLine($"Records after filtering: {afterCount}");
+                }
             }
 
             var plantMonitorings = plantMonitoringsQuery.ToList();

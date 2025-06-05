@@ -22,436 +22,264 @@
     var notStartedPercent = recordCount > 0 ? (int)Math.Round((double)notStartedCount / recordCount * 100) : 0;
 }
 
-
-@if (ViewBag.Notifications != null)
-{
-    @Html.Partial("_MonitoringNotifications", (List<EHS_PORTAL.Areas.CLIP.Models.MonitoringNotification>)ViewBag.Notifications)
-}
-
-<!-- Alert Messages -->
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Monitoring</h1>
     </div>
-}
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="fas fa-exclamation-circle me-2"></i> @TempData["ErrorMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    @if (ViewBag.Notifications != null)
+    {
+        @Html.Partial("_MonitoringNotifications", (List<EHS_PORTAL.Areas.CLIP.Models.MonitoringNotification>)ViewBag.Notifications)
+    }
+
+    <!-- Alert Messages -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-circle me-2"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Filters Card -->
+    <div class="card mb-4">
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "PlantMonitoring", FormMethod.Get, new { @class = "row g-3" }))
+            {
+                <div class="col-md-10">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select id="category" name="category" class="form-select">
+                                <option value="">All Categories</option>
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@category" @(ViewBag.SelectedCategory == category ? "selected" : "")>@category</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="monitoringType" class="form-label">Monitoring Type</label>
+                            <select id="monitoringType" name="monitoringType" class="form-select">
+                                <option value="">All Types</option>
+                                @foreach (var type in ViewBag.MonitoringTypes ?? new List<string>())
+                                {
+                                    <option value="@type" @(ViewBag.SelectedMonitoringType == type ? "selected" : "")>@type</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="frequency" class="form-label">Frequency</label>
+                            <select id="frequency" name="frequency" class="form-select">
+                                <option value="">All Frequencies</option>
+                                <option value="1" @(ViewBag.SelectedFrequency == 1 ? "selected" : "")>Monthly</option>
+                                <option value="2" @(ViewBag.SelectedFrequency == 2 ? "selected" : "")>Bi-Monthly</option>
+                                <option value="3" @(ViewBag.SelectedFrequency == 3 ? "selected" : "")>Quarterly</option>
+                                <option value="4" @(ViewBag.SelectedFrequency == 4 ? "selected" : "")>4 Months</option>
+                                <option value="6" @(ViewBag.SelectedFrequency == 6 ? "selected" : "")>Half-Yearly</option>
+                                <option value="8" @(ViewBag.SelectedFrequency == 8 ? "selected" : "")>8 Months</option>
+                                <option value="12" @(ViewBag.SelectedFrequency == 12 ? "selected" : "")>Yearly</option>
+                                <option value="15" @(ViewBag.SelectedFrequency == 15 ? "selected" : "")>15 Months</option>
+                                <option value="18" @(ViewBag.SelectedFrequency == 18 ? "selected" : "")>18 Months</option>
+                                <option value="24" @(ViewBag.SelectedFrequency == 24 ? "selected" : "")>Every 2 Years</option>
+                                <option value="36" @(ViewBag.SelectedFrequency == 36 ? "selected" : "")>Every 3 Years</option>
+                                <option value="48" @(ViewBag.SelectedFrequency == 48 ? "selected" : "")>Every 4 Years</option>
+                                <option value="60" @(ViewBag.SelectedFrequency == 60 ? "selected" : "")>Every 5 Years</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status" name="status" class="form-select">
+                                <option value="">All Status</option>
+                                <optgroup label="Process Status">
+                                    <option value="Completed" @(ViewBag.SelectedStatus == "Completed" ? "selected" : "")>Completed</option>
+                                    <option value="Work In Progress" @(ViewBag.SelectedStatus == "Work In Progress" || ViewBag.SelectedStatus == "In Progress" ? "selected" : "")>Work In Progress</option>
+                                    <option value="ePR Raised" @(ViewBag.SelectedStatus == "ePR Raised" || ViewBag.SelectedStatus == "In Preparation" ? "selected" : "")>ePR Raised</option>
+                                    <option value="Quotation Requested" @(ViewBag.SelectedStatus == "Quotation Requested" || ViewBag.SelectedStatus == "In Quotation" ? "selected" : "")>Quotation Requested</option>
+                                    <option value="Not Started" @(ViewBag.SelectedStatus == "Not Started" ? "selected" : "")>Not Started</option>
+                                </optgroup>
+                                <optgroup label="Expiration Status">
+                                    <option value="Active" @(ViewBag.SelectedStatus == "Active" ? "selected" : "")>Active</option>
+                                    <option value="Expiring Soon" @(ViewBag.SelectedStatus == "Expiring Soon" ? "selected" : "")>Expiring Soon</option>
+                                    <option value="Expired" @(ViewBag.SelectedStatus == "Expired" ? "selected" : "")>Expired</option>
+                                    <option value="No Expiry" @(ViewBag.SelectedStatus == "No Expiry" ? "selected" : "")>No Expiry</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="bi bi-search"></i> Apply Filters
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    @if (!string.IsNullOrEmpty(ViewBag.SelectedCategory) || !string.IsNullOrEmpty(ViewBag.SelectedPlantFilter) || 
+                        !string.IsNullOrEmpty(ViewBag.SelectedStatus) || !string.IsNullOrEmpty(ViewBag.SelectedMonitoringType) || 
+                        ViewBag.SelectedFrequency > 0)
+                    {
+                        <a href="@Url.Action("Index", "PlantMonitoring")" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i> Clear Filters
+                        </a>
+                    }
+                </div>
+            }
+
+            <div class="mt-3">
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == null || ViewBag.SelectedPlantFilter == "" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> All Plants
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "5,7,10", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "5,7,10" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P1, P3, P5
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "8", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "8" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P21
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "6,11", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "6,11" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P13, P55
+                    </a>
+                    <a href="@Url.Action("Index", "PlantMonitoring", new { plantFilter = "9", category = ViewBag.SelectedCategory, monitoringType = ViewBag.SelectedMonitoringType, frequency = ViewBag.SelectedFrequency, status = ViewBag.SelectedStatus })"
+                        class="btn @(ViewBag.SelectedPlantFilter == "9" ? "btn-primary" : "btn-outline-primary")">
+                        <i class="bi bi-buildings"></i> P34
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-}
-
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Monitoring Dashboard</h1>
-    <div class="d-flex">
+    <div class="d-flex gap-2">
         @if (User.IsInRole("Admin"))
         {
-            <a href="@Url.Action("Create")" class="btn btn-sm btn-success shadow-sm mr-2">
-                <i class="fas fa-plus fa-sm"></i> Add New Record
+            <a href="@Url.Action("Create")" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i> Add New Record
             </a>
         }
-        <a href="@Url.Action("Schedule")" class="btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-calendar fa-sm"></i> Progress Tracker
-        </a>
     </div>
-</div>
 
-<!-- Content Row -->
-<div class="row mb-4">
-    <!-- Total Records Card -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Records</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@recordCount</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
+    <!-- Results Table -->
+        <div class="card-header py-3 bg-light">
+            <h6 class="m-0 fw-bold">
+                <i class="bi bi-table me-1"></i> Monitoring Records 
+                @if(!string.IsNullOrEmpty(ViewBag.SelectedCategory) || !string.IsNullOrEmpty(ViewBag.SelectedPlantFilter) || 
+                    !string.IsNullOrEmpty(ViewBag.SelectedStatus) || !string.IsNullOrEmpty(ViewBag.SelectedMonitoringType) || 
+                    ViewBag.SelectedFrequency > 0)
+                {
+                    <span class="text-muted fw-normal ms-2">(Filtered Results)</span>
+                }
+            </h6>
         </div>
-    </div>
-
-    <!-- Completed Card -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Completed</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@completedCount</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Expiring Soon Card -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Expiring Soon</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@expiringCount</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clock fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Expired Card -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-danger shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Expired</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@expiredCount</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-exclamation-circle fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Content Row -->
-<div class="row mb-4">
-    <!-- Process Status Overview -->
-    <div class="col-lg-6 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Process Status Overview</h6>
-            </div>
-            <div class="card-body">
-                <h4 class="small font-weight-bold">Completed <span class="float-right">@completedCount (@completedPercent%)</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: @completedPercent%" aria-valuenow="@completedPercent" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Work In Progress <span class="float-right">@workInProgressCount</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: @(recordCount > 0 ? (int)Math.Round((double)workInProgressCount / recordCount * 100) : 0)%" aria-valuenow="@(recordCount > 0 ? (int)Math.Round((double)workInProgressCount / recordCount * 100) : 0)" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">ePR Raised <span class="float-right">@eprRaisedCount</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: @(recordCount > 0 ? (int)Math.Round((double)eprRaisedCount / recordCount * 100) : 0)%" aria-valuenow="@(recordCount > 0 ? (int)Math.Round((double)eprRaisedCount / recordCount * 100) : 0)" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Quotation Requested <span class="float-right">@quotationRequestedCount</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: @(recordCount > 0 ? (int)Math.Round((double)quotationRequestedCount / recordCount * 100) : 0)%" aria-valuenow="@(recordCount > 0 ? (int)Math.Round((double)quotationRequestedCount / recordCount * 100) : 0)" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Not Started <span class="float-right">@notStartedCount (@notStartedPercent%)</span></h4>
-                <div class="progress">
-                    <div class="progress-bar bg-secondary" role="progressbar" style="width: @notStartedPercent%" aria-valuenow="@notStartedPercent" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Expiry Status Overview -->
-    <div class="col-lg-6 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Expiry Status Overview</h6>
-            </div>
-            <div class="card-body">
-                <div class="chart-pie pt-4 pb-2">
-                    <div class="d-flex justify-content-center">
-                        <div style="width: 200px; height: 200px;">
-                            <div class="progress-circle">
-                                <div class="progress-circle-overlay text-center">
-                                    <span class="progress-circle-percent mb-0">@validPercent%</span>
-                                    <p class="text-muted mt-0">Active</p>
-                                </div>
-                                <svg viewBox="0 0 36 36" class="circular-chart">
-                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path class="circle" stroke-dasharray="@validPercent, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Active (@validCount)
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-warning"></i> Expiring Soon (@expiringCount)
-                        </span>
-                        <span>
-                            <i class="fas fa-circle text-danger"></i> Expired (@expiredCount)
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Filters Card -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3 d-flex justify-content-between align-items-center">
-        <h6 class="m-0 font-weight-bold text-primary">
-            <i class="fas fa-filter mr-1"></i> Filter Records
-        </h6>
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
-            <i class="fas fa-chevron-down"></i>
-        </button>
-    </div>
-    <div class="collapse show" id="filterCollapse">
-    <div class="card-body">
-            <form method="get" class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="category" class="form-label">Category</label>
-                <select id="category" name="category" class="form-control">
-                    <option value="">All Categories</option>
-                    @foreach (var category in ViewBag.Categories)
-                    {
-                        <option value="@category" @(ViewBag.SelectedCategory == category ? "selected" : "")>@category</option>
-                    }
-                </select>
-            </div>
-                <div class="col-md-4 mb-3">
-                    <label for="monitoringType" class="form-label">Monitoring Type</label>
-                    <select id="monitoringType" name="monitoringType" class="form-control">
-                        <option value="">All Types</option>
-                        @foreach (var type in ViewBag.MonitoringTypes ?? new List<string>())
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="recordsTable" width="100%" cellspacing="0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Monitoring Type</th>
+                            <th>Category</th>
+                            <th>Plant</th>
+                            <th>Area</th>
+                            <th>Frequency</th>
+                            <th>Expiry Date</th>
+                            <th>Process Status</th>
+                            <th>Expiration Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
                         {
-                            <option value="@type" @(ViewBag.SelectedMonitoringType == type ? "selected" : "")>@type</option>
+                            <tr>
+                                <td>@item.Monitoring.MonitoringName</td>
+                                <td>@item.Monitoring.MonitoringCategory</td>
+                                <td>@item.Plant.PlantName</td>
+                                <td>@(string.IsNullOrEmpty(item.Area) ? "-" : item.Area)</td>
+                                <td>
+                                    @{
+                                        string frequencyText = "Unknown";
+                                        int freq = item.Monitoring.MonitoringFreq;
+                                        
+                                        if (freq == 1) { frequencyText = "Monthly"; }
+                                        else if (freq == 2) { frequencyText = "Bi-Monthly"; }
+                                        else if (freq == 3) { frequencyText = "Quarterly"; }
+                                        else if (freq == 4) { frequencyText = "4 Months"; }
+                                        else if (freq == 6) { frequencyText = "Half-Yearly"; }
+                                        else if (freq == 8) { frequencyText = "8 Months"; }
+                                        else if (freq == 12) { frequencyText = "Yearly"; }
+                                        else if (freq == 15) { frequencyText = "15 Months"; }
+                                        else if (freq == 18) { frequencyText = "18 Months"; }
+                                        else if (freq == 24) { frequencyText = "Every 2 Years"; }
+                                        else if (freq == 36) { frequencyText = "Every 3 Years"; }
+                                        else if (freq == 48) { frequencyText = "Every 4 Years"; }
+                                        else if (freq == 60) { frequencyText = "Every 5 Years"; }
+                                        else { frequencyText = $"Every {freq} months"; }
+                                    }
+                                    @frequencyText
+                                </td>
+                                <td>
+                                    @if (item.ExpDate.HasValue)
+                                    {
+                                        <span class="@(item.ExpDate < DateTime.Now ? "text-danger fw-bold" : (item.ExpDate < DateTime.Now.AddDays(30) ? "text-warning fw-bold" : ""))">
+                                            @item.ExpDate.Value.ToString("dd/MM/yyyy HH:mm")
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Not set</span>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="badge text-black @item.ProcStatusCssClass">@item.ProcStatus</span>
+                                </td>
+                                <td>
+                                    <span class="badge text-white @item.ExpStatusCssClass">@item.ExpStatus</span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-sm btn-info" title="View Details" data-bs-toggle="tooltip">
+                                            <i class="bi bi-info-circle"></i>
+                                        </a>
+                                        <a href="@Url.Action("UpdateStatus", new { id = item.Id })" class="btn btn-sm btn-primary" title="Update Status" data-bs-toggle="tooltip">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-sm btn-warning" title="Edit Record" data-bs-toggle="tooltip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-sm btn-danger" title="Delete Record" data-bs-toggle="tooltip">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="frequency" class="form-label">Frequency</label>
-                    <select id="frequency" name="frequency" class="form-control">
-                        <option value="">All Frequencies</option>
-                        <option value="1" @(ViewBag.SelectedFrequency == 1 ? "selected" : "")>Monthly</option>
-                        <option value="2" @(ViewBag.SelectedFrequency == 2 ? "selected" : "")>Bi-Monthly</option>
-                        <option value="3" @(ViewBag.SelectedFrequency == 3 ? "selected" : "")>Quarterly</option>
-                        <option value="4" @(ViewBag.SelectedFrequency == 4 ? "selected" : "")>4 Months</option>
-                        <option value="6" @(ViewBag.SelectedFrequency == 6 ? "selected" : "")>Half-Yearly</option>
-                        <option value="8" @(ViewBag.SelectedFrequency == 8 ? "selected" : "")>8 Months</option>
-                        <option value="12" @(ViewBag.SelectedFrequency == 12 ? "selected" : "")>Yearly</option>
-                        <option value="15" @(ViewBag.SelectedFrequency == 15 ? "selected" : "")>15 Months</option>
-                        <option value="18" @(ViewBag.SelectedFrequency == 18 ? "selected" : "")>18 Months</option>
-                        <option value="24" @(ViewBag.SelectedFrequency == 24 ? "selected" : "")>Every 2 Years</option>
-                        <option value="36" @(ViewBag.SelectedFrequency == 36 ? "selected" : "")>Every 3 Years</option>
-                        <option value="48" @(ViewBag.SelectedFrequency == 48 ? "selected" : "")>Every 4 Years</option>
-                        <option value="60" @(ViewBag.SelectedFrequency == 60 ? "selected" : "")>Every 5 Years</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="plantId" class="form-label">Plant</label>
-                <select id="plantId" name="plantId" class="form-control">
-                    <option value="">All Plants</option>
-                    @foreach (var plant in ViewBag.Plants)
-                    {
-                        <option value="@plant.Id" @(ViewBag.SelectedPlantId == plant.Id ? "selected" : "")>@plant.PlantName</option>
-                    }
-                </select>
+                    </tbody>
+                </table>
             </div>
-                <div class="col-md-4 mb-3">
-                    <label for="status" class="form-label">Status</label>
-                <select id="status" name="status" class="form-control">
-                    <option value="">All Status</option>
-                    <optgroup label="Process Status">
-                        <option value="Completed" @(ViewBag.SelectedStatus == "Completed" ? "selected" : "")>Completed</option>
-                            <option value="Work In Progress" @(ViewBag.SelectedStatus == "Work In Progress" || ViewBag.SelectedStatus == "In Progress" ? "selected" : "")>Work In Progress</option>
-                            <option value="ePR Raised" @(ViewBag.SelectedStatus == "ePR Raised" || ViewBag.SelectedStatus == "In Preparation" ? "selected" : "")>ePR Raised</option>
-                            <option value="Quotation Requested" @(ViewBag.SelectedStatus == "Quotation Requested" || ViewBag.SelectedStatus == "In Quotation" ? "selected" : "")>Quotation Requested</option>
-                        <option value="Not Started" @(ViewBag.SelectedStatus == "Not Started" ? "selected" : "")>Not Started</option>
-                    </optgroup>
-                    <optgroup label="Expiration Status">
-                        <option value="Active" @(ViewBag.SelectedStatus == "Active" ? "selected" : "")>Active</option>
-                        <option value="Expiring Soon" @(ViewBag.SelectedStatus == "Expiring Soon" ? "selected" : "")>Expiring Soon</option>
-                        <option value="Expired" @(ViewBag.SelectedStatus == "Expired" ? "selected" : "")>Expired</option>
-                        <option value="No Expiry" @(ViewBag.SelectedStatus == "No Expiry" ? "selected" : "")>No Expiry</option>
-                    </optgroup>
-                </select>
-            </div>
-                <div class="col-12 text-right">
-                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary mr-2">
-                        <i class="fas fa-undo"></i> Reset
-                    </a>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i> Apply Filters
-                    </button>
-                </div>
-        </form>
-        </div>
-    </div>
-</div>
 
-<!-- Results Table -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">
-            <i class="fas fa-table mr-1"></i> Monitoring Records 
-            @if(!string.IsNullOrEmpty(ViewBag.SelectedCategory) || ViewBag.SelectedPlantId > 0 || 
-               !string.IsNullOrEmpty(ViewBag.SelectedStatus) || !string.IsNullOrEmpty(ViewBag.SelectedMonitoringType) || 
-               ViewBag.SelectedFrequency > 0)
+            @if (!Model.Any())
             {
-                <span class="text-muted font-weight-normal ml-2">(Filtered Results)</span>
+                <div class="alert alert-info text-center mt-3">
+                    <i class="bi bi-info-circle me-2"></i> No records found matching the filter criteria.
+                </div>
             }
-        </h6>
-    </div>
-    <div class="card-body">
-<div class="table-responsive">
-            <table class="table table-bordered table-hover" id="recordsTable" width="100%" cellspacing="0">
-                <thead>
-            <tr>
-                <th>Monitoring Type</th>
-                <th>Category</th>
-                <th>Plant</th>
-                <th>Area</th>
-                <th>Frequency</th>
-                <th>Expiry Date</th>
-                <th>Process Status</th>
-                <th>Expiration Status</th>
-                        <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Monitoring.MonitoringName</td>
-                    <td>@item.Monitoring.MonitoringCategory</td>
-                    <td>@item.Plant.PlantName</td>
-                            <td>@(string.IsNullOrEmpty(item.Area) ? "-" : item.Area)</td>
-                    <td>
-                        @{
-                            string frequencyText = "Unknown";
-                            int freq = item.Monitoring.MonitoringFreq;
-                            
-                            if (freq == 1) { frequencyText = "Monthly"; }
-                            else if (freq == 2) { frequencyText = "Bi-Monthly"; }
-                            else if (freq == 3) { frequencyText = "Quarterly"; }
-                            else if (freq == 4) { frequencyText = "4 Months"; }
-                            else if (freq == 6) { frequencyText = "Half-Yearly"; }
-                            else if (freq == 8) { frequencyText = "8 Months"; }
-                            else if (freq == 12) { frequencyText = "Yearly"; }
-                            else if (freq == 15) { frequencyText = "15 Months"; }
-                            else if (freq == 18) { frequencyText = "18 Months"; }
-                            else if (freq == 24) { frequencyText = "Every 2 Years"; }
-                            else if (freq == 36) { frequencyText = "Every 3 Years"; }
-                            else if (freq == 48) { frequencyText = "Every 4 Years"; }
-                            else if (freq == 60) { frequencyText = "Every 5 Years"; }
-                            else { frequencyText = $"Every {freq} months"; }
-                        }
-                        @frequencyText
-                    </td>
-                    <td>
-                        @if (item.ExpDate.HasValue)
-                        {
-                                    <span class="@(item.ExpDate < DateTime.Now ? "text-danger font-weight-bold" : (item.ExpDate < DateTime.Now.AddDays(30) ? "text-warning font-weight-bold" : ""))">
-                                @item.ExpDate.Value.ToString("dd/MM/yyyy HH:mm")
-                            </span>
-                        }
-                        else
-                        {
-                                    <span class="text-muted">Not set</span>
-                        }
-                    </td>
-                    <td>
-                                <span class="badge @item.ProcStatusCssClass text-white px-2 py-1">@item.ProcStatus</span>
-                    </td>
-                    <td>
-                                <span class="badge @item.ExpStatusCssClass text-white px-2 py-1">@item.ExpStatus</span>
-                    </td>
-                            <td class="text-center">
-                        <div class="btn-group">
-                                    <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-sm btn-info" title="View Details" data-toggle="tooltip">
-                                        <i class="fas fa-info-circle"></i>
-                            </a>
-                                    <a href="@Url.Action("UpdateStatus", new { id = item.Id })" class="btn btn-sm btn-primary" title="Update Status" data-toggle="tooltip">
-                                        <i class="fas fa-tasks"></i>
-                            </a>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                        <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-sm btn-warning" title="Edit Record" data-toggle="tooltip">
-                                            <i class="fas fa-edit"></i>
-                                </a>
-                                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-sm btn-danger" title="Delete Record" data-toggle="tooltip">
-                                            <i class="fas fa-trash"></i>
-                                </a>
-                            }
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-@if (!Model.Any())
-{
-            <div class="alert alert-info text-center mt-3">
-                <i class="fas fa-info-circle mr-2"></i> No records found matching the filter criteria.
-            </div>
-        }
-    </div>
+        </div>
 </div>
 
 <style>
-    .border-left-primary {
-        border-left: 0.25rem solid #4e73df !important;
-    }
-    .border-left-success {
-        border-left: 0.25rem solid #1cc88a !important;
-    }
-    .border-left-warning {
-        border-left: 0.25rem solid #f6c23e !important;
-    }
-    .border-left-danger {
-        border-left: 0.25rem solid #e74a3b !important;
-    }
-    .text-xs {
-        font-size: 0.7rem;
-    }
-    .text-gray-800 {
-        color: #5a5c69 !important;
-    }
-    .text-gray-300 {
-        color: #dddfeb !important;
-    }
-    
     /* Progress circle styles */
-    .progress-circle {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .progress-circle-overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-    }
-    
-    .progress-circle-percent {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #5a5c69;
-    }
-    
     .circular-chart {
         display: block;
         margin: 0 auto;
@@ -467,41 +295,45 @@
     
     .circle {
         fill: none;
-        stroke: #1cc88a;
+        stroke: #198754;
         stroke-width: 3.8;
         stroke-linecap: round;
         transform: rotate(-90deg);
         transform-origin: 50% 50%;
     }
-
-    /* Custom status background */
-    .bg-notstarted {
-        background-color: #575860 !important;
+    
+    /* Custom text colors */
+    .text-gray-300 {
+        color: #dddfeb !important;
     }
     
-
-    /* Dashboard styles */
-    .small {
-        font-size: 0.875rem;
+    /* Card styles */
+    .border-start {
+        border-left-width: 0.25rem !important;
     }
+    
+    /* Progress bar height */
     .progress {
-        height: 0.8rem;
-        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
     }
 </style>
 
 @section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <script>
         $(document).ready(function() {
             // Enable tooltips
-            $('[data-toggle="tooltip"]').tooltip();
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
             
             // Auto-submit form when select fields change
-            $("#category, #plantId, #status, #monitoringType, #frequency").change(function() {
+            $("#category, #plantFilter, #status, #monitoringType, #frequency").change(function() {
                 $(this).closest("form").submit();
             });
             
-            // Add data table functionalities
+            // Initialize DataTable
             if ($.fn.DataTable) {
                 $('#recordsTable').DataTable({
                     "paging": true,
