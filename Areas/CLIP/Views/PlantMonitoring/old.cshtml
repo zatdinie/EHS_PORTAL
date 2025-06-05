@@ -1,0 +1,1301 @@
+@using System.Linq
+@{
+    ViewBag.Title = "Progress Tracker";
+    var monitoringTypes = ViewBag.MonitoringTypes;
+    var plants = ViewBag.Plants;
+    var data = ViewBag.Data;
+    var currentYear = ViewBag.CurrentYear;
+    var monthNames = ViewBag.MonthNames;
+    var isAdmin = ViewBag.IsAdmin;
+    
+    // Calculate stats for the dashboard
+    int typeCount = monitoringTypes?.Count ?? 0;
+    
+    int inProgressCount = 0;
+    int completedCount = 0;
+    int expiredCount = 0;
+    int notStartedCount = 0;
+    int totalRecordsCount = 0;
+    
+    foreach (var m in monitoringTypes)
+    {
+        if (!data.ContainsKey(m.MonitoringID)) { continue; }
+        foreach (var plantId in data[m.MonitoringID].Keys)
+        {
+            foreach (var r in data[m.MonitoringID][plantId]) 
+            {
+                totalRecordsCount++;
+                
+                if (r.ProcStatus == "Work In Progress" || r.ProcStatus == "ePR Raised" || r.ProcStatus == "Quotation Requested")
+                {
+                    inProgressCount++;
+                }
+                else if (r.ProcStatus == "Completed")
+                {
+                    completedCount++;
+                }
+                else if (r.ProcStatus == "Not Started")
+                {
+                    notStartedCount++;
+                }
+                
+                if (r.ExpStatus == "Expired")
+                {
+                    expiredCount++;
+                }
+            }
+        }
+    }
+    
+    // Calculate percentages for dashboard cards
+    int inProgressPercent = totalRecordsCount > 0 ? (int)Math.Round((double)inProgressCount / totalRecordsCount * 100) : 0;
+    int completedPercent = totalRecordsCount > 0 ? (int)Math.Round((double)completedCount / totalRecordsCount * 100) : 0;
+    int expiredPercent = totalRecordsCount > 0 ? (int)Math.Round((double)expiredCount / totalRecordsCount * 100) : 0;
+    int notStartedPercent = totalRecordsCount > 0 ? (int)Math.Round((double)notStartedCount / totalRecordsCount * 100) : 0;
+}
+
+<!-- Header Section -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">Progress Tracker</h1>
+        <p class="text-muted">Track and manage monitoring activities across all plants</p>
+    </div>
+    <div class="d-flex">
+        @if (isAdmin)
+        {
+            <a href="@Url.Action("Create")" class="btn btn-sm btn-success shadow-sm mr-2">
+                <i class="fas fa-plus fa-sm"></i> Add New Record
+            </a>
+        }
+        <a href="@Url.Action("Index")" class="btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-list fa-sm"></i> List View
+        </a>
+    </div>
+</div>
+
+<!-- Stats Overview Row -->
+<div class="row mb-4">
+    <!-- Total Records Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Records</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@totalRecordsCount</div>
+                        <div class="mt-2 text-xs text-muted">Across @typeCount monitoring types</div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon-circle bg-primary">
+                            <i class="fas fa-clipboard-list text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- In Progress Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">In Progress</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@inProgressCount</div>
+                        <div class="mt-2">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: @inProgressPercent%" aria-valuenow="@inProgressPercent" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="text-xs text-muted mt-1">@inProgressPercent% of total</div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon-circle bg-info">
+                            <i class="fas fa-tasks text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Completed</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@completedCount</div>
+                        <div class="mt-2">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: @completedPercent%" aria-valuenow="@completedPercent" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="text-xs text-muted mt-1">@completedPercent% of total</div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon-circle bg-success">
+                            <i class="fas fa-check-circle text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expired Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Expired</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@expiredCount</div>
+                        <div class="mt-2">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: @expiredPercent%" aria-valuenow="@expiredPercent" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="text-xs text-muted mt-1">@expiredPercent% of total</div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon-circle bg-danger">
+                            <i class="fas fa-exclamation-circle text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Status Overview & Filter Section -->
+<div class="row mb-4">
+    <!-- Status Distribution Chart -->
+    <div class="col-lg-7 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Status Distribution</h6>
+            </div>
+            <div class="card-body">
+                <div class="status-chart-container mb-3">
+                    <div class="status-chart">
+                        <div class="chart-segment completed" style="--percent: @completedPercent%; --color: #1cc88a;">
+                            <span class="chart-label">@completedPercent%</span>
+                        </div>
+                        <div class="chart-segment in-progress" style="--percent: @inProgressPercent%; --color: #36b9cc;">
+                            <span class="chart-label">@inProgressPercent%</span>
+                        </div>
+                        <div class="chart-segment not-started" style="--percent: @notStartedPercent%; --color: #858796;">
+                            <span class="chart-label">@notStartedPercent%</span>
+                        </div>
+                        <div class="chart-segment expired" style="--percent: @expiredPercent%; --color: #e74a3b;">
+                            <span class="chart-label">@expiredPercent%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-legend d-flex justify-content-center mt-4">
+                    <div class="legend-item mr-4">
+                        <span class="legend-color bg-success"></span>
+                        <span class="legend-text">Completed (@completedCount)</span>
+                    </div>
+                    <div class="legend-item mr-4">
+                        <span class="legend-color bg-info"></span>
+                        <span class="legend-text">In Progress (@inProgressCount)</span>
+                    </div>
+                    <div class="legend-item mr-4">
+                        <span class="legend-color bg-secondary"></span>
+                        <span class="legend-text">Not Started (@notStartedCount)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color bg-danger"></span>
+                        <span class="legend-text">Expired (@expiredCount)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Card -->
+    <div class="col-lg-5 mb-4">
+        <div class="card shadow">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Quick Filters</h6>
+                <button class="btn btn-sm btn-outline-primary" id="resetFilters">
+                    <i class="fas fa-undo fa-sm"></i> Reset
+                </button>
+            </div>
+            <div class="card-body">
+                <form id="filterForm">
+                    <div class="form-group">
+                        <label for="categoryFilter" class="form-label small font-weight-bold">Category</label>
+                        <select id="categoryFilter" class="form-control form-control-sm">
+                            <option value="all">All Categories</option>
+                            @{
+                                var distinctCategories = new List<string>();
+                                foreach (var m in monitoringTypes)
+                                {
+                                    if (!distinctCategories.Contains(m.MonitoringCategory))
+                                    {
+                                        distinctCategories.Add(m.MonitoringCategory);
+                                    }
+                                }
+                                foreach (var category in distinctCategories)
+                                {
+                                    <option value="@category">@category</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="plantFilter" class="form-label small font-weight-bold">Plant</label>
+                        <select id="plantFilter" class="form-control form-control-sm">
+                            <option value="all">All Plants</option>
+                            @foreach (var plant in plants)
+                            {
+                                <option value="@plant.Id">@plant.PlantName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group mb-0">
+                        <label for="statusFilter" class="form-label small font-weight-bold">Status</label>
+                        <select id="statusFilter" class="form-control form-control-sm">
+                            <option value="all">All Statuses</option>
+                            <option value="Not Started">Not Started</option>
+                            <option value="Quotation Requested">Quotation Requested</option>
+                            <option value="ePR Raised">ePR Raised</option>
+                            <option value="Work In Progress">Work In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Progress Trackers -->
+<div id="progressTrackers">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="h5 text-gray-800 mb-0">Monitoring Activities</h4>
+        <div class="badge bg-secondary text-white shadow-sm px-3 py-2">
+            <i class="fas fa-filter mr-1"></i> <span id="filterSummary">All Records</span>
+        </div>
+    </div>
+
+    @foreach (var monitoring in monitoringTypes)
+    {
+        if (!data.ContainsKey(monitoring.MonitoringID) || data[monitoring.MonitoringID].Keys.Count == 0)
+        {
+            continue;
+        }
+        
+        <div class="card shadow mb-4 monitoring-item" data-category="@monitoring.MonitoringCategory">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-chart-line mr-1"></i> @monitoring.MonitoringCategory - @monitoring.MonitoringName
+                </h6>
+                <span class="badge bg-secondary text-white shadow-sm px-3 py-2">
+                    @{
+                        int recordsInType = 0;
+                        foreach (var plantId in data[monitoring.MonitoringID].Keys)
+                        {
+                            recordsInType += data[monitoring.MonitoringID][plantId].Count;
+                        }
+                    }
+                    <i class="fas fa-clipboard-list mr-1"></i> @recordsInType Records
+                </span>
+            </div>
+            <div class="card-body">
+                @foreach (var plantId in data[monitoring.MonitoringID].Keys)
+                {
+                    var plantFound = null as dynamic;
+                    foreach (var p in plants)
+                    {
+                        if (p.Id == plantId)
+                        {
+                            plantFound = p;
+                            break;
+                        }
+                    }
+                                
+                    if (plantFound == null) { continue; }
+                    
+                    <div class="plant-section mb-4" data-plant-id="@plantId">
+                        <div class="d-flex align-items-center mb-3 pl-2 border-left border-primary plant-title">
+                            <h6 class="mb-0 font-weight-bold">@plantFound.PlantName</h6>
+                            @{
+                                var areas = new HashSet<string>();
+                                foreach (var rec in data[monitoring.MonitoringID][plantId])
+                                {
+                                    if (!string.IsNullOrWhiteSpace(rec.Area))
+                                    {
+                                        areas.Add(rec.Area);
+                                    }
+                                }
+                                if (areas.Count > 0)
+                                {
+                                    <span class="badge badge-light ml-2 py-1">@string.Join(", ", areas)</span>
+                                }
+                            }
+                        </div>
+                        
+                        @foreach (var record in data[monitoring.MonitoringID][plantId])
+                        {
+                            <div class="monitoring-record mb-4 shadow-sm status-item" data-status="@record.ProcStatus">
+                                <!-- Status Header -->
+                                <div class="record-header d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
+                                    <div>
+                                        @if (!string.IsNullOrEmpty(record.Area))
+                                        {
+                                            <div class="mb-2">
+                                                <span class="badge bg-dark text-white px-2 py-1">Area:</span>
+                                                <span class="font-weight-bold">@record.Area</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="mb-2">
+                                                <span class="badge bg-dark text-white px-2 py-1">Area:</span>
+                                                <span class="text-muted">Not Specified</span>
+                                            </div>
+                                        }
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge @(record.ProcStatus == "Not Started" ? "bg-secondary" : record.ProcStatusCssClass) text-white px-2 py-1 mr-2" data-toggle="tooltip" data-html="true" 
+                                                  title="@GetStatusTooltip(record)">@record.ProcStatus</span>
+                                            <span class="badge @record.ExpStatusCssClass text-white px-2 py-1" data-toggle="tooltip" data-html="true"
+                                                  title="@GetExpiryTooltip(record)">
+                                                @record.ExpStatus
+                                                @{
+                                                    try 
+                                                    {
+                                                        if (record.ExpDate != null && record.ExpDate != DateTime.MinValue)
+                                                        {
+                                                            <span> - @record.ExpDate.Value.ToString("dd/MM/yyyy")</span>
+                                                        }
+                                                    }
+                                                    catch { /* Ignore conversion errors */ }
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group">
+                                        @if (!string.IsNullOrEmpty(record.Remarks))
+                                        {
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" data-html="true" 
+                                                    title="<strong>Remarks:</strong><br>@record.Remarks.Replace("\n", "<br>")">
+                                                <i class="fas fa-comment-dots"></i>
+                                            </button>
+                                        }
+                                        <a href="@Url.Action("Details", new { id = record.Id })" class="btn btn-sm btn-info" title="View Details" data-toggle="tooltip">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a href="@Url.Action("UpdateStatus", new { id = record.Id })" class="btn btn-sm btn-primary" title="Update Status" data-toggle="tooltip">
+                                            <i class="fas fa-tasks"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Progress Timeline -->
+                                <div class="progress-tracker-container p-3">
+                                    <div class="progress-tracker-horizontal">
+                                        <!-- Progress Track Line with completion percentage -->
+                                        <div class="progress-track-line">
+                                            @{
+                                                int completionPercentage = 0;
+                                                if (GetCurrentStage(record) == 0) { completionPercentage = 0; }
+                                                else if (GetCurrentStage(record) == 1) { completionPercentage = 25; }
+                                                else if (GetCurrentStage(record) == 2) { completionPercentage = 50; }
+                                                else if (GetCurrentStage(record) == 3) { completionPercentage = 75; }
+                                                else if (GetCurrentStage(record) == 4) { completionPercentage = 100; }
+                                            }
+                                            <div class="progress-track-completion" style="width: @completionPercentage%;"></div>
+                                        </div>
+                                        
+                                        <!-- Quotation Stage -->
+                                        <div class="progress-step-container">
+                                            <div class="progress-circle @(GetStepComplete(record, 1) ? "completed" : GetStepActive(record, 1) ? "active" : "")" 
+                                                 data-toggle="tooltip" data-html="true" title="@GetQuotationTooltip(record)">
+                                                <i class="fas fa-file-contract"></i>
+                                                @if (GetStepComplete(record, 1))
+                                                {
+                                                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                                                }
+                                            </div>
+                                            <div class="progress-label">Quotation Request</div>
+                                            <div class="progress-date">
+                                                @{
+                                                    try 
+                                                    {
+                                                        if (record.QuoteDate != null && record.QuoteDate != DateTime.MinValue)
+                                                        {
+                                                            @record.QuoteDate.ToString("dd/MM/yyyy")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-muted">Not started</span>
+                                                        }
+                                                    }
+                                                    catch 
+                                                    {
+                                                        <span class="text-muted">Not started</span>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Preparation Stage -->
+                                        <div class="progress-step-container">
+                                            <div class="progress-circle @(GetStepComplete(record, 2) ? "completed" : GetStepActive(record, 2) ? "active" : "")"
+                                                 data-toggle="tooltip" data-html="true" title="@GetPreparationTooltip(record)">
+                                                <i class="fas fa-clipboard-check"></i>
+                                                @if (GetStepComplete(record, 2))
+                                                {
+                                                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                                                }
+                                            </div>
+                                            <div class="progress-label">ePR Raised</div>
+                                            <div class="progress-date">
+                                                @{
+                                                    try 
+                                                    {
+                                                        if (record.EprDate != null && record.EprDate != DateTime.MinValue)
+                                                        {
+                                                            @record.EprDate.ToString("dd/MM/yyyy")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-muted">Not started</span>
+                                                        }
+                                                    }
+                                                    catch 
+                                                    {
+                                                        <span class="text-muted">Not started</span>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Work Stage -->
+                                        <div class="progress-step-container">
+                                            <div class="progress-circle @(GetStepComplete(record, 3) ? "completed" : GetStepActive(record, 3) ? "active" : "")"
+                                                 data-toggle="tooltip" data-html="true" title="@GetWorkTooltip(record)">
+                                                <i class="fas fa-tools"></i>
+                                                @if (GetStepComplete(record, 3))
+                                                {
+                                                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                                                }
+                                            </div>
+                                            <div class="progress-label">Work Execution</div>
+                                            <div class="progress-date">
+                                                @{
+                                                    try 
+                                                    {
+                                                        if (record.WorkDate != null && record.WorkDate != DateTime.MinValue)
+                                                        {
+                                                            @record.WorkDate.ToString("dd/MM/yyyy")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-muted">Not started</span>
+                                                        }
+                                                    }
+                                                    catch 
+                                                    {
+                                                        <span class="text-muted">Not started</span>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Completion Stage -->
+                                        <div class="progress-step-container">
+                                            <div class="progress-circle @(GetStepComplete(record, 4) ? "completed" : GetStepActive(record, 4) ? "active" : "")"
+                                                 data-toggle="tooltip" data-html="true" title="@GetCompletionTooltip(record)">
+                                                <i class="fas fa-certificate"></i>
+                                                @if (GetStepComplete(record, 4))
+                                                {
+                                                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                                                }
+                                            </div>
+                                            <div class="progress-label">Completion</div>
+                                            <div class="progress-date">
+                                                @{
+                                                    try 
+                                                    {
+                                                        if (record.WorkCompleteDate != null && record.WorkCompleteDate != DateTime.MinValue)
+                                                        {
+                                                            @record.WorkCompleteDate.ToString("dd/MM/yyyy")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="text-muted">Not completed</span>
+                                                        }
+                                                    }
+                                                    catch 
+                                                    {
+                                                        <span class="text-muted">Not completed</span>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    
+    @{
+        bool hasRecords = false;
+        foreach (var m in monitoringTypes)
+        {
+            if (data.ContainsKey(m.MonitoringID) && data[m.MonitoringID].Keys.Count > 0)
+            {
+                hasRecords = true;
+                break;
+            }
+        }
+        
+        if (!hasRecords)
+        {
+            <div class="alert alert-info shadow">
+                <div class="d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-info-circle fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="alert-heading mb-1">No monitoring records found</h4>
+                        <p class="mb-0">There are currently no monitoring records to display. Please add some records to see them here.</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<style>
+/* Dashboard Styles */
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+.border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+}
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+.border-left-danger {
+    border-left: 0.25rem solid #e74a3b !important;
+}
+.border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+}
+.text-xs {
+    font-size: 0.7rem;
+}
+.text-gray-800 {
+    color: #5a5c69 !important;
+}
+.text-gray-300 {
+    color: #dddfeb !important;
+}
+
+/* Card and General Styles */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.icon-circle {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.progress-sm {
+    height: 0.5rem !important;
+    border-radius: 0.25rem;
+}
+
+.small {
+    font-size: 0.875rem;
+}
+
+/* Status Chart */
+.status-chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+}
+
+.status-chart {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: #f8f9fc;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.chart-segment {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 50%, 50% 0%, calc(50% + 50% * sin(var(--percent) * 3.6deg)) calc(50% - 50% * cos(var(--percent) * 3.6deg)));
+    background-color: var(--color);
+    transform-origin: center;
+}
+
+.chart-segment.completed {
+    transform: rotate(0deg);
+    z-index: 4;
+}
+
+.chart-segment.in-progress {
+    transform: rotate(calc(var(--percent-completed, 0) * 3.6deg));
+    z-index: 3;
+}
+
+.chart-segment.not-started {
+    transform: rotate(calc((var(--percent-completed, 0) + var(--percent-in-progress, 0)) * 3.6deg));
+    z-index: 2;
+}
+
+.chart-segment.expired {
+    transform: rotate(calc((var(--percent-completed, 0) + var(--percent-in-progress, 0) + var(--percent-not-started, 0)) * 3.6deg));
+    z-index: 1;
+}
+
+.chart-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(0,0,0,0.3);
+    pointer-events: none;
+}
+
+.status-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    margin-right: 6px;
+}
+
+.legend-text {
+    font-size: 0.85rem;
+}
+
+/* Progress Tracker Styles */
+.monitoring-record {
+    border-radius: 0.5rem;
+    background-color: white;
+    border: 1px solid #e3e6f0;
+    transition: all 0.3s ease;
+}
+
+.monitoring-record:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.record-header {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.progress-tracker-container {
+    position: relative;
+    background-color: white;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.progress-tracker-horizontal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    padding: 0 20px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+.progress-track-line {
+    position: absolute;
+    top: 25px;
+    left: 50px;
+    right: 50px;
+    height: 6px;
+    background-color: #e4e4e4;
+    z-index: 1;
+    border-radius: 3px;
+}
+
+.progress-track-completion {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #4e73df;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.progress-step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+    position: relative;
+    z-index: 2;
+}
+
+.progress-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #6c757d;
+    border: 3px solid #e4e4e4;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.progress-circle.completed {
+    background-color: #1cc88a;
+    border-color: #1cc88a;
+    color: white;
+}
+
+.progress-circle.active {
+    background-color: #4e73df;
+    border-color: #4e73df;
+    color: white;
+}
+
+.check-icon {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    color: #1cc88a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border: 2px solid #1cc88a;
+}
+
+.progress-label {
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #5a5c69;
+}
+
+.progress-date {
+    font-size: 12px;
+    color: #858796;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.plant-title {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.plant-title:hover {
+    transform: translateX(5px);
+}
+
+/* Responsive adjustments */
+@@media (max-width: 768px) {
+    .progress-tracker-horizontal {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .progress-track-line {
+        display: none;
+    }
+    
+    .progress-step-container {
+        width: 100%;
+        flex-direction: row;
+        margin-bottom: 15px;
+        align-items: center;
+    }
+    
+    .progress-circle {
+        margin-right: 15px;
+    }
+    
+    .progress-label {
+        margin-top: 0;
+        margin-right: 15px;
+        min-width: 100px;
+    }
+    
+    .progress-date {
+        margin-top: 0;
+        text-align: left;
+    }
+    
+    .status-legend {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .legend-item {
+        margin-bottom: 8px;
+    }
+}
+
+.bg-notstarted {
+    background-color: #2e98c2 !important; /* Distinct purple */
+    color: #0273a3 !important;
+}
+
+/* Remarks button styling */
+.remarks-btn {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.remarks-btn:hover {
+    background-color: #138496 !important;
+    box-shadow: 0 0 8px rgba(23, 162, 184, 0.5);
+}
+
+.remarks-btn i {
+    margin-right: 4px;
+}
+</style>
+
+@functions {
+    private int GetCurrentStage(dynamic record)
+    {
+        try
+        {
+            if (record.WorkCompleteDate != null && record.WorkCompleteDate != DateTime.MinValue)
+                return 4; // Completed
+            else if (record.WorkDate != null && record.WorkDate != DateTime.MinValue)
+                return 3; // Work Execution
+            else if (record.EprDate != null && record.EprDate != DateTime.MinValue)
+                return 2; // Preparation
+            else if (record.QuoteDate != null && record.QuoteDate != DateTime.MinValue)
+                return 1; // Quotation
+            else
+                return 0; // Not Started
+        }
+        catch
+        {
+            return 0; // Default to Not Started if there's an error
+        }
+    }
+    
+    private bool GetStepComplete(dynamic record, int stepNumber)
+    {
+        int currentStage = GetCurrentStage(record);
+        return stepNumber < currentStage;
+    }
+    
+    private bool GetStepActive(dynamic record, int stepNumber)
+    {
+        int currentStage = GetCurrentStage(record);
+        return stepNumber == currentStage;
+    }
+    
+    private string GetStepClass(dynamic record, int stepNumber)
+    {
+        int currentStage = GetCurrentStage(record);
+        
+        if (stepNumber < currentStage)
+            return "completed";
+        else if (stepNumber == currentStage)
+            return "current";
+        else
+            return "";
+    }
+    
+    private string GetStatusTooltip(dynamic record)
+    {
+        string tooltip = "<strong>Process Details:</strong><br>";
+        
+        if (record.ProcStatus == "Quotation Requested")
+        {
+            tooltip += "Request for quotation has been initiated.<br>";
+            if (record.QuoteDate != null && record.QuoteDate != DateTime.MinValue)
+            {
+                tooltip += $"Started on: {record.QuoteDate.ToString("dd/MM/yyyy")}<br>";
+            }
+        }
+        else if (record.ProcStatus == "ePR Raised")
+        {
+            tooltip += "Electronic Purchase Requisition has been raised.<br>";
+            if (record.EprDate != null && record.EprDate != DateTime.MinValue)
+            {
+                tooltip += $"Started on: {record.EprDate.ToString("dd/MM/yyyy")}<br>";
+            }
+        }
+        else if (record.ProcStatus == "Work In Progress")
+        {
+            tooltip += "Work execution phase has started.<br>";
+            if (record.WorkDate != null && record.WorkDate != DateTime.MinValue)
+            {
+                tooltip += $"Started on: {record.WorkDate.ToString("dd/MM/yyyy")}<br>";
+            }
+        }
+        else if (record.ProcStatus == "Completed")
+        {
+            tooltip += "All monitoring work has been completed.<br>";
+            if (record.WorkCompleteDate != null && record.WorkCompleteDate != DateTime.MinValue)
+            {
+                tooltip += $"Completed on: {record.WorkCompleteDate.ToString("dd/MM/yyyy")}<br>";
+            }
+        }
+        else if (record.ProcStatus == "Not Started")
+        {
+            tooltip += "Monitoring process has not yet begun.";
+        }
+        
+        return tooltip;
+    }
+    
+    private string GetExpiryTooltip(dynamic record)
+    {
+        string tooltip = "<strong>Expiry Details:</strong><br>";
+        
+        if (record.ExpStatus == "Expired")
+        {
+            tooltip += "This monitoring record has expired and requires attention.<br>";
+            
+            if (record.ExpDate != null && record.ExpDate != DateTime.MinValue)
+            {
+                TimeSpan overdue = DateTime.Now - record.ExpDate;
+                tooltip += $"Expired on: {record.ExpDate.ToString("dd/MM/yyyy")}<br>";
+                tooltip += $"Overdue by: {Math.Floor(overdue.TotalDays)} days";
+            }
+        }
+        else if (record.ExpStatus == "Expiring Soon")
+        {
+            tooltip += "This monitoring record will expire soon and requires attention.<br>";
+            
+            if (record.ExpDate != null && record.ExpDate != DateTime.MinValue)
+            {
+                TimeSpan remaining = record.ExpDate - DateTime.Now;
+                tooltip += $"Expires on: {record.ExpDate.ToString("dd/MM/yyyy")}<br>";
+                tooltip += $"Days remaining: {Math.Ceiling(remaining.TotalDays)}";
+            }
+        }
+        else if (record.ExpStatus == "Active")
+        {
+            tooltip += "This monitoring record is currently Active.<br>";
+            
+            if (record.ExpDate != null && record.ExpDate != DateTime.MinValue)
+            {
+                TimeSpan remaining = record.ExpDate - DateTime.Now;
+                tooltip += $"Expires on: {record.ExpDate.ToString("dd/MM/yyyy")}<br>";
+                tooltip += $"Days remaining: {Math.Ceiling(remaining.TotalDays)}";
+            }
+        }
+        else if (record.ExpStatus == "No Expiry")
+        {
+            tooltip += "This monitoring record has no expiration date.";
+        }
+        
+        return tooltip;
+    }
+    
+    private string GetQuotationTooltip(dynamic record)
+    {
+        try
+        {
+            string tooltip = "<strong>Quotation Request</strong><br>";
+            
+            if (record.QuoteDate != null && record.QuoteDate != DateTime.MinValue)
+            {
+                tooltip += $"Started on: {record.QuoteDate.ToString("dd/MM/yyyy")}<br>";
+                
+                if (GetStepComplete(record, 1))
+                {
+                    tooltip += "<span class='text-success'>Completed</span><br>";
+                    tooltip += "See Details for completion information";
+                }
+                else
+                {
+                    tooltip += "<span class='text-warning'>In Progress</span><br>";
+                    tooltip += "Click 'Details' for assigned person";
+                }
+            }
+            else
+            {
+                tooltip += "This step has not been started yet.<br>";
+                tooltip += "Go to 'Update Status' to initiate";
+            }
+            
+            return tooltip;
+        }
+        catch
+        {
+            return "<strong>Quotation Request</strong><br>Information not available";
+        }
+    }
+    
+    private string GetPreparationTooltip(dynamic record)
+    {
+        try
+        {
+            string tooltip = "<strong>ePR (Electronic Purchase Requisition)</strong><br>";
+            
+            if (record.EprDate != null && record.EprDate != DateTime.MinValue)
+            {
+                tooltip += $"Started on: {record.EprDate.ToString("dd/MM/yyyy")}<br>";
+                
+                if (GetStepComplete(record, 2))
+                {
+                    tooltip += "<span class='text-success'>Completed</span><br>";
+                    tooltip += "See Details for completion information";
+                }
+                else
+                {
+                    tooltip += "<span class='text-warning'>In Progress</span><br>";
+                    tooltip += "Click 'Details' for assigned person";
+                }
+            }
+            else
+            {
+                tooltip += "This step has not been started yet.<br>";
+                tooltip += "Complete previous step first";
+            }
+            
+            return tooltip;
+        }
+        catch
+        {
+            return "<strong>ePR (Electronic Purchase Requisition)</strong><br>Information not available";
+        }
+    }
+    
+    private string GetWorkTooltip(dynamic record)
+    {
+        try
+        {
+            string tooltip = "<strong>Work Execution</strong><br>";
+            
+            if (record.WorkDate != null && record.WorkDate != DateTime.MinValue)
+            {
+                tooltip += $"Started on: {record.WorkDate.ToString("dd/MM/yyyy")}<br>";
+                
+                if (GetStepComplete(record, 3))
+                {
+                    tooltip += "<span class='text-success'>Completed</span><br>";
+                    tooltip += "See Details for completion information";
+                }
+                else
+                {
+                    tooltip += "<span class='text-warning'>In Progress</span><br>";
+                    tooltip += "Click 'Details' for assigned person";
+                }
+            }
+            else
+            {
+                tooltip += "This step has not been started yet.<br>";
+                tooltip += "Complete previous step first";
+            }
+            
+            return tooltip;
+        }
+        catch
+        {
+            return "<strong>Work Execution</strong><br>Information not available";
+        }
+    }
+    
+    private string GetCompletionTooltip(dynamic record)
+    {
+        try
+        {
+            string tooltip = "<strong>Completion</strong><br>";
+            
+            if (record.WorkCompleteDate != null && record.WorkCompleteDate != DateTime.MinValue)
+            {
+                tooltip += $"Completed on: {record.WorkCompleteDate.ToString("dd/MM/yyyy")}<br>";
+                tooltip += "<span class='text-success'>Completed</span><br>";
+                tooltip += "See Details for more information";
+            }
+            else
+            {
+                tooltip += "This step has not been completed yet.<br>";
+                tooltip += "Complete previous steps first";
+            }
+            
+            return tooltip;
+        }
+        catch
+        {
+            return "<strong>Completion</strong><br>Information not available";
+        }
+    }
+}
+
+@section Scripts {
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips with proper HTML support
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true,
+            container: 'body',
+            placement: 'auto',
+            boundary: 'window',
+            template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        });
+        
+        // Initialize status chart segments
+        const completedPercent = @completedPercent;
+        const inProgressPercent = @inProgressPercent;
+        const notStartedPercent = @notStartedPercent;
+        const expiredPercent = @expiredPercent;
+        
+        document.documentElement.style.setProperty('--percent-completed', completedPercent);
+        document.documentElement.style.setProperty('--percent-in-progress', inProgressPercent);
+        document.documentElement.style.setProperty('--percent-not-started', notStartedPercent);
+        document.documentElement.style.setProperty('--percent-expired', expiredPercent);
+        
+        // Filter functionality
+        function applyFilters() {
+            var categoryFilter = $("#categoryFilter").val();
+            var plantFilter = $("#plantFilter").val();
+            var statusFilter = $("#statusFilter").val();
+            
+            // Reset visibility
+            $(".monitoring-item").show();
+            $(".plant-section").show();
+            $(".status-item").show();
+            
+            // Apply category filter
+            if (categoryFilter !== "all") {
+                $(".monitoring-item").not(`[data-category='${categoryFilter}']`).hide();
+            }
+            
+            // Apply plant filter
+            if (plantFilter !== "all") {
+                $(".plant-section").not(`[data-plant-id='${plantFilter}']`).hide();
+            }
+            
+            // Apply status filter
+            if (statusFilter !== "all") {
+                $(".status-item").not(`[data-status='${statusFilter}']`).hide();
+                
+                // Hide plants with no visible items
+                $(".plant-section").each(function() {
+                    if($(this).find(".status-item:visible").length === 0) {
+                        $(this).hide();
+                    }
+                });
+                
+                // Hide monitoring items with no visible plants
+                $(".monitoring-item").each(function() {
+                    if($(this).find(".plant-section:visible").length === 0) {
+                        $(this).hide();
+                    }
+                });
+            }
+            
+            // Update filter summary text
+            updateFilterSummary(categoryFilter, plantFilter, statusFilter);
+        }
+        
+        function updateFilterSummary(category, plant, status) {
+            let summaryText = "";
+            
+            if (category !== "all" || plant !== "all" || status !== "all") {
+                if (status !== "all") {
+                    summaryText += status + " ";
+                }
+                
+                if (category !== "all") {
+                    summaryText += category + " ";
+                }
+                
+                if (plant !== "all") {
+                    const plantName = $("#plantFilter option:selected").text();
+                    summaryText += "in " + plantName;
+                }
+                
+                if (summaryText === "") {
+                    summaryText = "Filtered Results";
+                }
+            } else {
+                summaryText = "All Records";
+            }
+            
+            $("#filterSummary").text(summaryText);
+        }
+        
+        // Event handlers
+        $("#categoryFilter, #plantFilter, #statusFilter").change(function() {
+            applyFilters();
+        });
+        
+        $("#resetFilters").click(function(e) {
+            e.preventDefault();
+            $("#categoryFilter, #plantFilter, #statusFilter").val("all");
+            applyFilters();
+        });
+        
+        // Apply filters initially (in case of page reload with filters)
+        applyFilters();
+    });
+</script>
+} 

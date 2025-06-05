@@ -56,33 +56,18 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // Apply plant filter
             if (!string.IsNullOrEmpty(plantFilter))
             {
-                ViewBag.SelectedPlantFilter = plantFilter;
+                // Handle both old (concatenated) and new (comma-separated) formats
+                var plantIds = plantFilter.Split(',').Select(p => int.TryParse(p, out int id) ? id : -1).Where(id => id != -1).ToList();
                 
-                switch (plantFilter)
+                if (plantIds.Any())
                 {
-                    case "135":
-                        query = query.Where(c => c.Plant.PlantName == "Plant 1" || 
-                                                c.Plant.PlantName == "Plant 3" || 
-                                                c.Plant.PlantName == "Plant 5");
-                        break;
-                    case "21":
-                        query = query.Where(c => c.Plant.PlantName == "Plant 21");
-                        break;
-                    case "13,55":
-                        query = query.Where(c => c.Plant.PlantName == "Plant 13" || 
-                                                c.Plant.PlantName == "Plant 55");
-                        break;
-                    case "34":
-                        query = query.Where(c => c.Plant.PlantName == "Plant 34");
-                        break;
-                    default:
-                        // Try to parse as normal plant ID if it doesn't match any of the special filters
-                        int plantId;
-                        if (int.TryParse(plantFilter, out plantId))
-                        {
-                            query = query.Where(c => c.PlantID == plantId);
-                        }
-                        break;
+                    query = query.Where(p => plantIds.Contains(p.PlantID));
+                    ViewBag.SelectedPlantFilter = plantFilter;
+                }
+                else
+                {
+                    // If we couldn't parse any IDs, store the original filter string
+                    ViewBag.SelectedPlantFilter = plantFilter;
                 }
             }
 
@@ -178,8 +163,15 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         }
 
         // GET: PlantMonitoring/Schedule
-        public ActionResult Schedule()
+        public ActionResult Schedule(string plantFilter = null)
         {
+            // Set the selected plant filter in ViewBag
+            ViewBag.SelectedPlantFilter = plantFilter;
+            
+            System.Diagnostics.Debug.WriteLine("========================================");
+            System.Diagnostics.Debug.WriteLine($"SCHEDULE ACTION CALLED - Plant Filter: {plantFilter}");
+            System.Diagnostics.Debug.WriteLine("========================================");
+            
             // Get all monitoring types
             var monitoringTypes = db.Monitorings
                 .OrderBy(m => m.MonitoringCategory)
@@ -217,6 +209,27 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     .ToList();
                 
                 plantMonitoringsQuery = plantMonitoringsQuery.Where(p => userPlantIds.Contains(p.PlantID));
+            }
+
+            // Apply plant filter if provided
+            if (!string.IsNullOrEmpty(plantFilter))
+            {
+                var plantIds = plantFilter.Split(',').Select(p => int.TryParse(p, out int id) ? id : -1).Where(id => id != -1).ToList();
+                System.Diagnostics.Debug.WriteLine($"Parsed plant IDs: {string.Join(", ", plantIds)}");
+                
+                // Count records before filtering
+                var beforeCount = plantMonitoringsQuery.Count();
+                System.Diagnostics.Debug.WriteLine($"Records before filtering: {beforeCount}");
+                
+                if (plantIds.Any())
+                {
+                    plantMonitoringsQuery = plantMonitoringsQuery.Where(p => plantIds.Contains(p.PlantID));
+                    System.Diagnostics.Debug.WriteLine($"Filtered query to include only plants: {string.Join(", ", plantIds)}");
+                    
+                    // Count records after filtering
+                    var afterCount = plantMonitoringsQuery.Count();
+                    System.Diagnostics.Debug.WriteLine($"Records after filtering: {afterCount}");
+                }
             }
 
             var plantMonitorings = plantMonitoringsQuery.ToList();
