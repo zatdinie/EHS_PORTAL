@@ -25,7 +25,7 @@ namespace FETS
             DateTime? estimatedReturnDate = null)
         {
             // Path to the template file
-            string templatePath = HttpContext.Current.Server.MapPath("~/EmailTemplates/ServiceEmailTemplate.html");
+            string templatePath = HttpContext.Current.Server.MapPath("~/Areas/FETS/EmailTemplates/ServiceEmailTemplate.html");
             
             // Read the template
             string template = File.ReadAllText(templatePath);
@@ -65,7 +65,7 @@ namespace FETS
         public static string GetMultipleServiceEmailTemplate(List<FireExtinguisherServiceInfo> extinguishers)
         {
             // Path to the template file
-            string templatePath = HttpContext.Current.Server.MapPath("~/EmailTemplates/ServiceEmailTemplate.html");
+            string templatePath = HttpContext.Current.Server.MapPath("~/Areas/FETS/EmailTemplates/ServiceEmailTemplate.html");
             
             // Read the template
             string template = File.ReadAllText(templatePath);
@@ -156,7 +156,7 @@ namespace FETS
             string remarks = null)
         {
             // Path to the template file
-            string templatePath = HttpContext.Current.Server.MapPath("~/EmailTemplates/ServiceEmailTemplate.html");
+            string templatePath = HttpContext.Current.Server.MapPath("~/Areas/FETS/EmailTemplates/ServiceEmailTemplate.html");
             
             // Read the template
             string template = File.ReadAllText(templatePath);
@@ -196,7 +196,7 @@ namespace FETS
         public static string GetMultipleServiceCompletionEmailTemplate(List<FireExtinguisherServiceInfo> extinguishers, DateTime serviceCompletionDate, DateTime newExpiryDate)
         {
             // Path to the template file
-            string templatePath = HttpContext.Current.Server.MapPath("~/EmailTemplates/ServiceEmailTemplate.html");
+            string templatePath = HttpContext.Current.Server.MapPath("~/Areas/FETS/EmailTemplates/ServiceEmailTemplate.html");
             
             // Read the template
             string template = File.ReadAllText(templatePath);
