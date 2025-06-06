@@ -31,7 +31,9 @@
             else
             {
                 <div class="navbar-brand d-flex align-items-center">
-                    <img src="~/Images/logo.png" alt="CLIP Logo" height="30" class="me-2" />
+                    <a href="@Url.Action("Welcome", "Home", new { area = "CLIP" })">
+                        <img src="~/Images/logo.png" alt="CLIP Logo" height="30" class="me-2" />
+                    </a>
                     @Html.ActionLink("CLIP", "Welcome", "Home", new { area = "CLIP" }, new { @class = "text-decoration-none text-white" })
                 </div>
             }
