@@ -1323,21 +1323,6 @@ media (max-width: 768px) {
             $accordion.show();
         });
         
-        // Expand the first monitoring item in each category
-        $('.category-section').each(function() {
-            var $section = $(this);
-            
-            // Find the first monitoring item and expand it
-            var $firstItem = $section.find('.accordion-item').first();
-            if ($firstItem.length > 0) {
-                var $button = $firstItem.find('.accordion-button');
-                var $collapse = $firstItem.find('.accordion-collapse');
-                
-                $button.removeClass('collapsed');
-                $collapse.addClass('show');
-            }
-        });
-        
         // Handle search filter
         $('#searchInput').on('keyup', function() {
             var value = $(this).val().toLowerCase();
