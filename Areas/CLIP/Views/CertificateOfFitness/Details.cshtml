@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Certificate of Fitness Details";
+    bool userCanEditDelete = ViewBag.UserCanEditDelete != null && (bool)ViewBag.UserCanEditDelete;
 }
 
 <h1>Certificate of Fitness Details</h1>
@@ -147,10 +148,13 @@
         </div>
 
         <div class="mt-4">
-            @if (User.IsInRole("Admin"))
+            @if (userCanEditDelete)
             {
                 <a href="@Url.Action("Edit", "CertificateOfFitness", new { id = Model.Id })" class="btn btn-warning">
                     <i class="bi bi-pencil-square"></i> Edit
+                </a>
+                <a href="@Url.Action("Delete", "CertificateOfFitness", new { id = Model.Id })" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete
                 </a>
             }
             <a href="@Url.Action("Index", "CertificateOfFitness")" class="btn btn-secondary">
