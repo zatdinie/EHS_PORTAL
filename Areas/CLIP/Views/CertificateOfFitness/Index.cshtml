@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Certificates of Fitness";
+    // Get the list of plant IDs that the user has access to
+    var userAccessiblePlantIds = ViewBag.UserAccessiblePlantIds as List<int> ?? new List<int>();
 }
 
 <br></br>
@@ -198,7 +200,7 @@
                                    class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Details">
                                     <i class="bi bi-info-circle"></i>
                                 </a>
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin") || userAccessiblePlantIds.Contains(item.PlantId))
                                 {
                                     <a href="@Url.Action("Edit", "CertificateOfFitness", new { id = item.Id })"
                                        class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Edit">
