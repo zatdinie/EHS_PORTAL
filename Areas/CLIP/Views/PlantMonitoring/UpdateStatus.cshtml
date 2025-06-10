@@ -120,7 +120,6 @@
                     <div class="progress" style="height: 8px;">
                         @{
                             int progressPercentage = 0;
-                            if (Model.QuoteSubmitDate.HasValue) { progressPercentage = 25; }
                             if (Model.QuoteDate.HasValue) { progressPercentage = 50; }
                             if (!string.IsNullOrEmpty(Model.QuoteUserAssign)) { progressPercentage = 75; }
                             if (Model.QuoteCompleteDate.HasValue) { progressPercentage = 100; }
@@ -143,14 +142,6 @@
                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     <input type="datetime-local" class="form-control" id="quoteDate" name="QuoteDate" 
                                            value="@(Model.QuoteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="form-label fw-bold">Submit Date</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                    <input type="datetime-local" class="form-control" id="quoteSubmitDate" name="QuoteSubmitDate" 
-                                           value="@(Model.QuoteSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
                                 </div>
                             </div>
                             <div class="form-group mb-3">
@@ -253,7 +244,6 @@
                         <div class="progress" style="height: 8px;">
                             @{
                                 int eprProgressPercentage = 0;
-                                if (Model.EprSubmitDate.HasValue) { eprProgressPercentage = 25; }
                                 if (Model.EprDate.HasValue) { eprProgressPercentage = 50; }
                                 if (!string.IsNullOrEmpty(Model.EprUserAssign)) { eprProgressPercentage = 75; }
                                 if (Model.EprCompleteDate.HasValue) { eprProgressPercentage = 100; }
@@ -276,14 +266,6 @@
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         <input type="datetime-local" class="form-control" id="eprDate" name="EprDate" 
                                             value="@(Model.EprDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label fw-bold">Submit Date</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                        <input type="datetime-local" class="form-control" id="eprSubmitDate" name="EprSubmitDate" 
-                                            value="@(Model.EprSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
@@ -390,7 +372,6 @@
                         <div class="progress" style="height: 8px;">
                             @{
                                 int workProgressPercentage = 0;
-                                if (Model.WorkSubmitDate.HasValue) { workProgressPercentage = 25; }
                                 if (Model.WorkDate.HasValue) { workProgressPercentage = 50; }
                                 if (!string.IsNullOrEmpty(Model.WorkUserAssign)) { workProgressPercentage = 75; }
                                 if (Model.WorkCompleteDate.HasValue) { workProgressPercentage = 100; }
@@ -530,12 +511,10 @@
                                             <th colspan="3" class="bg-primary text-white">Quotation Phase</th>
                                         </tr>
                                         <tr>
-                                            <th style="width: 33%">Submit Date</th>
                                             <th style="width: 33%">Completion Date</th>
                                             <th style="width: 33%">Assigned To</th>
                                         </tr>
                                         <tr>
-                                            <td>@(Model.QuoteSubmitDate.HasValue ? Model.QuoteSubmitDate.Value.ToString("yyyy-MM-dd") : "N/A")</td>
                                             <td>@(Model.QuoteCompleteDate.HasValue ? Model.QuoteCompleteDate.Value.ToString("yyyy-MM-dd") : "N/A")</td>
                                             <td>@Model.QuoteUserAssign</td>
                                         </tr>
@@ -544,12 +523,10 @@
                                             <th colspan="3" class="bg-warning text-white">ePR Phase</th>
                                         </tr>
                                         <tr>
-                                            <th>Submit Date</th>
                                             <th>Completion Date</th>
                                             <th>Assigned To</th>
                                         </tr>
                                         <tr>
-                                            <td>@(Model.EprSubmitDate.HasValue ? Model.EprSubmitDate.Value.ToString("yyyy-MM-dd") : "N/A")</td>
                                             <td>@(Model.EprCompleteDate.HasValue ? Model.EprCompleteDate.Value.ToString("yyyy-MM-dd") : "N/A")</td>
                                             <td>@Model.EprUserAssign</td>
                                         </tr>
@@ -589,6 +566,28 @@
                 }
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Remarks Section -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0">Remarks</h5>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("UpdateStatus", "PlantMonitoring", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            <div class="mb-3">
+                <label for="Remarks" class="form-label"><strong>Remarks</strong></label>
+                @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", rows = 3 })
+                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "invalid-feedback" })
+            </div>
+            <button type="submit" class="btn btn-info">
+                <i class="fas fa-save me-1"></i> Save Remarks
+            </button>
+        }
     </div>
 </div>
 

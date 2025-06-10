@@ -30,11 +30,6 @@ namespace EHS_PORTAL.Areas.CLIP.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = false)]
         public DateTime? QuoteDate { get; set; }
 
-        [Display(Name = "Quotation Submit Date")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = false)]
-        public DateTime? QuoteSubmitDate { get; set; }
-
         [Display(Name = "Quotation Complete Date")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = false)]
@@ -53,11 +48,6 @@ namespace EHS_PORTAL.Areas.CLIP.Models
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = false)]
         public DateTime? EprDate { get; set; }
-
-        [Display(Name = "EPR Submit Date")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = false)]
-        public DateTime? EprSubmitDate { get; set; }
 
         [Display(Name = "EPR Complete Date")]
         [DataType(DataType.DateTime)]

@@ -90,7 +90,7 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="QuoteUserAssign" class="form-label"><strong>Assigned To</strong></label>
-                                                    @Html.EditorFor(model => model.QuoteUserAssign, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.DropDownList("QuoteUserAssign", (SelectList)ViewBag.UsersList, "-- Select User --", new { @class = "form-select" })
                                                 </div>
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="EprUserAssign" class="form-label"><strong>Assigned To</strong></label>
-                                                    @Html.EditorFor(model => model.EprUserAssign, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.DropDownList("EprUserAssign", (SelectList)ViewBag.UsersList, "-- Select User --", new { @class = "form-select" })
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="WorkUserAssign" class="form-label"><strong>Assigned To</strong></label>
-                                                    @Html.EditorFor(model => model.WorkUserAssign, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.DropDownList("WorkUserAssign", (SelectList)ViewBag.UsersList, "-- Select User --", new { @class = "form-select" })
                                                 </div>
                                             </div>
                                         </div>

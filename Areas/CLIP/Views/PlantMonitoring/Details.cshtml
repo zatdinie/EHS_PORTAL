@@ -169,13 +169,6 @@
                 </div>
                 
                 <div class="row mb-3">
-                    <div class="col-md-6 fw-bold">Submission:</div>
-                    <div class="col-md-6">
-                        @(Model.QuoteSubmitDate.HasValue ? Model.QuoteSubmitDate.Value.ToString("MM/dd/yyyy") : "Not submitted")
-                    </div>
-                </div>
-                
-                <div class="row mb-3">
                     <div class="col-md-6 fw-bold">Completion:</div>
                     <div class="col-md-6">
                         @(Model.QuoteCompleteDate.HasValue ? Model.QuoteCompleteDate.Value.ToString("MM/dd/yyyy") : "Not completed")
@@ -218,13 +211,6 @@
                     <div class="col-md-6 fw-bold">Start Date:</div>
                     <div class="col-md-6">
                         @(Model.EprDate.HasValue ? Model.EprDate.Value.ToString("MM/dd/yyyy") : "Not started")
-                    </div>
-                </div>
-                
-                <div class="row mb-3">
-                    <div class="col-md-6 fw-bold">Submission:</div>
-                    <div class="col-md-6">
-                        @(Model.EprSubmitDate.HasValue ? Model.EprSubmitDate.Value.ToString("MM/dd/yyyy") : "Not submitted")
                     </div>
                 </div>
                 

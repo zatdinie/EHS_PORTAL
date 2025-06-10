@@ -108,16 +108,6 @@
                                         </div>
                                         
                                         <div class="mb-3">
-                                            <label class="form-label"><strong>Submit</strong></label>
-                                            <div class="input-group">
-                                                @Html.TextBoxFor(model => model.QuoteSubmitDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-                                                <span class="input-group-text" data-bs-toggle="tooltip" title="Date when quotation was submitted">
-                                                    <i class="bi bi-calendar"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-3">
                                             <label class="form-label"><strong>Complete</strong></label>
                                             <div class="input-group">
                                                 @Html.TextBoxFor(model => model.QuoteCompleteDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
@@ -159,16 +149,6 @@
                                             <div class="input-group">
                                                 @Html.TextBoxFor(model => model.EprDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Date when ePR phase started">
-                                                    <i class="bi bi-calendar"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-3">
-                                            <label class="form-label"><strong>Submit</strong></label>
-                                            <div class="input-group">
-                                                @Html.TextBoxFor(model => model.EprSubmitDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-                                                <span class="input-group-text" data-bs-toggle="tooltip" title="Date when ePR was submitted">
                                                     <i class="bi bi-calendar"></i>
                                                 </span>
                                             </div>

@@ -258,13 +258,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     ExpStatus = pm.ExpStatus,
                     ExpDate = pm.ExpDate,
                     QuoteDate = pm.QuoteDate,
-                    QuoteSubmitDate = pm.QuoteSubmitDate,
                     QuoteCompleteDate = pm.QuoteCompleteDate,
                     EprDate = pm.EprDate,
-                    EprSubmitDate = pm.EprSubmitDate,
                     EprCompleteDate = pm.EprCompleteDate,
                     WorkDate = pm.WorkDate,
-                    WorkSubmitDate = pm.WorkSubmitDate,
                     WorkCompleteDate = pm.WorkCompleteDate,
                     Remarks = pm.Remarks
                 };
@@ -326,6 +323,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         {
             ViewBag.PlantID = new SelectList(db.Plants.OrderBy(p => p.PlantName), "Id", "PlantName");
             ViewBag.MonitoringID = new SelectList(db.Monitorings.OrderBy(m => m.MonitoringName), "MonitoringID", "MonitoringName");
+            
+            // Create SelectList for user assignments
+            var users = db.Users.OrderBy(u => u.UserName).ToList();
+            ViewBag.UsersList = new SelectList(users, "UserName", "UserName");
+            
             return View();
         }
 
@@ -359,6 +361,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
             ViewBag.PlantID = new SelectList(db.Plants.OrderBy(p => p.PlantName), "Id", "PlantName", plantMonitoring.PlantID);
             ViewBag.MonitoringID = new SelectList(db.Monitorings.OrderBy(m => m.MonitoringName), "MonitoringID", "MonitoringName", plantMonitoring.MonitoringID);
+            
+            // Create SelectList for user assignments
+            var users = db.Users.OrderBy(u => u.UserName).ToList();
+            ViewBag.UsersList = new SelectList(users, "UserName", "UserName");
+            
             return View(plantMonitoring);
         }
 
@@ -640,13 +647,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 
                 // Quotation Phase
                 plantMonitoring.QuoteDate = model.QuoteDate;
-                plantMonitoring.QuoteSubmitDate = model.QuoteSubmitDate;
                 plantMonitoring.QuoteCompleteDate = model.QuoteCompleteDate;
                 plantMonitoring.QuoteUserAssign = model.QuoteUserAssign;
                 
                 // Preparation Phase
                 plantMonitoring.EprDate = model.EprDate;
-                plantMonitoring.EprSubmitDate = model.EprSubmitDate;
                 plantMonitoring.EprCompleteDate = model.EprCompleteDate;
                 plantMonitoring.EprUserAssign = model.EprUserAssign;
                 
@@ -929,7 +934,6 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
             // Update only quotation phase
             plantMonitoring.QuoteDate = model.QuoteDate;
-            plantMonitoring.QuoteSubmitDate = model.QuoteSubmitDate;
             plantMonitoring.QuoteCompleteDate = model.QuoteCompleteDate;
             plantMonitoring.QuoteUserAssign = model.QuoteUserAssign;
 
@@ -1018,7 +1022,6 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
             // Update only ePR phase
             plantMonitoring.EprDate = model.EprDate;
-            plantMonitoring.EprSubmitDate = model.EprSubmitDate;
             plantMonitoring.EprCompleteDate = model.EprCompleteDate;
             plantMonitoring.EprUserAssign = model.EprUserAssign;
 
@@ -1382,42 +1385,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     });
                 }
                 
-                // 4. Overdue items (for items with dates set but not completed)
-                var overdueItems = db.PlantMonitorings
-                    .Include(p => p.Plant)
-                    .Include(p => p.Monitoring)
-                    .Where(p => (p.QuoteSubmitDate.HasValue && !p.QuoteCompleteDate.HasValue) ||
-                           (p.EprSubmitDate.HasValue && !p.EprCompleteDate.HasValue) ||
-                           (p.WorkSubmitDate.HasValue && !p.WorkCompleteDate.HasValue))
-                    .ToList()
-                    .Where(p => (p.QuoteSubmitDate.HasValue && p.QuoteSubmitDate.Value < today && !p.QuoteCompleteDate.HasValue && p.QuoteUserAssign == currentUser) ||
-                           (p.EprSubmitDate.HasValue && p.EprSubmitDate.Value < today && !p.EprCompleteDate.HasValue && p.EprUserAssign == currentUser) ||
-                           (p.WorkSubmitDate.HasValue && p.WorkSubmitDate.Value < today && !p.WorkCompleteDate.HasValue && p.WorkUserAssign == currentUser))
-                    .ToList();
-                
-                System.Diagnostics.Debug.WriteLine($"Found {overdueItems.Count} overdue items");
-                foreach (var item in overdueItems)
-                {
-                    string phase = "";
-                    if (item.QuoteSubmitDate.HasValue && !item.QuoteCompleteDate.HasValue && item.QuoteUserAssign == currentUser)
-                        phase = "Quotation";
-                    else if (item.EprSubmitDate.HasValue && !item.EprCompleteDate.HasValue && item.EprUserAssign == currentUser)
-                        phase = "ePR";
-                    else
-                        phase = "Work Execution";
-                    
-                    notifications.Add(new MonitoringNotification
-                    {
-                        Type = NotificationType.Overdue,
-                        Title = "Overdue Task",
-                        Message = $"The {phase} phase for {item.Monitoring.MonitoringName} at {item.Plant.PlantName} is overdue",
-                        Link = Url.Action("UpdateStatus", new { id = item.Id }),
-                        ItemId = item.Id,
-                        IsRead = readNotificationIds.Contains(item.Id)
-                    });
-                }
-                
-                // 5. Recently completed monitoring items
+                // 4. Recently completed monitoring items
                 var lastWeek = today.AddDays(-7); // Calculate date before using in LINQ
                 var completedItems = db.PlantMonitorings
                     .Include(p => p.Plant)
@@ -1479,13 +1447,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         public string ExpStatus { get; set; }
         public DateTime? ExpDate { get; set; }
         public DateTime? QuoteDate { get; set; }
-        public DateTime? QuoteSubmitDate { get; set; }
         public DateTime? QuoteCompleteDate { get; set; }
         public DateTime? EprDate { get; set; }
-        public DateTime? EprSubmitDate { get; set; }
         public DateTime? EprCompleteDate { get; set; }
         public DateTime? WorkDate { get; set; }
-        public DateTime? WorkSubmitDate { get; set; }
         public DateTime? WorkCompleteDate { get; set; }
         public string Remarks { get; set; }
 
