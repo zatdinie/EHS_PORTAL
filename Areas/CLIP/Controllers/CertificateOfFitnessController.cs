@@ -178,19 +178,49 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         }
 
         // GET: CertificateOfFitness/Create
-        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName");
+            // For non-admin users, only show their assigned plants in the dropdown
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName");
+            }
+            else
+            {
+                // Get user's assigned plants
+                string userId = User.Identity.GetUserId();
+                var userPlantIds = db.UserPlants
+                    .Where(up => up.UserId == userId)
+                    .Select(up => up.PlantId)
+                    .ToList();
+                
+                // If user has no assigned plants, show error
+                if (userPlantIds.Count == 0)
+                {
+                    TempData["ErrorMessage"] = "You don't have any plants assigned to you. Please contact an administrator.";
+                    return RedirectToAction("Index");
+                }
+                
+                ViewBag.PlantId = new SelectList(
+                    db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                    "Id", 
+                    "PlantName");
+            }
+            
             return View();
         }
 
         // POST: CertificateOfFitness/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "Id,PlantId,RegistrationNo,ExpiryDate,MachineName,Status,Remarks,Location,HostInfo,Department,ResidentInfo")] CertificateOfFitness certificateOfFitness, HttpPostedFileBase pdfDocument)
         {
+            // Check if user has access to this plant
+            if (!UserHasAccessToPlant(certificateOfFitness.PlantId))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            
             // Check for unique registration number
             bool isDuplicate = db.CertificateOfFitness.Any(c => 
                 c.RegistrationNo.Equals(certificateOfFitness.RegistrationNo, StringComparison.OrdinalIgnoreCase));
@@ -212,7 +242,27 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     if (pdfDocument.ContentLength > 20 * 1024 * 1024)
                     {
                         ModelState.AddModelError("", "The PDF document exceeds the maximum file size of 20MB.");
-                        ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+                        
+                        // Prepare plant dropdown based on user role
+                        if (User.IsInRole("Admin"))
+                        {
+                            ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+                        }
+                        else
+                        {
+                            string userId = User.Identity.GetUserId();
+                            var userPlantIds = db.UserPlants
+                                .Where(up => up.UserId == userId)
+                                .Select(up => up.PlantId)
+                                .ToList();
+                            
+                            ViewBag.PlantId = new SelectList(
+                                db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                                "Id", 
+                                "PlantName", 
+                                certificateOfFitness.PlantId);
+                        }
+                        
                         return View(certificateOfFitness);
                     }
 
@@ -239,7 +289,26 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+            // Prepare plant dropdown based on user role
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+            }
+            else
+            {
+                string userId = User.Identity.GetUserId();
+                var userPlantIds = db.UserPlants
+                    .Where(up => up.UserId == userId)
+                    .Select(up => up.PlantId)
+                    .ToList();
+                
+                ViewBag.PlantId = new SelectList(
+                    db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                    "Id", 
+                    "PlantName", 
+                    certificateOfFitness.PlantId);
+            }
+            
             return View(certificateOfFitness);
         }
 
