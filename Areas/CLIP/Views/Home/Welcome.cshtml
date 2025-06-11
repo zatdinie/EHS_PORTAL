@@ -9,6 +9,107 @@
 </div>
 
 <div class="container mt-5">
+
+        <!-- Competency Summary Section -->
+    <h1 class="text-center mb-4 mt-5">COMPETENCY MODULES</h1>
+    <div class="row mb-4">
+        <!-- Competency Stats Cards -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">Total Competency Modules</div>
+                            <div class="display-3 fw-bold">@ViewBag.CompetencySummary.TotalModules</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-journal-bookmark"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">Active Competencies</div>
+                            <div class="display-3 fw-bold">@ViewBag.CompetencySummary.ActiveCompetencies</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">Pending Competencies</div>
+                            <div class="display-3 fw-bold">@ViewBag.CompetencySummary.PendingCompetencies</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-hourglass-split"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">Expired Competencies</div>
+                            <div class="display-3 fw-bold">@ViewBag.CompetencySummary.ExpiredCompetencies</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Competency Type Distribution Chart -->
+        <div class="col-xl-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <i class="bi bi-pie-chart-fill me-1"></i>
+                    Competency Type Distribution
+                </div>
+                <div class="card-body">
+                    <canvas id="competencyTypeChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Competency Status Chart -->
+        <div class="col-xl-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <i class="bi bi-bar-chart-fill me-1"></i>
+                    Competency Status Overview
+                </div>
+                <div class="card-body">
+                    <canvas id="competencyStatusChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <h1 class="text-center mb-4">CERTIFICATE OF FITNESS</h1>
 
     <!-- Certificate of Fitness Summary Section -->
@@ -104,7 +205,7 @@
             </div>
         </div>
     </div>
-
+    
     <div class="row mt-4 mb-5">
         <div class="col-md-6 offset-md-3 text-center">
             <div class="card shadow-sm">
@@ -299,6 +400,117 @@
                         formatter: function (value, context) {
                             return value > 0 ? value : '';
                         }
+                    }
+                }
+            }
+        });
+        
+        // Competency Type Distribution Chart
+        var competencyTypeLabels = [];
+        var competencyTypeData = [];
+        var competencyTypeColors = [
+            'rgba(40, 167, 69, 0.7)',  // Green for Environment
+            'rgba(255, 193, 7, 0.7)',  // Yellow for Safety
+            'rgba(13, 110, 253, 0.7)', // Blue for Other
+            'rgba(108, 117, 125, 0.7)' // Gray for any additional types
+        ];
+        
+        @foreach (var type in ViewBag.CompetencySummary.CompetencyTypeCount)
+        {
+            @:competencyTypeLabels.push('@type.Key');
+            @:competencyTypeData.push(@type.Value);
+        }
+        
+        var competencyTypeCtx = document.getElementById('competencyTypeChart').getContext('2d');
+        var competencyTypeChart = new Chart(competencyTypeCtx, {
+            type: 'pie',
+            data: {
+                labels: competencyTypeLabels,
+                datasets: [{
+                    data: competencyTypeData,
+                    backgroundColor: competencyTypeColors.slice(0, competencyTypeLabels.length),
+                    borderColor: competencyTypeColors.map(color => color.replace('0.7', '1')),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Competency Distribution by Type'
+                    },
+                    datalabels: {
+                        color: '#000',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: function (value, context) {
+                            return value > 0 ? value : '';
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Competency Status Chart
+        var competencyStatusCtx = document.getElementById('competencyStatusChart').getContext('2d');
+        var competencyStatusChart = new Chart(competencyStatusCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Active', 'Pending', 'Expired'],
+                datasets: [{
+                    label: 'Competencies',
+                    data: [
+                        @ViewBag.CompetencySummary.ActiveCompetencies,
+                        @ViewBag.CompetencySummary.PendingCompetencies,
+                        @ViewBag.CompetencySummary.ExpiredCompetencies
+                    ],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.7)',
+                        'rgba(255, 193, 7, 0.7)',
+                        'rgba(220, 53, 69, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(40, 167, 69, 1)',
+                        'rgba(255, 193, 7, 1)',
+                        'rgba(220, 53, 69, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            precision: 0
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Competency Status Overview'
+                    },
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        color: '#000',
+                        font: {
+                            weight: 'bold'
+                        },
+                        anchor: 'end',
+                        align: 'top',
+                        offset: 0
                     }
                 }
             }

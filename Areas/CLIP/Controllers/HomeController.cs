@@ -142,6 +142,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             // Get plant machine counts for the public dashboard
             var plantCounts = GetPlantMachineCounts();
+            
+            // Get competency summary for the public dashboard
+            ViewBag.CompetencySummary = GetCompetencySummary();
+            
             return View(plantCounts);
         }
 
