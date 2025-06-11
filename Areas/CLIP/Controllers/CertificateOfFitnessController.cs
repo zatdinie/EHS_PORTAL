@@ -320,7 +320,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
-            CertificateOfFitness certificateOfFitness = db.CertificateOfFitness.Find(id);
+            CertificateOfFitness certificateOfFitness = db.CertificateOfFitness
+                .Include(c => c.Plant)
+                .FirstOrDefault(c => c.Id == id);
+                
             if (certificateOfFitness == null)
             {
                 return HttpNotFound();
@@ -331,6 +334,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+            
+            // Clear model state to ensure we start fresh
+            ModelState.Clear();
             
             // For non-admin users, only show their assigned plants in the dropdown
             if (User.IsInRole("Admin"))

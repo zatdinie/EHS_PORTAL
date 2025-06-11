@@ -63,7 +63,8 @@
                         <div class="mb-3">
                             <label for="ExpiryDate" class="form-label"><strong>Expiry Date</strong></label>
                             <div class="input-group">
-                                @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
+                                <input type="date" id="ExpiryDate" name="ExpiryDate" class="form-control" required="required" 
+                                       value="@Model.ExpiryDate.ToString("yyyy-MM-dd")" />
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Status will be updated automatically based on expiry date">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
@@ -184,6 +185,10 @@
         $(function () {
             // Initialize tooltips
             $('[data-bs-toggle="tooltip"]').tooltip();
+            
+            // Ensure date is correctly set
+            var expiryDate = '@Model.ExpiryDate.ToString("yyyy-MM-dd")';
+            $("#ExpiryDate").val(expiryDate);
             
             // Bootstrap form validation
             (function () {

@@ -50,7 +50,12 @@
                                         <label class="col-sm-3 form-label"><strong>Plant</strong></label>
                                         <div class="col-sm-9">
                                             <div class="input-group">
-                                                @Html.DropDownList("PlantID", (SelectList)ViewBag.PlantID, new { @class = "form-select", required = "required" })
+                                                <select id="PlantID" name="PlantID" class="form-select" required="required">
+                                                    @foreach (var item in (SelectList)ViewBag.PlantID)
+                                                    {
+                                                        <option value="@item.Value" @(item.Value == Model.PlantID.ToString() ? "selected" : "")>@item.Text</option>
+                                                    }
+                                                </select>
                                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Select the plant location">
                                                     <i class="bi bi-info-circle"></i>
                                                 </span>
@@ -284,6 +289,10 @@
         $(function () {
             // Initialize tooltips
             $('[data-bs-toggle="tooltip"]').tooltip();
+            
+            // Set the correct plant value
+            var plantId = @Model.PlantID;
+            $("#PlantID").val(plantId);
             
             // Bootstrap form validation
             (function () {
