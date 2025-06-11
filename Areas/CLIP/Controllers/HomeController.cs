@@ -15,6 +15,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         public ActionResult Index()
         {
             var plantCounts = GetPlantMachineCounts();
+            ViewBag.CompetencySummary = GetCompetencySummary();
             return View(plantCounts);
         }
 
@@ -26,6 +27,55 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             public int ActiveCount { get; set; }
             public int ExpiringSoonCount { get; set; }
             public int ExpiredCount { get; set; }
+        }
+
+        // Class to hold competency summary data
+        public class CompetencySummary
+        {
+            public int TotalModules { get; set; }
+            public int TotalUsers { get; set; }
+            public int ActiveCompetencies { get; set; }
+            public int PendingCompetencies { get; set; }
+            public int ExpiredCompetencies { get; set; }
+            public Dictionary<string, int> CompetencyTypeCount { get; set; }
+        }
+
+        // Helper method to get competency summary for dashboard
+        private CompetencySummary GetCompetencySummary()
+        {
+            var currentDate = DateTime.Now;
+            
+            // Get all modules and user competencies
+            var modules = db.CompetencyModules.ToList();
+            var userCompetencies = db.UserCompetencies.ToList();
+            
+            // Count by status
+            var activeCount = userCompetencies.Count(uc => uc.Status == "Active" && 
+                                                   (!uc.ExpiryDate.HasValue || uc.ExpiryDate.Value > currentDate));
+            var pendingCount = userCompetencies.Count(uc => uc.Status == "Pending");
+            var expiredCount = userCompetencies.Count(uc => uc.ExpiryDate.HasValue && uc.ExpiryDate.Value < currentDate);
+            
+            // Count by competency type
+            var typeCount = new Dictionary<string, int>();
+            foreach (var module in modules)
+            {
+                string type = !string.IsNullOrEmpty(module.CompetencyType) ? module.CompetencyType : "Other";
+                if (!typeCount.ContainsKey(type))
+                {
+                    typeCount[type] = 0;
+                }
+                typeCount[type] += module.UserCompetencies.Count;
+            }
+            
+            return new CompetencySummary
+            {
+                TotalModules = modules.Count,
+                TotalUsers = userCompetencies.Select(uc => uc.UserId).Distinct().Count(),
+                ActiveCompetencies = activeCount,
+                PendingCompetencies = pendingCount,
+                ExpiredCompetencies = expiredCount,
+                CompetencyTypeCount = typeCount
+            };
         }
 
         // Helper method to get plant machine counts for dashboards
