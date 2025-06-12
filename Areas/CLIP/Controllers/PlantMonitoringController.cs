@@ -377,13 +377,20 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PlantMonitoring plantMonitoring = db.PlantMonitorings.Find(id);
+            PlantMonitoring plantMonitoring = db.PlantMonitorings
+                .Include(p => p.Plant)
+                .Include(p => p.Monitoring)
+                .FirstOrDefault(p => p.Id == id);
             if (plantMonitoring == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MonitoringID = new SelectList(db.Monitorings, "MonitoringID", "MonitoringName", plantMonitoring.MonitoringID);
-            ViewBag.PlantID = new SelectList(db.Plants, "Id", "PlantName", plantMonitoring.PlantID);
+            
+            // Clear any existing model state to ensure fresh values
+            ModelState.Clear();
+            
+            ViewBag.MonitoringID = new SelectList(db.Monitorings.OrderBy(m => m.MonitoringName), "MonitoringID", "MonitoringName", plantMonitoring.MonitoringID);
+            ViewBag.PlantID = new SelectList(db.Plants.OrderBy(p => p.PlantName), "Id", "PlantName", plantMonitoring.PlantID);
             
             // Get users that have access to this plant
             var usersWithAccess = db.UserPlants
