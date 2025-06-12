@@ -12,7 +12,7 @@
     <!-- Link to Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <!-- Link to external CSS styles -->
-    <link href="Areas/FETS/Assets/css/styles.css" rel="stylesheet" />
+    <link href="~Areas\FETS\Assets\css\styles.css" rel="stylesheet" />
     <style>
         /* General body styling */
         body {
@@ -65,8 +65,7 @@
         /* Logo container styling */
         .logo-container {
             text-align: center;
-            margin-bottom: 5px;
-            width: 100%;
+            margin-bottom: 0px;
             position: relative;
             display: flex;
             justify-content: center;
