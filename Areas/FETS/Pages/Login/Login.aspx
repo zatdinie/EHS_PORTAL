@@ -7,14 +7,12 @@
     <title>INARI - FETS</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="~/Areas/FETS/favicon.ico" type="image/x-icon" />
-    <!-- Preload logo image -->
-    <link rel="preload" href="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.png")%>" as="image" />
     <!-- Link to Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Link to Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <!-- Link to external CSS styles -->
-    <link href="<%=ResolveUrl("~/Areas/FETS/Assets/css/styles.css")%>" rel="stylesheet" />
+    <link href="Areas/FETS/Assets/css/styles.css" rel="stylesheet" />
     <style>
         /* General body styling */
         body {
@@ -67,7 +65,7 @@
         /* Logo container styling */
         .logo-container {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 5px;
             width: 100%;
             position: relative;
             display: flex;
@@ -75,20 +73,15 @@
             align-items: center;
             height: auto;
             overflow: visible;
-            padding: 15px 0;
-            min-height: 90px; /* Ensures consistent height */
         }
 
         .logo {
             height: auto;
             display: block;
             position: relative;
-            width: auto;
+            width: 60%;
             max-width: 220px;
-            max-height: 80px;
             margin: 0 auto;
-            object-fit: contain;
-            transition: all 0.3s ease;
         }
 
         /* Login container styling */
@@ -262,49 +255,36 @@
         @media (min-width: 1600px) {
             .logo {
                 max-width: 240px;
-                max-height: 90px;
             }
         }
 
         @media (max-width: 1440px) {
             .logo {
                 max-width: 220px;
-                max-height: 80px;
             }
         }
 
         @media (max-width: 1080px) {
             .logo {
                 max-width: 200px;
-                max-height: 75px;
             }
         }
 
         @media (max-width: 1024px) {
             .logo {
                 max-width: 180px;
-                max-height: 70px;
             }
         }
 
         @media (max-width: 768px) {
             .logo {
                 max-width: 160px;
-                max-height: 65px;
-            }
-            .logo-container {
-                padding: 10px 0;
             }
         }
 
         @media (max-width: 480px) {
             .logo {
                 max-width: 140px;
-                max-height: 60px;
-            }
-            .logo-container {
-                padding: 8px 0;
-                margin-bottom: 20px;
             }
         }
 
@@ -341,15 +321,6 @@
             .login-header h1 {
                 font-size: 1.8rem;
             }
-            
-            .logo-container {
-                padding: 10px 0;
-            }
-            
-            .logo {
-                max-width: 150px;
-                max-height: 65px;
-            }
         }
         
         /* Handle mobile view in portrait orientation */
@@ -369,16 +340,6 @@
                 height: 70vh;
                 box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.1);
             }
-            
-            .logo-container {
-                padding: 8px 0;
-                margin-bottom: 15px;
-            }
-            
-            .logo {
-                max-width: 130px;
-                max-height: 55px;
-            }
         }
     </style>
 </head>
@@ -394,9 +355,7 @@
         <form id="form1" runat="server">
             <!-- Logo container -->
             <div class="logo-container">
-                <img src="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.png")%>" alt="FETS Logo" class="logo" 
-                     onerror="this.onerror=null;this.src='<%=ResolveUrl("~/Areas/FETS/Assets/images/logo.png")%>';" 
-                     loading="eager" />
+                <img src="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.png")%>" alt="FETS Logo" class="logo" />
             </div>
 
             <!-- Login container -->
