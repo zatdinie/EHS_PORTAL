@@ -26,6 +26,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         {
             System.Diagnostics.Debug.WriteLine("========================================");
             System.Diagnostics.Debug.WriteLine($"INDEX ACTION CALLED - User: {User.Identity.Name}");
+            System.Diagnostics.Debug.WriteLine($"Filters - Category: {category}, Plant: {plantFilter}, Status: {status}, Type: {monitoringType}, Frequency: {frequency}");
             System.Diagnostics.Debug.WriteLine("========================================");
             
             // Get all plant monitoring items with plant and monitoring details
@@ -51,6 +52,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 query = query.Where(p => p.Monitoring.MonitoringCategory == category);
                 ViewBag.SelectedCategory = category;
+                System.Diagnostics.Debug.WriteLine($"Filtering by category: {category}");
             }
 
             // Apply plant filter
@@ -63,11 +65,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 {
                     query = query.Where(p => plantIds.Contains(p.PlantID));
                     ViewBag.SelectedPlantFilter = plantFilter;
+                    System.Diagnostics.Debug.WriteLine($"Filtering by plants: {string.Join(", ", plantIds)}");
                 }
                 else
                 {
                     // If we couldn't parse any IDs, store the original filter string
                     ViewBag.SelectedPlantFilter = plantFilter;
+                    System.Diagnostics.Debug.WriteLine($"Could not parse plant IDs from: {plantFilter}");
                 }
             }
 
@@ -84,10 +88,12 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     if (status == "In Quotation") status = "Quotation Requested";
                     
                     query = query.Where(p => p.ProcStatus == status);
+                    System.Diagnostics.Debug.WriteLine($"Filtering by process status: {status}");
                 }
                 else
                 {
                     query = query.Where(p => p.ExpStatus == status);
+                    System.Diagnostics.Debug.WriteLine($"Filtering by expiry status: {status}");
                 }
 
                 ViewBag.SelectedStatus = status;
@@ -98,6 +104,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 query = query.Where(p => p.Monitoring.MonitoringName == monitoringType);
                 ViewBag.SelectedMonitoringType = monitoringType;
+                System.Diagnostics.Debug.WriteLine($"Filtering by monitoring type: {monitoringType}");
             }
 
             // New filter for frequency
@@ -105,6 +112,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 query = query.Where(p => p.Monitoring.MonitoringFreq == frequency.Value);
                 ViewBag.SelectedFrequency = frequency.Value;
+                System.Diagnostics.Debug.WriteLine($"Filtering by frequency: {frequency}");
             }
 
             // Load plants and monitoring categories for filtering
@@ -146,7 +154,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 "Quotation Requested",
                 "Not Started",
                 // Expiration Statuses
-                "Valid",
+                "Active",
                 "Expiring Soon",
                 "Expired",
                 "No Expiry"
@@ -155,10 +163,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // Get monitoring notifications for the current user
             ViewBag.Notifications = GetMonitoringNotifications();
             
-            // Group by Month for progress tracker
-            var currentYear = DateTime.Now.Year;
+            // Execute the query and get results
             var result = query.ToList();
-
+            System.Diagnostics.Debug.WriteLine($"Query returned {result.Count} results");
+            
             return View(result);
         }
 
@@ -1287,7 +1295,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             var notifications = new List<MonitoringNotification>();
             var currentUser = User.Identity.Name;
             var today = DateTime.Now.Date;
-            var thirtyDaysFromNow = today.AddDays(30); // Calculate date before using in LINQ
+            var ninetyDaysFromNow = today.AddDays(90); // Calculate date before using in LINQ
             
             // Get the list of read notification IDs from session
             var readNotificationIds = Session["ReadNotifications"] as List<int> ?? new List<int>();
@@ -1296,34 +1304,46 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 System.Diagnostics.Debug.WriteLine($"Generating notifications for user: {currentUser}");
                 
-                // 1. Items expiring soon (30, 14, and 7 days)
+                // Get plants the user has access to
+                var userId = User.Identity.GetUserId();
+                var userPlantIds = new List<int>();
+                
+                // If user is admin, they can see all plants, otherwise only assigned plants
+                if (User.IsInRole("Admin"))
+                {
+                    userPlantIds = db.Plants.Select(p => p.Id).ToList();
+                }
+                else
+                {
+                    userPlantIds = db.UserPlants
+                        .Where(up => up.UserId == userId)
+                        .Select(up => up.PlantId)
+                        .ToList();
+                }
+                
+                System.Diagnostics.Debug.WriteLine($"User has access to {userPlantIds.Count} plants");
+                
+                // 1. Items expiring soon (90 days)
                 var expiringItems = db.PlantMonitorings
                     .Include(p => p.Plant)
                     .Include(p => p.Monitoring)
                     .Where(p => p.ExpDate.HasValue && 
                            p.ExpDate.Value >= today &&
-                           p.ExpDate.Value <= thirtyDaysFromNow &&
-                           p.ProcStatus != "Completed")
+                           p.ExpDate.Value <= ninetyDaysFromNow &&
+                           p.ProcStatus == "Not Started" &&
+                           userPlantIds.Contains(p.PlantID))
                     .ToList();
                 
                 System.Diagnostics.Debug.WriteLine($"Found {expiringItems.Count} expiring items");
                 foreach (var item in expiringItems)
                 {
                     var daysRemaining = (item.ExpDate.Value - today).Days;
-                    string urgency = "";
-                    
-                    if (daysRemaining <= 7)
-                        urgency = "Very soon (7 days)";
-                    else if (daysRemaining <= 14)
-                        urgency = "Soon (14 days)";
-                    else
-                        urgency = "Within 30 days";
                     
                     notifications.Add(new MonitoringNotification
                     {
                         Type = NotificationType.Expiring,
                         Title = "Monitoring Expiring",
-                        Message = $"{item.Monitoring.MonitoringName} for {item.Plant.PlantName} {(string.IsNullOrEmpty(item.Area) ? "" : "(" + item.Area + ")")} is expiring {urgency}",
+                        Message = $"{item.Monitoring.MonitoringName} for {item.Plant.PlantName} {(string.IsNullOrEmpty(item.Area) ? "" : "(" + item.Area + ")")} is expiring in {daysRemaining} day{(daysRemaining != 1 ? "s" : "")}",
                         Link = Url.Action("Details", new { id = item.Id }),
                         ItemId = item.Id,
                         IsRead = readNotificationIds.Contains(item.Id)
@@ -1334,9 +1354,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 var assignedItems = db.PlantMonitorings
                     .Include(p => p.Plant)
                     .Include(p => p.Monitoring)
-                    .Where(p => (p.QuoteUserAssign == currentUser && p.QuoteCompleteDate == null) || 
+                    .Where(p => ((p.QuoteUserAssign == currentUser && p.QuoteCompleteDate == null) || 
                            (p.EprUserAssign == currentUser && p.EprCompleteDate == null) ||
-                           (p.WorkUserAssign == currentUser && p.WorkCompleteDate == null))
+                           (p.WorkUserAssign == currentUser && p.WorkCompleteDate == null)) &&
+                           userPlantIds.Contains(p.PlantID))
                     .ToList();
                 
                 System.Diagnostics.Debug.WriteLine($"Found {assignedItems.Count} assigned items");
@@ -1365,8 +1386,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 var readyForNextPhase = db.PlantMonitorings
                     .Include(p => p.Plant)
                     .Include(p => p.Monitoring)
-                    .Where(p => (p.QuoteCompleteDate.HasValue && !p.EprCompleteDate.HasValue) ||
-                           (p.EprCompleteDate.HasValue && !p.WorkCompleteDate.HasValue))
+                    .Where(p => ((p.QuoteCompleteDate.HasValue && !p.EprCompleteDate.HasValue) ||
+                           (p.EprCompleteDate.HasValue && !p.WorkCompleteDate.HasValue)) &&
+                           userPlantIds.Contains(p.PlantID))
                     .ToList()
                     .Where(p => (p.QuoteCompleteDate.HasValue && !p.EprCompleteDate.HasValue && p.EprUserAssign == currentUser) ||
                            (p.EprCompleteDate.HasValue && !p.WorkCompleteDate.HasValue && p.WorkUserAssign == currentUser))
@@ -1398,10 +1420,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     .Include(p => p.Plant)
                     .Include(p => p.Monitoring)
                     .Where(p => p.ProcStatus == "Completed" && 
-                          p.WorkCompleteDate.HasValue)
+                          p.WorkCompleteDate.HasValue &&
+                          p.WorkCompleteDate.Value >= lastWeek &&
+                          userPlantIds.Contains(p.PlantID))
                     .ToList()
-                    .Where(p => p.WorkCompleteDate.Value >= lastWeek && 
-                          (p.QuoteUserAssign == currentUser || p.EprUserAssign == currentUser || p.WorkUserAssign == currentUser))
+                    .Where(p => p.QuoteUserAssign == currentUser || p.EprUserAssign == currentUser || p.WorkUserAssign == currentUser)
                     .ToList();
                 
                 System.Diagnostics.Debug.WriteLine($"Found {completedItems.Count} completed items");

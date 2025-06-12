@@ -122,14 +122,22 @@ namespace EHS_PORTAL.Areas.CLIP.Models
         // Helper method to calculate expiration status
         public void CalculateExpStatus()
         {
+            string previousExpStatus = ExpStatus; // Store previous status to detect changes
+            
             if (!ExpDate.HasValue)
                 ExpStatus = "No Expiry";
             else if (ExpDate < DateTime.Now)
                 ExpStatus = "Expired";
-            else if (ExpDate < DateTime.Now.AddDays(30))
+            else if (ExpDate < DateTime.Now.AddDays(90))
                 ExpStatus = "Expiring Soon";
             else
                 ExpStatus = "Active";
+                
+            // If status changed to "Expiring Soon", automatically set process status to "Not Started"
+            if (ExpStatus == "Expiring Soon" && previousExpStatus != "Expiring Soon")
+            {
+                ProcStatus = "Not Started";
+            }
         }
 
         // Helper method to calculate both statuses

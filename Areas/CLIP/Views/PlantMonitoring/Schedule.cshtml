@@ -83,15 +83,7 @@
             </div>
     </div>
 
-    <!-- Filter Debug Info -->
-    @if (ViewBag.SelectedPlantFilter != null && !string.IsNullOrEmpty(ViewBag.SelectedPlantFilter.ToString()))
-    {
-        <div class="alert alert-info mb-4">
-            <strong>Active Filter:</strong> Plant IDs @ViewBag.SelectedPlantFilter 
-            <span class="ms-3">(@totalRecordsCount total records showing)</span>
-        </div>
-    }
-
+   
     <!-- Alert Messages -->
     @if (TempData["SuccessMessage"] != null)
     {
@@ -118,27 +110,27 @@
                     class="btn @(ViewBag.SelectedPlantFilter == null || ViewBag.SelectedPlantFilter == "" ? "btn-primary" : "btn-outline-primary")">
                     <i class="bi bi-buildings"></i> All Plants
                 </a>
-                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "5,7,10" })"
-                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "5,7,10" ? "btn-primary" : "btn-outline-primary")">
+                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "1,3,6" })"
+                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "1,3,6" ? "btn-primary" : "btn-outline-primary")">
                     <i class="bi bi-buildings"></i> P1, P3, P5
                 </a>
-                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "8" })"
-                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "8" ? "btn-primary" : "btn-outline-primary")">
+                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "4" })"
+                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "4" ? "btn-primary" : "btn-outline-primary")">
                     <i class="bi bi-buildings"></i> P21
                 </a>
-                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "6,11" })"
-                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "6,11" ? "btn-primary" : "btn-outline-primary")">
+                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "2,7" })"
+                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "2,7" ? "btn-primary" : "btn-outline-primary")">
                     <i class="bi bi-buildings"></i> P13, P55
                 </a>
-                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "9" })"
-                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "9" ? "btn-primary" : "btn-outline-primary")">
+                <a href="@Url.Action("Schedule", "PlantMonitoring", new { plantFilter = "5" })"
+                    class="btn @(ViewBag.SelectedPlantFilter != null && ViewBag.SelectedPlantFilter.ToString() == "5" ? "btn-primary" : "btn-outline-primary")">
                     <i class="bi bi-buildings"></i> P34
                 </a>
             </div>
             @if (ViewBag.SelectedPlantFilter != null && !string.IsNullOrEmpty(ViewBag.SelectedPlantFilter.ToString()))
             {
                 <div class="mt-2 small text-muted">
-                    Currently filtering for plant IDs: @ViewBag.SelectedPlantFilter
+                    
                 </div>
             }
         </div>
@@ -1323,22 +1315,33 @@ media (max-width: 768px) {
             $accordion.show();
         });
         
-        // Handle search filter
-        $('#searchInput').on('keyup', function() {
-            var value = $(this).val().toLowerCase();
+        // Function to apply all filters together
+        function applyFilters() {
+            var searchValue = $('#searchInput').val().toLowerCase();
+            var statusValue = $('#statusFilter').val().toLowerCase();
             
+            // First hide all items
             $('.monitoring-item').each(function() {
                 var $item = $(this);
-                var text = $item.text().toLowerCase();
+                var itemText = $item.text().toLowerCase();
+                var itemStatus = $item.find('.badge').text().toLowerCase();
+                var matchesSearch = searchValue === '' || itemText.indexOf(searchValue) > -1;
+                var matchesStatus = statusValue === '' || itemStatus.indexOf(statusValue) > -1;
                 
-                if (text.indexOf(value) > -1) {
+                // Show item only if it matches both filters
+                if (matchesSearch && matchesStatus) {
                     $item.show();
                 } else {
                     $item.hide();
                 }
             });
             
-            // Check if any items are visible in each section
+            // Update category section visibility
+            updateCategorySectionVisibility();
+        }
+        
+        // Function to update category section visibility
+        function updateCategorySectionVisibility() {
             $('.category-section').each(function() {
                 var $section = $(this);
                 var hasVisibleItems = false;
@@ -1356,48 +1359,20 @@ media (max-width: 768px) {
                     $section.hide();
                 }
             });
+        }
+        
+        // Handle search filter
+        $('#searchInput').on('keyup', function() {
+            applyFilters();
         });
         
-        // Initialize the status filter
+        // Handle status filter
         $('#statusFilter').on('change', function() {
-            var status = $(this).val().toLowerCase();
-            
-            if (status === '') {
-                // Show all items if no status filter
-                $('.monitoring-item').show();
-            } else {
-                // Filter by status
-                $('.monitoring-item').each(function() {
-                    var $item = $(this);
-                    var itemStatus = $item.find('.badge:contains("' + status + '")').text().toLowerCase();
-                    
-                    if (itemStatus.indexOf(status.toLowerCase()) > -1) {
-                        $item.show();
-                    } else {
-                        $item.hide();
-                    }
-                });
-            }
-            
-            // Check if any items are visible in each section
-            $('.category-section').each(function() {
-                var $section = $(this);
-                var hasVisibleItems = false;
-                
-                $section.find('.monitoring-item').each(function() {
-                    if ($(this).is(':visible')) {
-                        hasVisibleItems = true;
-                        return false; // Break the loop
-                    }
-                });
-                
-                if (hasVisibleItems) {
-                    $section.show();
-                } else {
-                    $section.hide();
-                }
-            });
+            applyFilters();
         });
+        
+        // Initialize filters on page load
+        applyFilters();
     });
 </script>
 } 
