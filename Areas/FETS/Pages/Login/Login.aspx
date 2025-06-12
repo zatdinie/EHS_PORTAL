@@ -12,7 +12,7 @@
     <!-- Link to Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <!-- Link to external CSS styles -->
-    <link href="~/Areas/FETS/Assets/css/styles.css" rel="stylesheet" />
+    <link href="~Areas\FETS\Assets\css\styles.css" rel="stylesheet" />
     <style>
         /* General body styling */
         body {
@@ -65,8 +65,7 @@
         /* Logo container styling */
         .logo-container {
             text-align: center;
-            margin-bottom: 30px;
-            width: 100%;
+            margin-bottom: 0px;
             position: relative;
             display: flex;
             justify-content: center;
@@ -355,7 +354,7 @@
         <form id="form1" runat="server">
             <!-- Logo container -->
             <div class="logo-container">
-                <img src="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.jpeg")%>" alt="FETS Logo" class="logo" />
+                <img src="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.png")%>" alt="FETS Logo" class="logo" />
             </div>
 
             <!-- Login container -->
@@ -387,7 +386,7 @@
                 
                 <!-- Back to Dashboard Button -->
                 <div class="back-to-dashboard">
-                    <a href="~/Areas/FETS/Pages/PublicDashboard/PublicDashboard.aspx" class="btn-back">
+                    <a href="/Areas/FETS/Pages/PublicDashboard/PublicDashboard.aspx" class="btn-back">
                         <i class="fas fa-arrow-left"></i> Back to Dashboard
                     </a>
                 </div>

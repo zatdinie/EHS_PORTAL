@@ -347,7 +347,7 @@
     <Content Include="Areas\FETS\Uploads\misc\image-1.png" />
     <Content Include="Areas\FETS\Uploads\misc\image-2.png" />
     <Content Include="Areas\FETS\Uploads\misc\login.png" />
-    <Content Include="Areas\FETS\Uploads\misc\logo.jpeg" />
+    <Content Include="Areas\FETS\Uploads\misc\logo.png" />
     <Content Include="Areas\FETS\Uploads\misc\mapupload.png" />
     <Content Include="Areas\FETS\Uploads\misc\publicdashboard1.jpg" />
     <Content Include="Areas\FETS\Uploads\misc\publicdashboard2.jpg" />

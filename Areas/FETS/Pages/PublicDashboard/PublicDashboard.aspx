@@ -424,7 +424,7 @@
         <div class="dashboard-container">
             <div class="dashboard-header uniform-width-container">
                 <div class="logo-container">
-                    <img src="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.jpeg")%>" alt="INARI Logo" class="logo" />
+                    <img src="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.png")%>" alt="INARI Logo" class="logo" />
                 </div>
                 <h2>ENVIRONMENT, HEALTH AND SAFETY DEPARTMENT (EHS)</h2>
                 <h3>FIRE EXTINGUISHER TRACKING DASHBOARD</h3>
