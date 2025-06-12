@@ -33,7 +33,7 @@ LEFT JOIN
     [ESH].[CLIP].[Monitoring] M ON PM.MonitoringID = M.MonitoringID
 WHERE 
     PM.ExpDate IS NOT NULL
-    AND DATEDIFF(DAY, GETDATE(), PM.ExpDate) <= 30
+    AND DATEDIFF(DAY, GETDATE(), PM.ExpDate) <= 90
     AND DATEDIFF(DAY, GETDATE(), PM.ExpDate) >= 0
 ORDER BY 
     DaysUntilExpiry;
@@ -230,13 +230,13 @@ BEGIN
             
             <p>Dear Team,</p>
             
-            <p>This is an <strong>important notification</strong> regarding plant monitoring items for <strong>' + @plantName + '</strong> that will expire within the next 30 days. Please take action to ensure continued compliance.</p>
+            <p>This is an <strong>important notification</strong> regarding plant monitoring items for <strong>' + @plantName + '</strong> that will expire within the next 90 days. Please take action to ensure continued compliance.</p>
             
             <div class="summary-box">
                 <h3>Summary:</h3>
                 <div class="summary-item critical-count">Critical (≤7 days): ' + CAST(@plantCriticalCount AS varchar) + '</div>
                 <div class="summary-item warning-count">Warning (8-15 days): ' + CAST(@plantWarningCount AS varchar) + '</div>
-                <div class="summary-item info-count">Upcoming (16-30 days): ' + CAST(@plantInfoCount AS varchar) + '</div>
+                <div class="summary-item info-count">Upcoming (16-90 days): ' + CAST(@plantInfoCount AS varchar) + '</div>
                 <div class="summary-item">Total: ' + CAST(@plantItemCount AS varchar) + '</div>
             </div>
             
@@ -269,7 +269,7 @@ BEGIN
                 <ul>
                     <li><span style="color: #a94442; font-weight: bold;">Red</span> - Critical (7 days or less)</li>
                     <li><span style="color: #8a6d3b; font-weight: bold;">Yellow</span> - Warning (8-15 days)</li>
-                    <li><span style="color: #31708f;">Blue</span> - Upcoming (16-30 days)</li>
+                    <li><span style="color: #31708f;">Blue</span> - Upcoming (16-90 days)</li>
                 </ul>
             </div>
             

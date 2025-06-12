@@ -130,7 +130,7 @@ namespace EHS_PORTAL
         private string CalculateStatus(DateTime expiryDate)
         {
             DateTime today = DateTime.Today;
-            DateTime expiringSoonDate = expiryDate.AddDays(-60);
+            DateTime expiringSoonDate = expiryDate.AddDays(-90);
 
             if (today > expiryDate)
                 return "Expired";

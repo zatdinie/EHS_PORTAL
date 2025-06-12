@@ -84,8 +84,8 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         {
             // Get current date
             var currentDate = DateTime.Now;
-            // Date 30 days from now for "expiring soon" calculation
-            var expiringDate = currentDate.AddDays(30);
+            // Date 90 days from now for "expiring soon" calculation (changed from 30 to 90 days)
+            var expiringDate = currentDate.AddDays(90);
             
             // Get all plants
             var plants = db.Plants.ToList();

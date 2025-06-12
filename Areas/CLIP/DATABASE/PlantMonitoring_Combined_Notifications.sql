@@ -1,16 +1,20 @@
 USE [ESH]
 GO
+/****** Object:  StoredProcedure [dbo].[CLIP_PM_WeeklyReminder]    Script Date: 12/6/2025 11:29:35 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[PlantMonitoring_Combined_Notifications] AS 
-BEGIN 
+ALTER PROCEDURE [dbo].[CLIP_PM_WeeklyReminder] AS
+BEGIN
 SET NOCOUNT ON;
+
+
+
 
 -- PART 1: EXPIRING ITEMS SECTION
 -- Find expiring items in plant monitoring
-SELECT 
+SELECT
     PM.Id,
     PM.PlantID,
     PM.Area,
@@ -20,28 +24,31 @@ SELECT
     PM.ExpDate,
     DATEDIFF(DAY, GETDATE(), PM.ExpDate) AS DaysUntilExpiry,
     PM.Remarks,
-    CASE 
+    CASE
         WHEN DATEDIFF(DAY, GETDATE(), PM.ExpDate) <= 7 THEN 'critical'
         WHEN DATEDIFF(DAY, GETDATE(), PM.ExpDate) <= 15 THEN 'warning'
         ELSE 'info'
     END AS SeverityClass
 INTO #ExpiringItems
-FROM 
+FROM
     [ESH].[CLIP].[PlantMonitoring] PM
-LEFT JOIN 
+LEFT JOIN
     [ESH].[CLIP].[Plants] P ON PM.PlantID = P.Id
-LEFT JOIN 
+LEFT JOIN
     [ESH].[CLIP].[Monitoring] M ON PM.MonitoringID = M.MonitoringID
-WHERE 
+WHERE
     PM.ExpDate IS NOT NULL
-    AND DATEDIFF(DAY, GETDATE(), PM.ExpDate) <= 30
+    AND DATEDIFF(DAY, GETDATE(), PM.ExpDate) <= 90
     AND DATEDIFF(DAY, GETDATE(), PM.ExpDate) >= 0
-ORDER BY 
+ORDER BY
     DaysUntilExpiry;
 
+
+
+
 -- PART 2: STATUS UPDATES SECTION
--- Create a temporary table to store status changes from the last 24 hours
-SELECT 
+-- Create a temporary table to store status changes from the last week (changed from 24 hours)
+SELECT
     PM.Id,
     PM.PlantID,
     PM.MonitoringID,
@@ -61,7 +68,7 @@ SELECT
     PM.WorkCompleteDate,
     PM.WorkUserAssign,
     PM.Remarks,
-    CASE 
+    CASE
         WHEN PM.WorkCompleteDate IS NOT NULL THEN 'Completed'
         WHEN PM.WorkDate IS NOT NULL THEN 'Work In Progress'
         WHEN PM.EprDate IS NOT NULL THEN 'ePR Raised'
@@ -69,22 +76,25 @@ SELECT
         ELSE 'Not Started'
     END AS CurrentStatus,
     CASE
-        WHEN (PM.QuoteDate IS NOT NULL AND DATEDIFF(HOUR, PM.QuoteDate, GETDATE()) <= 24)
-            OR (PM.QuoteCompleteDate IS NOT NULL AND DATEDIFF(HOUR, PM.QuoteCompleteDate, GETDATE()) <= 24)
-            OR (PM.EprDate IS NOT NULL AND DATEDIFF(HOUR, PM.EprDate, GETDATE()) <= 24)
-            OR (PM.EprCompleteDate IS NOT NULL AND DATEDIFF(HOUR, PM.EprCompleteDate, GETDATE()) <= 24)
-            OR (PM.WorkDate IS NOT NULL AND DATEDIFF(HOUR, PM.WorkDate, GETDATE()) <= 24)
-            OR (PM.WorkCompleteDate IS NOT NULL AND DATEDIFF(HOUR, PM.WorkCompleteDate, GETDATE()) <= 24)
+        WHEN (PM.QuoteDate IS NOT NULL AND DATEDIFF(DAY, PM.QuoteDate, GETDATE()) <= 7)
+            OR (PM.QuoteCompleteDate IS NOT NULL AND DATEDIFF(DAY, PM.QuoteCompleteDate, GETDATE()) <= 7)
+            OR (PM.EprDate IS NOT NULL AND DATEDIFF(DAY, PM.EprDate, GETDATE()) <= 7)
+            OR (PM.EprCompleteDate IS NOT NULL AND DATEDIFF(DAY, PM.EprCompleteDate, GETDATE()) <= 7)
+            OR (PM.WorkDate IS NOT NULL AND DATEDIFF(DAY, PM.WorkDate, GETDATE()) <= 7)
+            OR (PM.WorkCompleteDate IS NOT NULL AND DATEDIFF(DAY, PM.WorkCompleteDate, GETDATE()) <= 7)
         THEN 1
         ELSE 0
     END AS HasRecentChanges
 INTO #StatusItems
-FROM 
+FROM
     [ESH].[CLIP].[PlantMonitoring] PM
-LEFT JOIN 
+LEFT JOIN
     [ESH].[CLIP].[Plants] P ON PM.PlantID = P.Id
-LEFT JOIN 
+LEFT JOIN
     [ESH].[CLIP].[Monitoring] M ON PM.MonitoringID = M.MonitoringID;
+
+
+
 
 -- Get all plants that need notifications (either expiring items or status updates)
 SELECT DISTINCT PlantID, PlantName
@@ -95,12 +105,18 @@ FROM (
     SELECT PlantID, PlantName FROM #StatusItems WHERE HasRecentChanges = 1
 ) AS CombinedPlants;
 
+
+
+
 -- Count statistics for overall report
 DECLARE @totalExpiringCount int = (SELECT COUNT(*) FROM #ExpiringItems);
 DECLARE @criticalCount int = (SELECT COUNT(*) FROM #ExpiringItems WHERE SeverityClass = 'critical');
 DECLARE @warningCount int = (SELECT COUNT(*) FROM #ExpiringItems WHERE SeverityClass = 'warning');
 DECLARE @infoCount int = (SELECT COUNT(*) FROM #ExpiringItems WHERE SeverityClass = 'info');
 DECLARE @recentChangesCount int = (SELECT COUNT(*) FROM #StatusItems WHERE HasRecentChanges = 1);
+
+
+
 
 -- Exit if no items to report
 IF @totalExpiringCount = 0 AND @recentChangesCount = 0
@@ -111,18 +127,33 @@ BEGIN
     RETURN;
 END
 
+
+
+
 -- Define base URL for the application
-DECLARE @baseUrl nvarchar(100) = 'https://inariportal.inari-amertron.com.my/CLIP/PlantMonitoring/Details/';
+DECLARE @baseUrl nvarchar(100) = 'http://10.21.11.60:8084/CLIP/PlantMonitoring';
+
+
+
 
 -- Loop through each affected plant and send emails to users assigned to that plant
 DECLARE @plantID int;
 DECLARE @plantName nvarchar(100);
 
-DECLARE plant_cursor CURSOR FOR 
+
+
+
+DECLARE plant_cursor CURSOR FOR
 SELECT PlantID, PlantName FROM #AffectedPlants;
+
+
+
 
 OPEN plant_cursor;
 FETCH NEXT FROM plant_cursor INTO @plantID, @plantName;
+
+
+
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
@@ -131,25 +162,25 @@ BEGIN
     INTO #PlantExpiringItems
     FROM #ExpiringItems
     WHERE PlantID = @plantID;
-    
+   
     SELECT *
     INTO #PlantStatusItems
     FROM #StatusItems
     WHERE PlantID = @plantID;
-    
+   
     -- Count statistics for this plant
     DECLARE @plantExpiringCount int = (SELECT COUNT(*) FROM #PlantExpiringItems);
     DECLARE @plantCriticalCount int = (SELECT COUNT(*) FROM #PlantExpiringItems WHERE SeverityClass = 'critical');
     DECLARE @plantWarningCount int = (SELECT COUNT(*) FROM #PlantExpiringItems WHERE SeverityClass = 'warning');
     DECLARE @plantInfoCount int = (SELECT COUNT(*) FROM #PlantExpiringItems WHERE SeverityClass = 'info');
     DECLARE @plantRecentChanges int = (SELECT COUNT(*) FROM #PlantStatusItems WHERE HasRecentChanges = 1);
-    
+   
     -- Only proceed if there are items to report for this plant
     IF @plantExpiringCount > 0 OR @plantRecentChanges > 0
     BEGIN
         -- Generate HTML for expiring items
         DECLARE @expiringItemsHTML nvarchar(max) = '';
-        
+       
         IF @plantExpiringCount > 0
         BEGIN
             SELECT @expiringItemsHTML = @expiringItemsHTML + '
@@ -166,10 +197,10 @@ BEGIN
             FROM #PlantExpiringItems
             ORDER BY DaysUntilExpiry;
         END
-        
+       
         -- Generate HTML for recent status changes
         DECLARE @recentChangesHTML nvarchar(max) = '';
-        
+       
         IF @plantRecentChanges > 0
         BEGIN
             SELECT @recentChangesHTML = @recentChangesHTML + '
@@ -180,8 +211,8 @@ BEGIN
                     <td style="padding: 8px; border: 1px solid #ddd;">' + ISNULL(Area, '') + '</td>
                     <td style="padding: 8px; text-align: center; border: 1px solid #ddd;"><span style="font-weight: bold; color: #3c763d;">' + CurrentStatus + '</span></td>
                     <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">' + ISNULL(CONVERT(varchar, ExpDate, 103), 'N/A') + '</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">' + 
-                        CASE 
+                    <td style="padding: 8px; border: 1px solid #ddd;">' +
+                        CASE
                             WHEN CurrentStatus = 'Quotation Requested' THEN ISNULL(QuoteUserAssign, 'Unassigned')
                             WHEN CurrentStatus = 'ePR Raised' THEN ISNULL(EprUserAssign, 'Unassigned')
                             WHEN CurrentStatus IN ('Work In Progress', 'Completed') THEN ISNULL(WorkUserAssign, 'Unassigned')
@@ -191,7 +222,7 @@ BEGIN
                 </tr>'
             FROM #PlantStatusItems
             WHERE HasRecentChanges = 1
-            ORDER BY 
+            ORDER BY
                 CASE CurrentStatus
                     WHEN 'Not Started' THEN 1
                     WHEN 'Quotation Requested' THEN 2
@@ -201,7 +232,7 @@ BEGIN
                     ELSE 6
                 END;
         END
-        
+       
         -- Create email content
         DECLARE @htmlContent nvarchar(max) = '<!DOCTYPE html>
 <html>
@@ -315,12 +346,12 @@ BEGIN
             <h1>Plant Monitoring Notification</h1>
             <p>' + @plantName + ' - ' + CONVERT(varchar, GETDATE(), 103) + '</p>
         </div>
-        
+       
         <div class="content">
             <p>Dear Team,</p>
-            
+           
             <p>This is an <strong>important notification</strong> regarding plant monitoring items for <strong>' + @plantName + '</strong>. Please review the information below and take appropriate action.</p>';
-            
+           
         -- Add expiring items section if there are any
         IF @plantExpiringCount > 0
         BEGIN
@@ -328,15 +359,15 @@ BEGIN
             <div class="section-header">
                 <h2 style="margin: 0;">Expiring Monitoring Items</h2>
             </div>
-            
+           
             <div class="summary-box">
                 <h3>Expiry Summary:</h3>
                 <div class="summary-item critical-count">Critical (≤7 days): ' + CAST(@plantCriticalCount AS varchar) + '</div>
                 <div class="summary-item warning-count">Warning (8-15 days): ' + CAST(@plantWarningCount AS varchar) + '</div>
-                <div class="summary-item info-count">Upcoming (16-30 days): ' + CAST(@plantInfoCount AS varchar) + '</div>
+                <div class="summary-item info-count">Upcoming (16-90 days): ' + CAST(@plantInfoCount AS varchar) + '</div>
                 <div class="summary-item">Total: ' + CAST(@plantExpiringCount AS varchar) + '</div>
             </div>
-            
+           
             <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
                 <thead>
                     <tr>
@@ -355,19 +386,19 @@ BEGIN
                 </tbody>
             </table>';
         END
-        
+       
         -- Add status updates section if there are any
         IF @plantRecentChanges > 0
         BEGIN
             SET @htmlContent = @htmlContent + '
             <div class="section-header">
-                <h2 style="margin: 0;">Recent Status Updates (Last 24 Hours)</h2>
+                <h2 style="margin: 0;">Recent Status Updates (Last 7 Days)</h2>
             </div>
-            
+           
             <div class="summary-box">
                 <div class="summary-item status-update">Status Updates: ' + CAST(@plantRecentChanges AS varchar) + '</div>
             </div>
-            
+           
             <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
                 <thead>
                     <tr>
@@ -386,16 +417,16 @@ BEGIN
                 </tbody>
             </table>';
         END
-        
+       
         -- Close out the HTML
         SET @htmlContent = @htmlContent + '
             <p>Please review these items and take appropriate action. You can click on the "View Details" button to access the full details of each item.</p>
-            
+           
             <p>Thank you for your attention to these important matters.</p>
-            
+           
             <p>Best regards,<br>EHS Portal System</p>
         </div>
-        
+       
         <div class="footer">
             <p>This is an automated message from the EHS Portal. Please do not reply to this email.</p>
             <p>© ' + CAST(YEAR(GETDATE()) AS varchar) + ' Inari Amertron Berhad - Environment, Health and Safety Department</p>
@@ -404,47 +435,93 @@ BEGIN
 </body>
 </html>';
 
+
+
+
         -- Get users assigned to this plant
         DECLARE @recipients nvarchar(max) = '';
-        
+       
         SELECT @recipients = @recipients + Email + ' ; '
         FROM [ESH].[CLIP].[UserPlants] UP
-        JOIN [ESH].[dbo].[AspNetUsers] U ON UP.UserId = U.Id
+        JOIN [ESH].[CLIP].[AspNetUsers] U ON UP.UserId = U.Id
         WHERE UP.PlantId = @plantID AND U.Email IS NOT NULL;
-        
+       
         -- Add admin recipients
         SELECT @recipients = @recipients + Email + ' ; '
-        FROM [ESH].[dbo].[AspNetUsers] U
-        JOIN [ESH].[dbo].[AspNetUserRoles] UR ON U.Id = UR.UserId
-        JOIN [ESH].[dbo].[AspNetRoles] R ON UR.RoleId = R.Id
+        FROM [ESH].[CLIP].[AspNetUsers] U
+        JOIN [ESH].[CLIP].[AspNetUserRoles] UR ON U.Id = UR.UserId
+        JOIN [ESH].[CLIP].[AspNetRoles] R ON UR.RoleId = R.Id
         WHERE R.Name = 'Admin' AND U.Email IS NOT NULL;
-        
+       
         -- Remove trailing semicolon
         IF LEN(@recipients) > 0
             SET @recipients = LEFT(@recipients, LEN(@recipients) - 1);
-        
+       
         -- Send email if we have recipients
         IF LEN(@recipients) > 0
         BEGIN
             DECLARE @subject nvarchar(255) = 'Plant Monitoring Notification - ' + @plantName + ' - ' + CONVERT(varchar, GETDATE(), 103);
+           
+            -- Convert counts to variables to avoid CAST in dynamic SQL
+            DECLARE @expiringCountStr varchar(10) = CAST(@plantExpiringCount AS varchar);
+            DECLARE @statusCountStr varchar(10) = CAST(@plantRecentChanges AS varchar);
+            DECLARE @currentDate varchar(20) = CONVERT(varchar, GETDATE(), 103);
             
-            -- Use Database Mail to send the email
-            EXEC msdb.dbo.sp_send_dbmail
-                @profile_name = 'EHS_Mail_Profile',
-                @recipients = @recipients,
-                @subject = @subject,
-                @body = @htmlContent,
-                @body_format = 'HTML';
+            -- Insert into TAUTO_EMAIL with error handling
+            BEGIN TRY
+                -- Try to insert into AUTOREPORT.dbo.TAUTO_EMAIL
+                DECLARE @sqlCmd nvarchar(max) = N'
+                INSERT INTO [AUTOREPORT].[dbo].TAUTO_EMAIL (
+                    EMAIL_DESC, 
+                    TOLIST, 
+                    CCLIST, 
+                    EMAIL_TITLE, 
+                    EMAIL_CONTENT, 
+                    CREATE_BY, 
+                    CREATE_DATE, 
+                    UPDATE_FLAG
+                ) 
+                VALUES (
+                    ''Plant Monitoring Combined Notification for ' + @plantName + ''', 
+                    ''' + @recipients + ''', 
+                    '''', 
+                    ''' + @subject + ' - Expiring: ' + @expiringCountStr + ' | Status Updates: ' + @statusCountStr + ''', 
+                    ''' + REPLACE(@htmlContent, '''', '''''') + ''', 
+                    ''INARI PORTAL'', 
+                    GETDATE(), 
+                    ''N''
+                )';
+                
+                EXEC sp_executesql @sqlCmd;
+            END TRY
+            BEGIN CATCH
+                -- Log error to a table
+                INSERT INTO [ESH].[FETS].[ErrorLog] (
+                    ErrorMessage,
+                    ErrorLine,
+                    ErrorProcedure,
+                    ErrorDateTime
+                )
+                VALUES (
+                    ERROR_MESSAGE(),
+                    ERROR_LINE(),
+                    ERROR_PROCEDURE(),
+                    GETDATE()
+                );
+            END CATCH
         END
     END
-    
+   
     -- Clean up temporary tables for this plant
     DROP TABLE #PlantExpiringItems;
     DROP TABLE #PlantStatusItems;
-    
+   
     -- Get next plant
     FETCH NEXT FROM plant_cursor INTO @plantID, @plantName;
 END
+
+
+
 
 -- Clean up
 CLOSE plant_cursor;
@@ -453,4 +530,12 @@ DROP TABLE #ExpiringItems;
 DROP TABLE #StatusItems;
 DROP TABLE #AffectedPlants;
 
-END 
+
+
+
+END
+
+
+
+
+
