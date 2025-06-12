@@ -16,6 +16,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         {
             var plantCounts = GetPlantMachineCounts();
             ViewBag.CompetencySummary = GetCompetencySummary();
+            ViewBag.PlantMonitoringSummary = GetPlantMonitoringSummary();
             return View(plantCounts);
         }
 
@@ -146,6 +147,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // Get competency summary for the public dashboard
             ViewBag.CompetencySummary = GetCompetencySummary();
             
+            // Get plant monitoring summary for the public dashboard
+            ViewBag.PlantMonitoringSummary = GetPlantMonitoringSummary();
+            
             return View(plantCounts);
         }
 
@@ -268,6 +272,188 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             
             return View(model);
+        }
+
+        // Class to hold plant monitoring summary data
+        public class PlantMonitoringSummary
+        {
+            public int TotalRecords { get; set; }
+            public int CompletedCount { get; set; }
+            public int InProgressCount { get; set; }
+            public int ExpiredCount { get; set; }
+            public int NotStartedCount { get; set; }
+            public List<ExpiryTimelineItem> ExpiryTimeline { get; set; }
+            public List<WorkAssignmentItem> WorkAssignments { get; set; }
+            public Dictionary<string, int> PhaseDistribution { get; set; }
+        }
+
+        public class ExpiryTimelineItem
+        {
+            public string Month { get; set; }
+            public int Count { get; set; }
+            public bool IsCurrentMonth { get; set; }
+            public bool IsNextMonth { get; set; }
+        }
+
+        public class WorkAssignmentItem
+        {
+            public string UserName { get; set; }
+            public int Count { get; set; }
+        }
+
+        private PlantMonitoringSummary GetPlantMonitoringSummary()
+        {
+            var summary = new PlantMonitoringSummary
+            {
+                TotalRecords = 0,
+                CompletedCount = 0,
+                InProgressCount = 0,
+                ExpiredCount = 0,
+                NotStartedCount = 0,
+                ExpiryTimeline = new List<ExpiryTimelineItem>(),
+                WorkAssignments = new List<WorkAssignmentItem>(),
+                PhaseDistribution = new Dictionary<string, int>()
+            };
+
+            try
+            {
+                // Get all plant monitoring records
+                var plantMonitorings = db.PlantMonitorings.ToList();
+                
+                // Calculate total records and status counts
+                summary.TotalRecords = plantMonitorings.Count;
+                summary.CompletedCount = plantMonitorings.Count(p => p.ProcStatus == "Completed");
+                summary.InProgressCount = plantMonitorings.Count(p => 
+                    p.ProcStatus == "Work In Progress" || 
+                    p.ProcStatus == "ePR Raised" || 
+                    p.ProcStatus == "Quotation Requested");
+                summary.ExpiredCount = plantMonitorings.Count(p => p.ExpStatus == "Expired");
+                summary.NotStartedCount = plantMonitorings.Count(p => p.ProcStatus == "Not Started");
+
+                // Calculate phase distribution
+                summary.PhaseDistribution["Quotation Phase"] = plantMonitorings.Count(p => 
+                    p.QuoteDate.HasValue && (!p.QuoteCompleteDate.HasValue || !p.EprDate.HasValue));
+                
+                summary.PhaseDistribution["ePR Phase"] = plantMonitorings.Count(p => 
+                    p.EprDate.HasValue && (!p.EprCompleteDate.HasValue || !p.WorkDate.HasValue));
+                
+                summary.PhaseDistribution["Work Execution"] = plantMonitorings.Count(p => 
+                    p.WorkDate.HasValue && !p.WorkCompleteDate.HasValue);
+                
+                summary.PhaseDistribution["Completed"] = plantMonitorings.Count(p => 
+                    p.WorkCompleteDate.HasValue);
+                
+                summary.PhaseDistribution["Not Started"] = plantMonitorings.Count(p => 
+                    !p.QuoteDate.HasValue && !p.EprDate.HasValue && !p.WorkDate.HasValue);
+
+                // Generate expiry timeline data for the next 6 months
+                var currentMonth = DateTime.Now.Month;
+                var currentYear = DateTime.Now.Year;
+                
+                for (int i = 0; i < 6; i++)
+                {
+                    var targetMonth = currentMonth + i;
+                    var targetYear = currentYear;
+                    
+                    if (targetMonth > 12)
+                    {
+                        targetMonth -= 12;
+                        targetYear++;
+                    }
+                    
+                    var monthStart = new DateTime(targetYear, targetMonth, 1);
+                    var monthEnd = monthStart.AddMonths(1).AddDays(-1);
+                    
+                    var expiringCount = plantMonitorings.Count(p => 
+                        p.ExpDate.HasValue && 
+                        p.ExpDate.Value >= monthStart && 
+                        p.ExpDate.Value <= monthEnd);
+                    
+                    summary.ExpiryTimeline.Add(new ExpiryTimelineItem
+                    {
+                        Month = monthStart.ToString("MMM yyyy"),
+                        Count = expiringCount,
+                        IsCurrentMonth = i == 0,
+                        IsNextMonth = i == 1
+                    });
+                }
+
+                // Generate work assignment data
+                var workAssignments = plantMonitorings
+                    .Where(p => !string.IsNullOrEmpty(p.WorkUserAssign) || 
+                               !string.IsNullOrEmpty(p.QuoteUserAssign) || 
+                               !string.IsNullOrEmpty(p.EprUserAssign))
+                    .GroupBy(p => 
+                        !string.IsNullOrEmpty(p.WorkUserAssign) ? p.WorkUserAssign :
+                        !string.IsNullOrEmpty(p.EprUserAssign) ? p.EprUserAssign :
+                        p.QuoteUserAssign)
+                    .Select(g => new WorkAssignmentItem
+                    {
+                        UserName = g.Key,
+                        Count = g.Count()
+                    })
+                    .OrderByDescending(w => w.Count)
+                    .Take(7) // Limit to top 7 users
+                    .ToList();
+                
+                summary.WorkAssignments = workAssignments;
+            }
+            catch (Exception ex)
+            {
+                // Log error
+                System.Diagnostics.Debug.WriteLine($"Error getting plant monitoring summary: {ex.Message}");
+                
+                // Ensure we have at least some default data for the charts
+                if (summary.ExpiryTimeline.Count == 0)
+                {
+                    var currentMonth = DateTime.Now.Month;
+                    var currentYear = DateTime.Now.Year;
+                    
+                    for (int i = 0; i < 6; i++)
+                    {
+                        var targetMonth = currentMonth + i;
+                        var targetYear = currentYear;
+                        
+                        if (targetMonth > 12)
+                        {
+                            targetMonth -= 12;
+                            targetYear++;
+                        }
+                        
+                        var monthStart = new DateTime(targetYear, targetMonth, 1);
+                        
+                        summary.ExpiryTimeline.Add(new ExpiryTimelineItem
+                        {
+                            Month = monthStart.ToString("MMM yyyy"),
+                            Count = 0,
+                            IsCurrentMonth = i == 0,
+                            IsNextMonth = i == 1
+                        });
+                    }
+                }
+                
+                // Add a default user if no assignments
+                if (summary.WorkAssignments.Count == 0)
+                {
+                    summary.WorkAssignments.Add(new WorkAssignmentItem
+                    {
+                        UserName = "No Assignments",
+                        Count = 0
+                    });
+                }
+                
+                // Initialize phase distribution with default values
+                if (summary.PhaseDistribution.Count == 0)
+                {
+                    summary.PhaseDistribution["Quotation Phase"] = 0;
+                    summary.PhaseDistribution["ePR Phase"] = 0;
+                    summary.PhaseDistribution["Work Execution"] = 0;
+                    summary.PhaseDistribution["Completed"] = 0;
+                    summary.PhaseDistribution["Not Started"] = 0;
+                }
+            }
+
+            return summary;
         }
     }
 }

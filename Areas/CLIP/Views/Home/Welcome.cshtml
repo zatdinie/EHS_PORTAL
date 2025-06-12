@@ -206,7 +206,123 @@
         </div>
     </div>
     
-    <div class="row mt-4 mb-5">
+    
+    
+    <!-- Plant Monitoring Section -->
+    <h1 class="text-center mb-4 mt-5">PLANT MONITORING</h1>
+    
+    <!-- 1. Status Overview Statistics -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">Total Monitoring Records</div>
+                            <div class="display-3 fw-bold">@ViewBag.PlantMonitoringSummary.TotalRecords</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-clipboard-data"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">Completed</div>
+                            <div class="display-3 fw-bold">@ViewBag.PlantMonitoringSummary.CompletedCount</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">In Progress</div>
+                            <div class="display-3 fw-bold">@ViewBag.PlantMonitoringSummary.InProgressCount</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-hourglass-split"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 text-white">Expired</div>
+                            <div class="display-3 fw-bold">@ViewBag.PlantMonitoringSummary.ExpiredCount</div>
+                        </div>
+                        <div class="fs-1">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- 4. Timeline and Expiry Information -->
+        <div class="col-xl-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <i class="bi bi-calendar-event me-1"></i>
+                    Upcoming Expiries - Trend
+                </div>
+                <div class="card-body">
+                    <canvas id="expiryTimelineChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- 8. Work Assignment Metrics -->
+        <div class="col-xl-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <i class="bi bi-people-fill me-1"></i>
+                    Work Assignments by User
+                </div>
+                <div class="card-body">
+                    <canvas id="workAssignmentChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Phase Distribution Chart -->
+        <div class="col-xl-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <i class="bi bi-diagram-3-fill me-1"></i>
+                    Monitoring Phase Distribution
+                </div>
+                <div class="card-body">
+                    <canvas id="phaseDistributionChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 mb-5">
         <div class="col-md-6 offset-md-3 text-center">
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -221,7 +337,6 @@
             </div>
         </div>
     </div>
-</div>
 
 @section scripts {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -499,6 +614,261 @@
                     title: {
                         display: true,
                         text: 'Competency Status Overview'
+                    },
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        color: '#000',
+                        font: {
+                            weight: 'bold'
+                        },
+                        anchor: 'end',
+                        align: 'top',
+                        offset: 0
+                    }
+                }
+            }
+        });
+        
+        // Plant Monitoring Charts
+        
+        // Expiry Timeline Chart
+        var expiryLabels = [];
+        var expiryData = [];
+        var expiryColors = [];
+        
+        @foreach (var item in ViewBag.PlantMonitoringSummary.ExpiryTimeline)
+        {
+            @:expiryLabels.push('@item.Month');
+            @:expiryData.push(@item.Count);
+            
+            // Different colors based on urgency
+            if (item.IsCurrentMonth) {
+                @:expiryColors.push('rgba(220, 53, 69, 0.7)'); // Red for current month
+            } else if (item.IsNextMonth) {
+                @:expiryColors.push('rgba(255, 193, 7, 0.7)'); // Yellow for next month
+            } else {
+                @:expiryColors.push('rgba(13, 110, 253, 0.7)'); // Blue for future months
+            }
+        }
+        
+        var expiryCtx = document.getElementById('expiryTimelineChart').getContext('2d');
+        var expiryChart = new Chart(expiryCtx, {
+            type: 'line',
+            data: {
+                labels: expiryLabels,
+                datasets: [{
+                    label: 'Expiring Items',
+                    data: expiryData,
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    borderColor: 'rgba(13, 110, 253, 0.8)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: expiryColors,
+                    pointBorderColor: expiryColors.map(color => color.replace('0.7', '1')),
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            precision: 0
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Expiring Items',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Upcoming Expiries by Month',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 20
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                return tooltipItems[0].label;
+                            },
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + ' items';
+                                }
+                                return label;
+                            },
+                            afterLabel: function(context) {
+                                const index = context.dataIndex;
+                                if (index === 0) {
+                                    return 'Current month - urgent attention required';
+                                } else if (index === 1) {
+                                    return 'Next month - plan ahead';
+                                }
+                                return '';
+                            }
+                        }
+                    },
+                    datalabels: {
+                        color: function(context) {
+                            return context.dataIndex <= 1 ? '#000' : '#666';
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: function(context) {
+                                return context.dataIndex <= 1 ? 14 : 12;
+                            }
+                        },
+                        formatter: function(value, context) {
+                            return value > 0 ? value : '';
+                        },
+                        anchor: 'end',
+                        align: 'top',
+                        offset: 5
+                    }
+                }
+            }
+        });
+        
+        // Work Assignment Chart
+        var assigneeLabels = [];
+        var assignmentData = [];
+        var assignmentColors = [
+            'rgba(40, 167, 69, 0.7)',  // Green
+            'rgba(255, 193, 7, 0.7)',  // Yellow
+            'rgba(13, 110, 253, 0.7)', // Blue
+            'rgba(108, 117, 125, 0.7)', // Gray
+            'rgba(111, 66, 193, 0.7)',  // Purple
+            'rgba(23, 162, 184, 0.7)',  // Cyan
+            'rgba(253, 126, 20, 0.7)'   // Orange
+        ];
+        
+        @foreach (var item in ViewBag.PlantMonitoringSummary.WorkAssignments)
+        {
+            @:assigneeLabels.push('@item.UserName');
+            @:assignmentData.push(@item.Count);
+        }
+        
+        var assignmentCtx = document.getElementById('workAssignmentChart').getContext('2d');
+        var assignmentChart = new Chart(assignmentCtx, {
+            type: 'pie',
+            data: {
+                labels: assigneeLabels,
+                datasets: [{
+                    data: assignmentData,
+                    backgroundColor: assignmentColors.slice(0, assigneeLabels.length),
+                    borderColor: assignmentColors.map(color => color.replace('0.7', '1')).slice(0, assigneeLabels.length),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Work Assignments by User'
+                    },
+                    datalabels: {
+                        color: '#000',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: function(value, context) {
+                            return value > 0 ? value : '';
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Phase Distribution Chart
+        var phaseLabels = [];
+        var phaseData = [];
+        var phaseColors = [
+            'rgba(255, 193, 7, 0.7)',  // Yellow for Quotation
+            'rgba(13, 110, 253, 0.7)', // Blue for ePR
+            'rgba(111, 66, 193, 0.7)',  // Purple for Work Execution
+            'rgba(40, 167, 69, 0.7)',  // Green for Completed
+            'rgba(108, 117, 125, 0.7)' // Gray for Not Started
+        ];
+        
+        @foreach (var phase in ViewBag.PlantMonitoringSummary.PhaseDistribution)
+        {
+            @:phaseLabels.push('@phase.Key');
+            @:phaseData.push(@phase.Value);
+        }
+        
+        var phaseCtx = document.getElementById('phaseDistributionChart').getContext('2d');
+        var phaseChart = new Chart(phaseCtx, {
+            type: 'bar',
+            data: {
+                labels: phaseLabels,
+                datasets: [{
+                    label: 'Records',
+                    data: phaseData,
+                    backgroundColor: phaseColors,
+                    borderColor: phaseColors.map(color => color.replace('0.7', '1')),
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            precision: 0
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Monitoring Records by Phase'
                     },
                     legend: {
                         display: false
