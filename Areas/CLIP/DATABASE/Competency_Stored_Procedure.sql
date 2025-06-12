@@ -650,11 +650,134 @@ BEGIN
     END
 
     -- Clean up
-    DROP TABLE IF EXISTS #EnvironmentUsers;
-    DROP TABLE IF EXISTS #SHOUsers;
-    DROP TABLE IF EXISTS #UpcomingDeductions;
-    DROP TABLE IF EXISTS #RPOUsers;
-    DROP TABLE IF EXISTS #UpcomingAtomDeductions;
-    DROP TABLE IF EXISTS #ExpiringCompetencies;
+    DROP TABLE #EnvironmentUsers;
+    DROP TABLE #SHOUsers;
+    DROP TABLE #UpcomingDeductions;
+    DROP TABLE #RPOUsers;
+    DROP TABLE #UpcomingAtomDeductions;
+    DROP TABLE #ExpiringCompetencies;
+
+    ---------------------------------------
+    -- PART 5: Expired Competencies Alert --
+    ---------------------------------------
+    
+    -- Step 1: Identify users with SHO or RPO competencies that have already expired
+    SELECT DISTINCT 
+        U.Id AS UserId,
+        U.UserName,
+        U.Email,
+        CM.ModuleName AS CompetencyType,
+        UC.ExpiryDate,
+        UC.Id AS UserCompetencyId,
+        DATEDIFF(DAY, UC.ExpiryDate, GETDATE()) AS DaysExpired
+    INTO #ExpiredCompetencies
+    FROM [CLIP].[AspNetUsers] U
+    INNER JOIN [CLIP].[UserCompetencies] UC ON U.Id = UC.UserId
+    INNER JOIN [CLIP].[CompetencyModules] CM ON UC.CompetencyModuleId = CM.Id
+    WHERE CM.ModuleName IN ('SHO', 'RPO')
+    AND UC.Status = 'Active'
+    AND UC.ExpiryDate < GETDATE();
+    
+    -- Step 1.1: Update the status of expired competencies to "Expired"
+    UPDATE UC
+    SET UC.Status = 'Expired'
+    FROM [CLIP].[UserCompetencies] UC
+    INNER JOIN #ExpiredCompetencies EC ON UC.Id = EC.UserCompetencyId;
+
+    -- Step 2: Send email if there are expired competencies
+    IF EXISTS (SELECT 1 FROM #ExpiredCompetencies)
+    BEGIN
+        -- Step 2.1: Collect email addresses for users with expired competencies
+        DECLARE @expiredCompetencyUsers NVARCHAR(MAX);
+        SELECT @expiredCompetencyUsers = STUFF((
+            SELECT DISTINCT ' ; ' + Email
+            FROM #ExpiredCompetencies
+            FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 3, '');
+        
+        -- Step 2.2: Combine email lists with admin users
+        DECLARE @allExpiredRecipients NVARCHAR(MAX);
+        IF @adminUsers IS NOT NULL AND @adminUsers <> ''
+        BEGIN
+            IF @expiredCompetencyUsers IS NOT NULL AND @expiredCompetencyUsers <> ''
+                SET @allExpiredRecipients = @expiredCompetencyUsers + ' ; ' + @adminUsers;
+            ELSE
+                SET @allExpiredRecipients = @adminUsers;
+        END
+        ELSE
+            SET @allExpiredRecipients = @expiredCompetencyUsers;
+
+        -- Step 2.3: Build the HTML rows for the email
+        DECLARE @expiredRowsHTML NVARCHAR(MAX) = '';
+        SELECT @expiredRowsHTML = STUFF((
+            SELECT '
+                <tr>
+                    <td>' + UserName + '</td>
+                    <td>' + Email + '</td>
+                    <td>' + CompetencyType + '</td>
+                    <td>' + CONVERT(VARCHAR, ExpiryDate, 103) + '</td>
+                    <td>' + CAST(DaysExpired AS VARCHAR) + '</td>
+                </tr>'
+            FROM #ExpiredCompetencies
+            ORDER BY DaysExpired DESC
+            FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '');
+
+        -- Step 2.4: Compose email content
+        DECLARE @expiredHtmlContent NVARCHAR(MAX);
+        SET @expiredHtmlContent = '
+            <html>
+            <head>
+                <style>
+                    table { border-collapse: collapse; width: 100%; }
+                    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                    th { background-color: #f2f2f2; }
+                    h2, h3 { color: #333366; }
+                    .highlight { background-color: #ffcccc; }
+                </style>
+            </head>
+            <body>
+                <h2>EXPIRED Competencies Alert</h2>
+                <p class="highlight">The following users have competencies that have ALREADY EXPIRED and require immediate attention:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Competency Type</th>
+                            <th>Expiry Date</th>
+                            <th>Days Expired</th>
+                        </tr>
+                    </thead>
+                    <tbody>' + @expiredRowsHTML + '</tbody>
+                </table>
+                <p class="highlight">URGENT: These competencies must be renewed immediately as they are already expired.</p>
+            </body>
+            </html>';
+
+        -- Step 2.5: Insert into email queue
+        DECLARE @totalExpired INT = (SELECT COUNT(*) FROM #ExpiredCompetencies);
+        INSERT INTO [AUTOREPORT].dbo.[TAUTO_EMAIL] (
+            EMAIL_DESC, 
+            TOLIST, 
+            CCLIST, 
+            EMAIL_TITLE, 
+            EMAIL_CONTENT, 
+            CREATE_BY, 
+            CREATE_DATE, 		
+            UPDATE_FLAG
+        ) 
+        VALUES (
+            'Expired Competencies Alert', 
+            @allExpiredRecipients, 
+            '', 
+            'URGENT: ' + CAST(@totalExpired AS VARCHAR) + ' Competencies EXPIRED (' + CONVERT(VARCHAR, GETDATE(), 103) + ')', 
+            @expiredHtmlContent, 
+            'INARI PORTAL', 
+            GETDATE(), 
+            'N'
+        );
+    END
+
+    -- Add expired competencies to cleanup
+    DROP TABLE #ExpiredCompetencies;
 END
 GO
