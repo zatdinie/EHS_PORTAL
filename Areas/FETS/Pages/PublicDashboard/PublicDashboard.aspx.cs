@@ -171,7 +171,7 @@ ORDER BY p.PlantName", conn))
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Simple error handling - in production you might log this
                 hdnTypeChartData.Value = "{}";
@@ -238,7 +238,7 @@ ORDER BY p.PlantName", conn))
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Simple error handling
                 hdnPlantChartData.Value = "{}";
@@ -304,7 +304,7 @@ ORDER BY p.PlantName", conn))
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Simple error handling
                 hdnNextExpiryChartData.Value = "{}";
