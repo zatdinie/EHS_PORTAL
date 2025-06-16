@@ -249,9 +249,18 @@
                                         <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-sm btn-info" title="View Details" data-bs-toggle="tooltip">
                                             <i class="bi bi-info-circle"></i>
                                         </a>
-                                        <a href="@Url.Action("UpdateStatus", new { id = item.Id })" class="btn btn-sm btn-primary" title="Update Status" data-bs-toggle="tooltip">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                        @if (User.IsInRole("Admin") || (ViewBag.UserPlantIds != null && ViewBag.UserPlantIds.Contains(item.PlantID)))
+                                        {
+                                            <a href="@Url.Action("UpdateStatus", new { id = item.Id })" class="btn btn-sm btn-primary" title="Update Status" data-bs-toggle="tooltip">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-sm btn-secondary disabled" title="You don't have access to update this plant" data-bs-toggle="tooltip">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        }
                                         @if (User.IsInRole("Admin"))
                                         {
                                             <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-sm btn-warning" title="Edit Record" data-bs-toggle="tooltip">

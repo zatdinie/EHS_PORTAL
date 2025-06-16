@@ -52,7 +52,8 @@
                         type="button" 
                         role="tab" 
                         aria-controls="quotation" 
-                        aria-selected="@(activeTab == "quotation" ? "true" : "false")">
+                        aria-selected="@(activeTab == "quotation" ? "true" : "false")"
+                        title="First phase: Request for quotation from vendor">
                     <i class="fas fa-file-invoice-dollar me-1"></i> 1. Quotation Phase
                 </button>
             </li>
@@ -65,7 +66,8 @@
                         role="tab" 
                         aria-controls="epr" 
                         aria-selected="@(activeTab == "epr" ? "true" : "false")"
-                        @(!isQuotationCompleted ? "disabled" : "")>
+                        @(!isQuotationCompleted ? "disabled" : "")
+                        title="Second phase: Electronic Purchase Requisition process">
                     <i class="fas fa-file-contract me-1"></i> 2. Raise ePR Phase
                 </button>
             </li>
@@ -78,7 +80,8 @@
                         role="tab" 
                         aria-controls="work" 
                         aria-selected="@(activeTab == "work" ? "true" : "false")"
-                        @(!isEprCompleted ? "disabled" : "")>
+                        @(!isEprCompleted ? "disabled" : "")
+                        title="Third phase: Actual monitoring work execution">
                     <i class="fas fa-tools me-1"></i> 3. Work Execution Phase
                 </button>
             </li>
@@ -91,7 +94,8 @@
                         role="tab" 
                         aria-controls="summary" 
                         aria-selected="@(activeTab == "summary" ? "true" : "false")"
-                        @(!isWorkCompleted ? "disabled" : "")>
+                        @(!isWorkCompleted ? "disabled" : "")
+                        title="Final phase: Overview of completed monitoring">
                     <i class="fas fa-clipboard-check me-1"></i> 4. Summary
                 </button>
             </li>
@@ -105,7 +109,12 @@
     <div class="tab-pane fade @(activeTab == "quotation" ? "show active" : "")" id="quotation" role="tabpanel" aria-labelledby="quotation-tab">
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="fas fa-file-invoice-dollar me-2"></i> Quotation Phase</h5>
+                <h5 class="mb-0">
+                    <i class="fas fa-file-invoice-dollar me-2"></i> Quotation Phase
+                    <span class="ms-2" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>Quotation Phase</strong><br>In this phase, request for Quotation is initiated and vendor pricing is obtained. Complete this phase before proceeding to ePR.">
+                        <i class="bi bi-info-circle"></i>
+                    </span>
+                </h5>
                 <span class="badge bg-light text-primary">Step 1 of 3</span>
             </div>
             <div class="card-body">
@@ -142,6 +151,9 @@
                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     <input type="datetime-local" class="form-control" id="quoteDate" name="QuoteDate" 
                                            value="@(Model.QuoteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Quotation request was initiated">
+                                        <i class="bi bi-info-circle"></i>
+                                    </span>
                                 </div>
                             </div>
                             <div class="form-group mb-3">
@@ -150,6 +162,9 @@
                                     <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                     <input type="datetime-local" class="form-control" id="quoteCompleteDate" name="QuoteCompleteDate" 
                                            value="@(Model.QuoteCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Quotation was approved and completed. PIC required to choose the most cost-efficient pricing offered by Vendors. Kindly include the Quotation if possible.">
+                                        <i class="bi bi-info-circle"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -167,6 +182,9 @@
                                     {
                                         <input type="text" name="QuoteUserAssign" value="@(string.IsNullOrEmpty(Model.QuoteUserAssign) ? currentUser : Model.QuoteUserAssign)" class="form-control" readonly />
                                     }
+                                    <span class="input-group-text" data-bs-toggle="tooltip" title="PIC responsible for this phase">
+                                        <i class="bi bi-info-circle"></i>
+                                    </span>
                                 </div>
                                 <div class="invalid-feedback">Please assign someone to this phase.</div>
                             </div>
@@ -176,6 +194,9 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
                                     <input type="file" name="quoteDocument" class="form-control file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png" data-max-size="20" />
+                                    <span class="input-group-text" data-bs-toggle="tooltip" title="Upload Quotation document or related files (PDF, Word, Excel, images)">
+                                        <i class="bi bi-info-circle"></i>
+                                    </span>
                                 </div>
                                 <small class="form-text text-muted">Max file size: 20MB</small>
                                 @if (!string.IsNullOrEmpty(Model.QuoteDoc))
@@ -221,7 +242,12 @@
     <div class="tab-pane fade @(activeTab == "epr" ? "show active" : "")" id="epr" role="tabpanel" aria-labelledby="epr-tab">
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="fas fa-file-contract me-2"></i> Raise ePR Phase</h5>
+                <h5 class="mb-0">
+                    <i class="fas fa-file-contract me-2"></i> Raise ePR Phase
+                    <span class="ms-2" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>Raise ePR Phase</strong><br>In this phase, Electronic Purchase Requisition is created in the system based on the approved quotation. This is required before Work Phase can begin.">
+                        <i class="bi bi-info-circle"></i>
+                    </span>
+                </h5>
                 <span class="badge bg-light text-warning">Step 2 of 3</span>
             </div>
             <div class="card-body">
@@ -266,6 +292,9 @@
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         <input type="datetime-local" class="form-control" id="eprDate" name="EprDate" 
                                             value="@(Model.EprDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the ePR was initiated in the system">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
@@ -274,6 +303,9 @@
                                         <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                         <input type="datetime-local" class="form-control" id="eprCompleteDate" name="EprCompleteDate" 
                                             value="@(Model.EprCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the ePR was approved and completed">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -291,6 +323,9 @@
                                         {
                                             <input type="text" name="EprUserAssign" value="@(string.IsNullOrEmpty(Model.EprUserAssign) ? currentUser : Model.EprUserAssign)" class="form-control" readonly />
                                         }
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="PIC responsible for raising and processing the ePR">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                     <div class="invalid-feedback">Please assign someone to this phase.</div>
                                 </div>
@@ -300,6 +335,9 @@
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
                                         <input type="file" name="eprDocument" class="form-control file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png" data-max-size="20" />
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="Upload ePR document or purchase order confirmation">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                     <small class="form-text text-muted">Max file size: 20MB</small>
                                     @if (!string.IsNullOrEmpty(Model.EprDoc))
@@ -349,7 +387,12 @@
     <div class="tab-pane fade @(activeTab == "work" ? "show active" : "")" id="work" role="tabpanel" aria-labelledby="work-tab">
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="fas fa-tools me-2"></i> Work Execution Phase</h5>
+                <h5 class="mb-0">
+                    <i class="fas fa-tools me-2"></i> Work Execution Phase
+                    <span class="ms-2" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>Work Execution Phase</strong><br>In this phase, the actual monitoring work is performed by the vendor. Record work start date, submission date, and completion date.">
+                        <i class="bi bi-info-circle"></i>
+                    </span>
+                </h5>
                 <span class="badge bg-light text-success">Step 3 of 3</span>
             </div>
             <div class="card-body">
@@ -389,19 +432,25 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label class="form-label fw-bold">Work Date</label>
+                                    <label class="form-label fw-bold">Work Initiate Date</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         <input type="datetime-local" class="form-control" id="workDate" name="WorkDate" 
                                             value="@(Model.WorkDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Work Execution Phase started">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label class="form-label fw-bold">Submit Date</label>
+                                    <label class="form-label fw-bold">Work Start Date</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                         <input type="datetime-local" class="form-control" id="workSubmitDate" name="WorkSubmitDate" 
                                             value="@(Model.WorkSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Work is Executed">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
@@ -410,6 +459,9 @@
                                         <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                         <input type="datetime-local" class="form-control" id="workCompleteDate" name="WorkCompleteDate" 
                                             value="@(Model.WorkCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the work was verified and accepted as complete. Reminder to use date stated on the Final Report.">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                     <small class="form-text text-muted">When completed, renewal date will be set based on monitoring frequency.</small>
                                 </div>
@@ -428,6 +480,9 @@
                                         {
                                             <input type="text" name="WorkUserAssign" value="@(string.IsNullOrEmpty(Model.WorkUserAssign) ? currentUser : Model.WorkUserAssign)" class="form-control" readonly />
                                         }
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="PIC responsible for overseeing the work and verifying completion">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                     <div class="invalid-feedback">Please assign someone to this phase.</div>
                                 </div>
@@ -437,6 +492,9 @@
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-file-upload"></i></span>
                                         <input type="file" name="workDocument" class="form-control file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png" data-max-size="20" />
+                                        <span class="input-group-text" data-bs-toggle="tooltip" title="Upload related documents such as Final Report, Completion Certificates, etc.">
+                                            <i class="bi bi-info-circle"></i>
+                                        </span>
                                     </div>
                                     <small class="form-text text-muted">Max file size: 20MB</small>
                                     @if (!string.IsNullOrEmpty(Model.WorkDoc))
@@ -486,7 +544,12 @@
     <div class="tab-pane fade @(activeTab == "summary" ? "show active" : "")" id="summary" role="tabpanel" aria-labelledby="summary-tab">
         <div class="card shadow-sm mb-4">
             <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="fas fa-clipboard-check me-2"></i> Monitoring Summary</h5>
+                <h5 class="mb-0">
+                    <i class="fas fa-clipboard-check me-2"></i> Monitoring Summary
+                    <span class="ms-2" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>Monitoring Summary</strong><br>This section provides an overview of all completed phases and shows the next expiry date based on the monitoring frequency.">
+                        <i class="bi bi-info-circle"></i>
+                    </span>
+                </h5>
                 <span class="badge bg-light text-info">Completed</span>
             </div>
             <div class="card-body">
@@ -572,16 +635,26 @@
 <!-- Remarks Section -->
 <div class="card shadow-sm mb-4">
     <div class="card-header bg-light">
-        <h5 class="mb-0">Remarks</h5>
+        <h5 class="mb-0">
+            <i class="fas fa-comment-alt me-2"></i> Remarks
+            <span class="ms-2" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>Remarks</strong><br>Add any additional notes, observations, or important information about this monitoring record. Remarks are visible in all phases.">
+                <i class="bi bi-info-circle"></i>
+            </span>
+        </h5>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("UpdateStatus", "PlantMonitoring", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+        @using (Html.BeginForm("UpdateRemarks", "PlantMonitoring", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.Id)
             <div class="mb-3">
                 <label for="Remarks" class="form-label"><strong>Remarks</strong></label>
-                @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", rows = 3 })
+                <div class="input-group">
+                    @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control", rows = 3 })
+                    <span class="input-group-text" data-bs-toggle="tooltip" title="Enter any additional information or notes about this monitoring record">
+                        <i class="bi bi-info-circle"></i>
+                    </span>
+                </div>
                 @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "invalid-feedback" })
             </div>
             <button type="submit" class="btn btn-info">
@@ -600,8 +673,18 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script>
         $(document).ready(function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    html: true,
+                    container: 'body'
+                });
+            });
+            
             // File size validation
             $('.file-upload').on('change', function() {
                 var fileInput = $(this)[0];

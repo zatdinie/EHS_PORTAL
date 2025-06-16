@@ -35,17 +35,14 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 .Include(p => p.Monitoring)
                 .AsQueryable();
 
-            // Filter by user's plants if user is not admin
-            if (!User.IsInRole("Admin"))
-            {
-                var userId = User.Identity.GetUserId();
-                var userPlantIds = db.UserPlants
-                    .Where(up => up.UserId == userId)
-                    .Select(up => up.PlantId)
-                    .ToList();
-                
-                query = query.Where(p => userPlantIds.Contains(p.PlantID));
-            }
+            // Get user's assigned plants to mark which ones they can update
+            var userId = User.Identity.GetUserId();
+            var userPlantIds = db.UserPlants
+                .Where(up => up.UserId == userId)
+                .Select(up => up.PlantId)
+                .ToList();
+            
+            ViewBag.UserPlantIds = userPlantIds;
             
             // Apply filters if provided
             if (!string.IsNullOrEmpty(category))
@@ -123,7 +120,6 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             }
             else
             {
-                var userId = User.Identity.GetUserId();
                 ViewBag.Plants = db.UserPlants
                     .Where(up => up.UserId == userId)
                     .Select(up => up.Plant)
@@ -186,38 +182,23 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 .ThenBy(m => m.MonitoringName)
                 .ToList();
 
-            // Get plants based on user role
-            var plants = new List<Plant>();
-            if (User.IsInRole("Admin"))
-            {
-                plants = db.Plants.OrderBy(p => p.PlantName).ToList();
-            }
-            else
-            {
-                var userId = User.Identity.GetUserId();
-                plants = db.UserPlants
-                    .Where(up => up.UserId == userId)
-                    .Select(up => up.Plant)
-                    .OrderBy(p => p.PlantName)
-                    .ToList();
-            }
+            // Get all plants
+            var plants = db.Plants.OrderBy(p => p.PlantName).ToList();
+            
+            // Get user's assigned plants to mark which ones they can update
+            var userId = User.Identity.GetUserId();
+            var userPlantIds = db.UserPlants
+                .Where(up => up.UserId == userId)
+                .Select(up => up.PlantId)
+                .ToList();
+            
+            ViewBag.UserPlantIds = userPlantIds;
 
-            // Get plant monitoring records based on user role
+            // Get all plant monitoring records
             var plantMonitoringsQuery = db.PlantMonitorings
                 .Include(p => p.Plant)
                 .Include(p => p.Monitoring)
                 .AsQueryable();
-
-            if (!User.IsInRole("Admin"))
-            {
-                var userId = User.Identity.GetUserId();
-                var userPlantIds = db.UserPlants
-                    .Where(up => up.UserId == userId)
-                    .Select(up => up.PlantId)
-                    .ToList();
-                
-                plantMonitoringsQuery = plantMonitoringsQuery.Where(p => userPlantIds.Contains(p.PlantID));
-            }
 
             // Apply plant filter if provided
             if (!string.IsNullOrEmpty(plantFilter))
@@ -304,19 +285,16 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return HttpNotFound();
             }
 
-            // Check if user has access to this plant monitoring record
-            if (!User.IsInRole("Admin"))
+            // Check if user has access to update this plant monitoring record
+            bool userHasAccessToUpdate = User.IsInRole("Admin");
+            if (!userHasAccessToUpdate)
             {
                 var userId = User.Identity.GetUserId();
-                var userHasAccessToPlant = db.UserPlants
+                userHasAccessToUpdate = db.UserPlants
                     .Any(up => up.UserId == userId && up.PlantId == plantMonitoring.PlantID);
-                
-                if (!userHasAccessToPlant)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-                }
             }
-
+            
+            ViewBag.UserHasAccessToUpdate = userHasAccessToUpdate;
             ViewBag.IsAdmin = User.IsInRole("Admin");
             
             // Get monitoring notifications for the current user
@@ -1287,6 +1265,44 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 TempData["ErrorMessage"] = "Error renewing monitoring: " + ex.Message;
                 return RedirectToAction("Details", new { id = id });
             }
+        }
+
+        // POST: PlantMonitoring/UpdateRemarks/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateRemarks(int id, string Remarks)
+        {
+            var plantMonitoring = db.PlantMonitorings.Find(id);
+            if (plantMonitoring == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Check if user has access to this plant monitoring record
+            if (!User.IsInRole("Admin"))
+            {
+                var userId = User.Identity.GetUserId();
+                var userHasAccessToPlant = db.UserPlants
+                    .Any(up => up.UserId == userId && up.PlantId == plantMonitoring.PlantID);
+                
+                if (!userHasAccessToPlant)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
+            }
+
+            // Update only remarks
+            plantMonitoring.Remarks = Remarks;
+            
+            // Save changes
+            db.Entry(plantMonitoring).State = EntityState.Modified;
+            db.SaveChanges();
+
+            // Success message
+            TempData["SuccessMessage"] = "Remarks successfully updated.";
+
+            // Redirect back to the update page
+            return RedirectToAction("UpdateStatus", new { id = plantMonitoring.Id });
         }
 
         // Generates monitoring notifications for the current user
