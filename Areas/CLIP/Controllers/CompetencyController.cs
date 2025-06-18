@@ -18,8 +18,6 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // Get list of all competency modules
             var competencyModules = _db.CompetencyModules.ToList();
             
-            // Log the view action
-            LogActivity("VIEW", "Viewed competency modules list", "CompetencyModule");
             
             return View("Competency", competencyModules);
         }
