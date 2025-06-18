@@ -1,0 +1,132 @@
+@model EHS_PORTAL.Areas.CLIP.Models.ActivityLog
+@{
+    ViewBag.Title = "Activity Log Details";
+}
+
+<h2>Activity Log Details</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Log Entry #@Model.LogID</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>Date/Time:</dt>
+                    <dd>@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</dd>
+
+                    <dt>User:</dt>
+                    <dd>
+                        @if (!string.IsNullOrEmpty(Model.UserID))
+                        {
+                            <a href="@Url.Action("UserActivity", new { userId = Model.UserID })">@Model.UserName</a>
+                        }
+                        else
+                        {
+                            @Model.UserName
+                        }
+                    </dd>
+
+                    <dt>Action:</dt>
+                    <dd><span class="label @GetActionLabelClass(Model.Action)">@Model.Action</span></dd>
+
+                    <dt>Description:</dt>
+                    <dd>@Model.Description</dd>
+
+                    <dt>Entity Type:</dt>
+                    <dd>@Model.EntityName</dd>
+
+                    <dt>Entity ID:</dt>
+                    <dd>@Model.EntityID</dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>IP Address:</dt>
+                    <dd>@Model.IPAddress</dd>
+
+                    <dt>User Agent:</dt>
+                    <dd>
+                        <small class="text-muted">@Model.UserAgent</small>
+                    </dd>
+
+                    <dt>Page URL:</dt>
+                    <dd>
+                        <small class="text-muted">@Model.PageUrl</small>
+                    </dd>
+
+                    <dt>Session ID:</dt>
+                    <dd>
+                        <small class="text-muted">@Model.SessionID</small>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.OldValue) || !string.IsNullOrEmpty(Model.NewValue))
+        {
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Changes</h4>
+                    <div class="row">
+                        @if (!string.IsNullOrEmpty(Model.OldValue))
+                        {
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Previous Value</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <pre>@Model.OldValue</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.NewValue))
+                        {
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">New Value</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <pre>@Model.NewValue</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="panel-footer">
+        <a href="@Url.Action("Index")" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+</div>
+
+@functions {
+    public string GetActionLabelClass(string action)
+    {
+        switch (action?.ToUpper())
+        {
+            case "LOGIN":
+            case "LOGOUT":
+                return "label-default";
+            case "CREATE":
+                return "label-success";
+            case "UPDATE":
+                return "label-primary";
+            case "DELETE":
+                return "label-danger";
+            case "VIEW":
+                return "label-info";
+            default:
+                return "label-default";
+        }
+    }
+} 
