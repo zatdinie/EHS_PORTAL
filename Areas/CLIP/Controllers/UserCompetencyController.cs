@@ -21,8 +21,6 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 .Include(cm => cm.UserCompetencies.Select(uc => uc.User))
                 .ToList();
             
-            // Log the view action
-            LogView("UserCompetency", null, "Viewed user competencies list");
             
             return View(competencyModules);
         }
@@ -485,9 +483,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             ViewBag.ATOMCEPPoints = user.Atom_CEP ?? 0;
             ViewBag.DOECPDPoints = user.DOE_CPD ?? 0;
             ViewBag.DOSHCEPPoints = user.Dosh_CEP ?? 0;
-            
-            // Log the view action
-            LogView("UserCompetency", userId, "Viewed my competencies");
+        
             
             return View(userCompetencies);
         }
