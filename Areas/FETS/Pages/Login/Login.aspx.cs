@@ -68,7 +68,7 @@ namespace FETS.Pages.Login
                     using (SqlConnection conn = new SqlConnection(connectionString))
                     {
                         string query = @"
-                            INSERT INTO ActivityLogs (UserID, Action, Description, EntityType, EntityID, IPAddress)
+                            INSERT INTO FETS.ActivityLogs (UserID, Action, Description, EntityType, EntityID, IPAddress)
                             VALUES (@UserID, @Action, @Description, @EntityType, @EntityID, @IPAddress)";
 
                         using (SqlCommand cmd = new SqlCommand(query, conn))

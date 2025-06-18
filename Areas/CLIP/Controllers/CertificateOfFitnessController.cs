@@ -12,9 +12,8 @@ using System.Web;
 namespace EHS_PORTAL.Areas.CLIP.Controllers
 {
     [Authorize]
-    public class CertificateOfFitnessController : Controller
+    public class CertificateOfFitnessController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // Helper method to check if the current user has access to a specific plant
         private bool UserHasAccessToPlant(int plantId)
@@ -29,7 +28,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             string userId = User.Identity.GetUserId();
             
             // Check if the user is assigned to this plant
-            return db.UserPlants.Any(up => up.UserId == userId && up.PlantId == plantId);
+            return _db.UserPlants.Any(up => up.UserId == userId && up.PlantId == plantId);
         }
         
         // Helper method to get all plant IDs the current user has access to
@@ -38,14 +37,14 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // Admin users have access to all plants
             if (User.IsInRole("Admin"))
             {
-                return db.Plants.Select(p => p.Id).ToList();
+                return _db.Plants.Select(p => p.Id).ToList();
             }
             
             // Get current user ID
             string userId = User.Identity.GetUserId();
             
             // Return list of plant IDs the user is assigned to
-            return db.UserPlants
+            return _db.UserPlants
                 .Where(up => up.UserId == userId)
                 .Select(up => up.PlantId)
                 .ToList();
@@ -56,7 +55,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         public JsonResult IsRegistrationNoAvailable(string registrationNo, int? id)
         {
             // Check if the registration number exists and doesn't belong to the current record (in case of editing)
-            bool isAvailable = !db.CertificateOfFitness.Any(c => 
+            bool isAvailable = !_db.CertificateOfFitness.Any(c => 
                 c.RegistrationNo.Equals(registrationNo, StringComparison.OrdinalIgnoreCase) && 
                 (id == null || c.Id != id.Value));
                 
@@ -88,14 +87,14 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
             // Get user accessible plants for dropdown filter
             List<int> accessiblePlantIds = GetUserAccessiblePlantIds();
-            var plants = db.Plants.OrderBy(p => p.PlantName).ToList();
+            var plants = _db.Plants.OrderBy(p => p.PlantName).ToList();
             ViewBag.Plants = new SelectList(plants, "Id", "PlantName");
             
             // Store accessible plant IDs in ViewBag for the view to use
             ViewBag.UserAccessiblePlantIds = accessiblePlantIds;
 
             // Start with all certificates (users can see all)
-            var certificates = db.CertificateOfFitness.Include(c => c.Plant);
+            var certificates = _db.CertificateOfFitness.Include(c => c.Plant);
             
             // Apply plant filter
             if (!string.IsNullOrEmpty(plantFilter))
@@ -165,7 +164,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CertificateOfFitness certificateOfFitness = db.CertificateOfFitness.Include(c => c.Plant).FirstOrDefault(c => c.Id == id);
+            CertificateOfFitness certificateOfFitness = _db.CertificateOfFitness.Include(c => c.Plant).FirstOrDefault(c => c.Id == id);
             if (certificateOfFitness == null)
             {
                 return HttpNotFound();
@@ -173,6 +172,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             // Pass information about whether the user can edit/delete this certificate
             ViewBag.UserCanEditDelete = UserHasAccessToPlant(certificateOfFitness.PlantId);
+            
+            // Log the view action
+            LogView("Certificate of Fitness", id.ToString(), $"Viewed Certificate of Fitness details for {certificateOfFitness.RegistrationNo}");
             
             return View(certificateOfFitness);
         }
@@ -183,13 +185,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // For non-admin users, only show their assigned plants in the dropdown
             if (User.IsInRole("Admin"))
             {
-                ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName");
+                ViewBag.PlantId = new SelectList(_db.Plants, "Id", "PlantName");
             }
             else
             {
                 // Get user's assigned plants
                 string userId = User.Identity.GetUserId();
-                var userPlantIds = db.UserPlants
+                var userPlantIds = _db.UserPlants
                     .Where(up => up.UserId == userId)
                     .Select(up => up.PlantId)
                     .ToList();
@@ -202,10 +204,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 }
                 
                 ViewBag.PlantId = new SelectList(
-                    db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                    _db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
                     "Id", 
                     "PlantName");
             }
+            
+            // Log the view action
+            LogView("Certificate of Fitness", null, "Accessed Certificate of Fitness creation form");
             
             return View();
         }
@@ -222,7 +227,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             }
             
             // Check for unique registration number
-            bool isDuplicate = db.CertificateOfFitness.Any(c => 
+            bool isDuplicate = _db.CertificateOfFitness.Any(c => 
                 c.RegistrationNo.Equals(certificateOfFitness.RegistrationNo, StringComparison.OrdinalIgnoreCase));
             
             if (isDuplicate)
@@ -246,18 +251,18 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                         // Prepare plant dropdown based on user role
                         if (User.IsInRole("Admin"))
                         {
-                            ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+                            ViewBag.PlantId = new SelectList(_db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
                         }
                         else
                         {
                             string userId = User.Identity.GetUserId();
-                            var userPlantIds = db.UserPlants
+                            var userPlantIds = _db.UserPlants
                                 .Where(up => up.UserId == userId)
                                 .Select(up => up.PlantId)
                                 .ToList();
                             
                             ViewBag.PlantId = new SelectList(
-                                db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                                _db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
                                 "Id", 
                                 "PlantName", 
                                 certificateOfFitness.PlantId);
@@ -284,26 +289,31 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     certificateOfFitness.DocumentPath = fileName;
                 }
                 
-                db.CertificateOfFitness.Add(certificateOfFitness);
-                db.SaveChanges();
+                _db.CertificateOfFitness.Add(certificateOfFitness);
+                _db.SaveChanges();
+                
+                // Log the creation action
+                LogCreation("Certificate of Fitness", certificateOfFitness.Id.ToString(), 
+                    $"Created Certificate of Fitness with Registration No: {certificateOfFitness.RegistrationNo}, Machine: {certificateOfFitness.MachineName}");
+                
                 return RedirectToAction("Index");
             }
 
             // Prepare plant dropdown based on user role
             if (User.IsInRole("Admin"))
             {
-                ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+                ViewBag.PlantId = new SelectList(_db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
             }
             else
             {
                 string userId = User.Identity.GetUserId();
-                var userPlantIds = db.UserPlants
+                var userPlantIds = _db.UserPlants
                     .Where(up => up.UserId == userId)
                     .Select(up => up.PlantId)
                     .ToList();
                 
                 ViewBag.PlantId = new SelectList(
-                    db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                    _db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
                     "Id", 
                     "PlantName", 
                     certificateOfFitness.PlantId);
@@ -320,7 +330,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
-            CertificateOfFitness certificateOfFitness = db.CertificateOfFitness
+            CertificateOfFitness certificateOfFitness = _db.CertificateOfFitness
                 .Include(c => c.Plant)
                 .FirstOrDefault(c => c.Id == id);
                 
@@ -341,23 +351,26 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             // For non-admin users, only show their assigned plants in the dropdown
             if (User.IsInRole("Admin"))
             {
-                ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+                ViewBag.PlantId = new SelectList(_db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
             }
             else
             {
                 // Get user's assigned plants
                 string userId = User.Identity.GetUserId();
-                var userPlantIds = db.UserPlants
+                var userPlantIds = _db.UserPlants
                     .Where(up => up.UserId == userId)
                     .Select(up => up.PlantId)
                     .ToList();
                 
                 ViewBag.PlantId = new SelectList(
-                    db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                    _db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
                     "Id", 
                     "PlantName", 
                     certificateOfFitness.PlantId);
             }
+            
+            // Log the view action
+            LogView("Certificate of Fitness", id.ToString(), $"Accessed edit form for Certificate of Fitness: {certificateOfFitness.RegistrationNo}");
             
             return View(certificateOfFitness);
         }
@@ -373,8 +386,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             
+            // Get the original certificate for logging changes
+            var originalCertificate = _db.CertificateOfFitness.AsNoTracking().FirstOrDefault(c => c.Id == certificateOfFitness.Id);
+            
             // Check for unique registration number (excluding current record)
-            bool isDuplicate = db.CertificateOfFitness.Any(c => 
+            bool isDuplicate = _db.CertificateOfFitness.Any(c => 
                 c.RegistrationNo.Equals(certificateOfFitness.RegistrationNo, StringComparison.OrdinalIgnoreCase) && 
                 c.Id != certificateOfFitness.Id);
             
@@ -399,18 +415,18 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                         // Prepare plant dropdown based on user role
                         if (User.IsInRole("Admin"))
                         {
-                            ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+                            ViewBag.PlantId = new SelectList(_db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
                         }
                         else
                         {
                             string userId = User.Identity.GetUserId();
-                            var userPlantIds = db.UserPlants
+                            var userPlantIds = _db.UserPlants
                                 .Where(up => up.UserId == userId)
                                 .Select(up => up.PlantId)
                                 .ToList();
                             
                             ViewBag.PlantId = new SelectList(
-                                db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                                _db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
                                 "Id", 
                                 "PlantName", 
                                 certificateOfFitness.PlantId);
@@ -447,26 +463,52 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     certificateOfFitness.DocumentPath = fileName;
                 }
                 
-                db.Entry(certificateOfFitness).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(certificateOfFitness).State = EntityState.Modified;
+                _db.SaveChanges();
+                
+                // Prepare detailed change log
+                var changes = new List<string>();
+                
+                if (originalCertificate.RegistrationNo != certificateOfFitness.RegistrationNo)
+                    changes.Add($"Registration No: {originalCertificate.RegistrationNo} → {certificateOfFitness.RegistrationNo}");
+                    
+                if (originalCertificate.MachineName != certificateOfFitness.MachineName)
+                    changes.Add($"Machine Name: {originalCertificate.MachineName} → {certificateOfFitness.MachineName}");
+                    
+                if (originalCertificate.ExpiryDate != certificateOfFitness.ExpiryDate)
+                    changes.Add($"Expiry Date: {originalCertificate.ExpiryDate.ToShortDateString()} → {certificateOfFitness.ExpiryDate.ToShortDateString()}");
+                    
+                if (originalCertificate.PlantId != certificateOfFitness.PlantId)
+                {
+                    var oldPlant = _db.Plants.Find(originalCertificate.PlantId);
+                    var newPlant = _db.Plants.Find(certificateOfFitness.PlantId);
+                    changes.Add($"Plant: {oldPlant?.PlantName} → {newPlant?.PlantName}");
+                }
+                
+                // Log the update action with detailed changes
+                string changeDetails = changes.Count > 0 ? string.Join("; ", changes) : "No fields changed";
+                LogUpdate("Certificate of Fitness", certificateOfFitness.Id.ToString(), 
+                    originalCertificate.ToString(), certificateOfFitness.ToString(), 
+                    $"Updated Certificate of Fitness: {certificateOfFitness.RegistrationNo}. Changes: {changeDetails}");
+                
                 return RedirectToAction("Index");
             }
             
             // Prepare plant dropdown based on user role
             if (User.IsInRole("Admin"))
             {
-                ViewBag.PlantId = new SelectList(db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
+                ViewBag.PlantId = new SelectList(_db.Plants, "Id", "PlantName", certificateOfFitness.PlantId);
             }
             else
             {
                 string userId = User.Identity.GetUserId();
-                var userPlantIds = db.UserPlants
+                var userPlantIds = _db.UserPlants
                     .Where(up => up.UserId == userId)
                     .Select(up => up.PlantId)
                     .ToList();
                 
                 ViewBag.PlantId = new SelectList(
-                    db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
+                    _db.Plants.Where(p => userPlantIds.Contains(p.Id)), 
                     "Id", 
                     "PlantName", 
                     certificateOfFitness.PlantId);
@@ -483,7 +525,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
-            CertificateOfFitness certificateOfFitness = db.CertificateOfFitness.Include(c => c.Plant).FirstOrDefault(c => c.Id == id);
+            CertificateOfFitness certificateOfFitness = _db.CertificateOfFitness.Include(c => c.Plant).FirstOrDefault(c => c.Id == id);
             if (certificateOfFitness == null)
             {
                 return HttpNotFound();
@@ -495,6 +537,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             
+            // Log the view action
+            LogView("Certificate of Fitness", id.ToString(), $"Accessed delete confirmation for Certificate of Fitness: {certificateOfFitness.RegistrationNo}");
+            
             return View(certificateOfFitness);
         }
 
@@ -503,13 +548,17 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CertificateOfFitness certificateOfFitness = db.CertificateOfFitness.Find(id);
+            CertificateOfFitness certificateOfFitness = _db.CertificateOfFitness.Find(id);
             
             // Check if user has access to this plant
             if (!UserHasAccessToPlant(certificateOfFitness.PlantId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+            
+            // Store certificate details for logging before deletion
+            string regNo = certificateOfFitness.RegistrationNo;
+            string machineName = certificateOfFitness.MachineName;
             
             // Delete the associated PDF file if it exists
             if (!string.IsNullOrEmpty(certificateOfFitness.DocumentPath))
@@ -521,8 +570,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 }
             }
             
-            db.CertificateOfFitness.Remove(certificateOfFitness);
-            db.SaveChanges();
+            _db.CertificateOfFitness.Remove(certificateOfFitness);
+            _db.SaveChanges();
+            
+            // Log the deletion action
+            LogDeletion("Certificate of Fitness", id.ToString(), 
+                $"Deleted Certificate of Fitness: {regNo}, Machine: {machineName}");
+            
             return RedirectToAction("Index");
         }
 
@@ -534,7 +588,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             
-            CertificateOfFitness certificate = db.CertificateOfFitness.Find(id);
+            CertificateOfFitness certificate = _db.CertificateOfFitness.Find(id);
             if (certificate == null || string.IsNullOrEmpty(certificate.DocumentPath))
             {
                 return HttpNotFound();
@@ -546,15 +600,16 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return HttpNotFound();
             }
             
+            // Log the view document action
+            LogView("Certificate of Fitness Document", id.ToString(), 
+                $"Viewed document for Certificate of Fitness: {certificate.RegistrationNo}");
+            
             return File(filePath, "application/pdf");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+            // No need to dispose _db here as it's handled by the base controller
             base.Dispose(disposing);
         }
     }

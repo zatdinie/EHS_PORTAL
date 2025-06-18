@@ -29,6 +29,8 @@ namespace EHS_PORTAL
                 LoginPath = new PathString("/Account/Login"),
                 CookieName = ".CLIP_AUTH_COOKIE",
                 CookiePath = "/CLIP",
+                ExpireTimeSpan = TimeSpan.FromMinutes(30), // Session expires after 30 minutes of inactivity
+                SlidingExpiration = true, // Reset the expiration time on each request
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.

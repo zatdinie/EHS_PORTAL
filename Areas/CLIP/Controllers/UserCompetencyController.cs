@@ -11,16 +11,16 @@ using EHS_PORTAL.Areas.CLIP.Models;
 namespace EHS_PORTAL.Areas.CLIP.Controllers
 {
     [Authorize]
-    public class UserCompetencyController : Controller
+    public class UserCompetencyController : BaseController
     {
         // GET: UserCompetency
         public ActionResult Index()
         {
-            var db = new ApplicationDbContext();
             // Get all competency modules with associated user competencies
-            var competencyModules = db.CompetencyModules
+            var competencyModules = _db.CompetencyModules
                 .Include(cm => cm.UserCompetencies.Select(uc => uc.User))
                 .ToList();
+            
             
             return View(competencyModules);
         }
@@ -28,11 +28,12 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         // GET: UserCompetency/Assign
         public ActionResult Assign()
         {
-            var db = new ApplicationDbContext();
-            
             // Get all users and competency modules for dropdowns
-            ViewBag.Users = db.Users.ToList();
-            ViewBag.CompetencyModules = db.CompetencyModules.ToList();
+            ViewBag.Users = _db.Users.ToList();
+            ViewBag.CompetencyModules = _db.CompetencyModules.ToList();
+            
+            // Log the view action
+            LogView("UserCompetency", null, "Accessed user competency assignment form");
             
             return View();
         }
@@ -44,10 +45,8 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new ApplicationDbContext();
-                
                 // Check if this competency is already assigned to the user
-                bool exists = db.UserCompetencies.Any(uc => 
+                bool exists = _db.UserCompetencies.Any(uc => 
                     uc.UserId == model.UserId && 
                     uc.CompetencyModuleId == model.CompetencyModuleId);
                 
@@ -56,14 +55,14 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     TempData["ErrorMessage"] = "This competency is already assigned to the selected user.";
                     
                     // Reload ViewBag data for dropdowns
-                    ViewBag.Users = db.Users.ToList();
-                    ViewBag.CompetencyModules = db.CompetencyModules.ToList();
+                    ViewBag.Users = _db.Users.ToList();
+                    ViewBag.CompetencyModules = _db.CompetencyModules.ToList();
                     
                     return View(model);
                 }
                 
                 // Get the competency module type
-                var competencyModule = db.CompetencyModules.Find(model.CompetencyModuleId);
+                var competencyModule = _db.CompetencyModules.Find(model.CompetencyModuleId);
                 if (competencyModule != null && competencyModule.CompetencyType == "Environment")
                 {
                     // For Environment type, no expiry date is needed
@@ -98,17 +97,24 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     model.DocumentPath = "~/Areas/CLIP/Uploads/UserCompetency/" + uniqueFileName;
                 }
                 
-                db.UserCompetencies.Add(model);
-                db.SaveChanges();
+                _db.UserCompetencies.Add(model);
+                _db.SaveChanges();
+                
+                // Get user and competency info for logging
+                var user = _db.Users.Find(model.UserId);
+                var comp = _db.CompetencyModules.Find(model.CompetencyModuleId);
+                
+                // Log the creation
+                LogCreation("UserCompetency", model.Id.ToString(), 
+                    $"Assigned competency '{comp?.ModuleName}' to user '{user?.UserName}'");
                 
                 TempData["SuccessMessage"] = "Competency assigned to user successfully.";
                 return RedirectToAction("Index");
             }
             
             // If we got this far, something failed; reload form
-            var context = new ApplicationDbContext();
-            ViewBag.Users = context.Users.ToList();
-            ViewBag.CompetencyModules = context.CompetencyModules.ToList();
+            ViewBag.Users = _db.Users.ToList();
+            ViewBag.CompetencyModules = _db.CompetencyModules.ToList();
             
             return View(model);
         }
@@ -116,8 +122,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         // GET: UserCompetency/Edit/5
         public ActionResult Edit(int id)
         {
-            var db = new ApplicationDbContext();
-            var userCompetency = db.UserCompetencies
+            var userCompetency = _db.UserCompetencies
                 .Include(uc => uc.User)
                 .Include(uc => uc.CompetencyModule)
                 .FirstOrDefault(uc => uc.Id == id);
@@ -146,6 +151,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 ViewBag.SelectedBuildings = new string[] { };
             }
             
+            // Log the view action
+            LogView("UserCompetency", id.ToString(), 
+                $"Accessed edit form for competency '{userCompetency.CompetencyModule?.ModuleName}' assigned to user '{userCompetency.User?.UserName}'");
+            
             return View(userCompetency);
         }
 
@@ -156,8 +165,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new ApplicationDbContext();
-                var userCompetency = db.UserCompetencies.Find(model.Id);
+                var userCompetency = _db.UserCompetencies
+                    .Include(uc => uc.User)
+                    .Include(uc => uc.CompetencyModule)
+                    .FirstOrDefault(uc => uc.Id == model.Id);
                 
                 if (userCompetency == null)
                 {
@@ -165,12 +176,19 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     return RedirectToAction("Index");
                 }
                 
+                // Store old values for logging
+                var oldStatus = userCompetency.Status;
+                var oldCompletionDate = userCompetency.CompletionDate;
+                var oldExpiryDate = userCompetency.ExpiryDate;
+                var oldRemarks = userCompetency.Remarks;
+                var oldBuilding = userCompetency.Building;
+                
                 // Update properties
                 userCompetency.Status = model.Status;
                 userCompetency.CompletionDate = model.CompletionDate;
                 
                 // Get the competency module type
-                var competencyModule = db.CompetencyModules.Find(userCompetency.CompetencyModuleId);
+                var competencyModule = _db.CompetencyModules.Find(userCompetency.CompetencyModuleId);
                 if (competencyModule != null && competencyModule.CompetencyType == "Environment")
                 {
                     // For Environment type, no expiry date is needed
@@ -202,8 +220,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 }
 
                 // Process document upload if provided
+                bool documentChanged = false;
                 if (documentFile != null && documentFile.ContentLength > 0)
                 {
+                    documentChanged = true;
+                    
                     // Create directory if it doesn't exist
                     string uploadsFolder = Server.MapPath("~/Areas/CLIP/Uploads/UserCompetency");
                     if (!Directory.Exists(uploadsFolder))
@@ -232,7 +253,34 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     userCompetency.DocumentPath = "~/Areas/CLIP/Uploads/UserCompetency/" + uniqueFileName;
                 }
                 
-                db.SaveChanges();
+                _db.SaveChanges();
+                
+                // Prepare changes log
+                var changes = new List<string>();
+                
+                if (oldStatus != userCompetency.Status)
+                    changes.Add($"Status: {oldStatus} → {userCompetency.Status}");
+                    
+                if (oldCompletionDate != userCompetency.CompletionDate)
+                    changes.Add($"Completion Date: {oldCompletionDate?.ToShortDateString() ?? "None"} → {userCompetency.CompletionDate?.ToShortDateString() ?? "None"}");
+                    
+                if (oldExpiryDate != userCompetency.ExpiryDate)
+                    changes.Add($"Expiry Date: {oldExpiryDate?.ToShortDateString() ?? "None"} → {userCompetency.ExpiryDate?.ToShortDateString() ?? "None"}");
+                    
+                if (oldRemarks != userCompetency.Remarks)
+                    changes.Add($"Remarks: {oldRemarks ?? "None"} → {userCompetency.Remarks ?? "None"}");
+                    
+                if (oldBuilding != userCompetency.Building)
+                    changes.Add($"Building: {oldBuilding ?? "None"} → {userCompetency.Building ?? "None"}");
+                    
+                if (documentChanged)
+                    changes.Add("Document: Updated");
+                
+                // Log the update
+                string changeDetails = changes.Count > 0 ? string.Join("; ", changes) : "No fields changed";
+                LogUpdate("UserCompetency", model.Id.ToString(), 
+                    null, null, 
+                    $"Updated competency '{userCompetency.CompetencyModule?.ModuleName}' for user '{userCompetency.User?.UserName}'. Changes: {changeDetails}");
                 
                 TempData["SuccessMessage"] = "User competency updated successfully.";
                 return RedirectToAction("Index");
@@ -263,8 +311,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirm(int id)
         {
-            var db = new ApplicationDbContext();
-            var userCompetency = db.UserCompetencies
+            var userCompetency = _db.UserCompetencies
                 .Include(uc => uc.User)
                 .Include(uc => uc.CompetencyModule)
                 .FirstOrDefault(uc => uc.Id == id);
@@ -274,6 +321,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 TempData["ErrorMessage"] = "User competency not found.";
                 return RedirectToAction("Index");
             }
+            
+            // Log the view action
+            LogView("UserCompetency", id.ToString(), 
+                $"Viewed delete confirmation for competency '{userCompetency.CompetencyModule?.ModuleName}' assigned to user '{userCompetency.User?.UserName}'");
             
             return View(userCompetency);
         }
@@ -286,11 +337,17 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         {
             try
             {
-                var db = new ApplicationDbContext();
-                var userCompetency = db.UserCompetencies.Find(id);
+                var userCompetency = _db.UserCompetencies
+                    .Include(uc => uc.User)
+                    .Include(uc => uc.CompetencyModule)
+                    .FirstOrDefault(uc => uc.Id == id);
                 
                 if (userCompetency != null)
                 {
+                    // Store info for logging
+                    string userName = userCompetency.User?.UserName;
+                    string moduleName = userCompetency.CompetencyModule?.ModuleName;
+                    
                     // Delete associated document if exists
                     if (!string.IsNullOrEmpty(userCompetency.DocumentPath))
                     {
@@ -301,8 +358,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                         }
                     }
 
-                    db.UserCompetencies.Remove(userCompetency);
-                    db.SaveChanges();
+                    _db.UserCompetencies.Remove(userCompetency);
+                    _db.SaveChanges();
+                    
+                    // Log the deletion
+                    LogDeletion("UserCompetency", id.ToString(), 
+                        $"Removed competency '{moduleName}' from user '{userName}'");
+                    
                     TempData["SuccessMessage"] = "User competency removed successfully.";
                 }
                 else
@@ -323,8 +385,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         // GET: UserCompetency/DownloadDocument/5
         public ActionResult DownloadDocument(int id)
         {
-            var db = new ApplicationDbContext();
-            var userCompetency = db.UserCompetencies.Find(id);
+            var userCompetency = _db.UserCompetencies
+                .Include(uc => uc.User)
+                .Include(uc => uc.CompetencyModule)
+                .FirstOrDefault(uc => uc.Id == id);
             
             if (userCompetency == null || string.IsNullOrEmpty(userCompetency.DocumentPath))
             {
@@ -339,6 +403,10 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 TempData["ErrorMessage"] = "Document file not found.";
                 return RedirectToAction("Index");
             }
+            
+            // Log the view action
+            LogView("UserCompetencyDocument", id.ToString(), 
+                $"Downloaded document for competency '{userCompetency.CompetencyModule?.ModuleName}' assigned to user '{userCompetency.User?.UserName}'");
             
             // Get file info
             var fileInfo = new FileInfo(filePath);
@@ -376,8 +444,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return RedirectToAction("Index");
             }
             
-            var db = new ApplicationDbContext();
-            var user = db.Users.Find(userId);
+            var user = _db.Users.Find(userId);
             
             if (user == null)
             {
@@ -385,7 +452,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return RedirectToAction("Index");
             }
             
-            var userCompetencies = db.UserCompetencies
+            var userCompetencies = _db.UserCompetencies
                 .Include(uc => uc.CompetencyModule)
                 .Where(uc => uc.UserId == userId)
                 .ToList();
@@ -394,6 +461,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             ViewBag.ATOMCEPPoints = user.Atom_CEP ?? 0;
             ViewBag.DOECPDPoints = user.DOE_CPD ?? 0;
             ViewBag.DOSHCEPPoints = user.Dosh_CEP ?? 0;
+            
+            // Log the view action
+            LogView("UserCompetency", userId, $"Viewed competencies for user '{user.UserName}'");
             
             return View(userCompetencies);
         }
@@ -402,11 +472,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         public ActionResult MyCompetencies()
         {
             string userId = User.Identity.GetUserId();
-            var db = new ApplicationDbContext();
+            var user = _db.Users.Find(userId);
             
-            var user = db.Users.Find(userId);
-            
-            var userCompetencies = db.UserCompetencies
+            var userCompetencies = _db.UserCompetencies
                 .Include(uc => uc.CompetencyModule)
                 .Where(uc => uc.UserId == userId)
                 .ToList();
@@ -415,6 +483,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             ViewBag.ATOMCEPPoints = user.Atom_CEP ?? 0;
             ViewBag.DOECPDPoints = user.DOE_CPD ?? 0;
             ViewBag.DOSHCEPPoints = user.Dosh_CEP ?? 0;
+        
             
             return View(userCompetencies);
         }

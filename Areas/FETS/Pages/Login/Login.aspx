@@ -428,7 +428,7 @@
                 
                 <!-- Back to Dashboard Button -->
                 <div class="back-to-dashboard">
-                    <a href="~/Areas/FETS/Pages/PublicDashboard/PublicDashboard.aspx" class="btn-back">
+                    <a href="/Areas/FETS/Pages/PublicDashboard/PublicDashboard.aspx" class="btn-back">
                         <i class="fas fa-arrow-left"></i> Back to Dashboard
                     </a>
                 </div>

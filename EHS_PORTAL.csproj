@@ -110,6 +110,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
@@ -229,6 +235,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\fullcalendar.min.css" />
     <Content Include="Content\fullcalendar.print.css" />
@@ -279,6 +286,9 @@
     <Content Include="Areas\CLIP\Views\Manage\EditProfile.cshtml" />
     <Content Include="Areas\CLIP\Views\Shared\_MonitoringNotifications.cshtml" />
     <Content Include="Areas\CLIP\Views\UserCompetency\DeleteConfirm.cshtml" />
+    <Content Include="Areas\CLIP\Views\ActivityLog\Details.cshtml" />
+    <Content Include="Areas\CLIP\Views\ActivityLog\Index.cshtml" />
+    <Content Include="Areas\CLIP\Views\ActivityLog\UserActivity.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -460,15 +470,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\CLIP\CLIPAreaRegistration.cs" />
     <Compile Include="Areas\CLIP\Controllers\AccountController.cs" />
+    <Compile Include="Areas\CLIP\Controllers\ActivityLogController.cs" />
     <Compile Include="Areas\CLIP\Controllers\ActivityTrainingController.cs" />
+    <Compile Include="Areas\CLIP\Controllers\BaseController.cs" />
     <Compile Include="Areas\CLIP\Controllers\CertificateOfFitnessController.cs" />
     <Compile Include="Areas\CLIP\Controllers\CompetencyController.cs" />
     <Compile Include="Areas\CLIP\Controllers\HomeController.cs" />
     <Compile Include="Areas\CLIP\Controllers\ManageController.cs" />
     <Compile Include="Areas\CLIP\Controllers\MonitoringController.cs" />
     <Compile Include="Areas\CLIP\Controllers\PlantMonitoringController.cs" />
+    <Compile Include="Areas\CLIP\Controllers\SessionController.cs" />
     <Compile Include="Areas\CLIP\Controllers\UserCompetencyController.cs" />
     <Compile Include="Areas\CLIP\Core\CustomAttributes.cs" />
+    <Compile Include="Areas\CLIP\Filters\ActivityLoggerAttribute.cs" />
     <Compile Include="Areas\CLIP\Controllers\CalendarController.cs" />
     <Compile Include="Areas\CLIP\Migrations\202504240642424_InitIdentity.cs" />
     <Compile Include="Areas\CLIP\Migrations\202504240642424_InitIdentity.Designer.cs">
@@ -512,6 +526,7 @@
     </Compile>
     <Compile Include="Areas\CLIP\Migrations\Configuration.cs" />
     <Compile Include="Areas\CLIP\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\CLIP\Models\ActivityLog.cs" />
     <Compile Include="Areas\CLIP\Models\ActivityTraining.cs" />
     <Compile Include="Areas\CLIP\Models\ActivityTrainingViewModel.cs" />
     <Compile Include="Areas\CLIP\Models\AreaPlant.cs" />
@@ -526,6 +541,7 @@
     <Compile Include="Areas\CLIP\Models\PlantMonitoring.cs" />
     <Compile Include="Areas\CLIP\Models\UserCompetency.cs" />
     <Compile Include="Areas\CLIP\Models\UserPlant.cs" />
+    <Compile Include="Areas\CLIP\Services\ActivityLogger.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

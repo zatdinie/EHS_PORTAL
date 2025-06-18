@@ -52,6 +52,7 @@ namespace EHS_PORTAL.Areas.CLIP.Models
         public DbSet<PlantMonitoring> PlantMonitorings { get; set; }
         public DbSet<MonitoringDocument> MonitoringDocuments { get; set; }
         public DbSet<ActivityTraining> ActivityTrainings { get; set; }
+        public DbSet<ActivityLog> ActivityLogs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -75,6 +76,7 @@ namespace EHS_PORTAL.Areas.CLIP.Models
             MapToClip<PlantMonitoring>(modelBuilder, "PlantMonitoring");
             MapToClip<MonitoringDocument>(modelBuilder, "MonitoringDocument");
             MapToClip<ActivityTraining>(modelBuilder, "ActivityTrainings");
+            MapToClip<ActivityLog>(modelBuilder, "ActivityLogs");
 
             // Relationships
             modelBuilder.Entity<UserCompetency>()
