@@ -475,6 +475,16 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        
+                        // Log successful login after sign in
+                        var logger = new ActivityLogger(_db, HttpContext);
+                        logger.LogActivity(
+                            action: "LOGIN",
+                            description: "User logged into the system via external provider",
+                            entityName: "User",
+                            entityId: user.Id
+                        );
+                        
                         return RedirectToLocal(returnUrl);
                     }
                 }

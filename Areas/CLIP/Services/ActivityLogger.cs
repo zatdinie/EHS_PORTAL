@@ -21,8 +21,27 @@ namespace EHS_PORTAL.Areas.CLIP.Services
         {
             try
             {
-                var userId = _httpContext.User.Identity.GetUserId();
-                var userName = _httpContext.User.Identity.Name;
+                // For login actions, the HttpContext.User.Identity might not be populated yet
+                // Use the provided entityId as userId if action is LOGIN
+                string userId = entityId;
+                string userName = null;
+                
+                // For actions other than LOGIN, get the user info from the HttpContext
+                if (action != "LOGIN" && _httpContext.User.Identity.IsAuthenticated)
+                {
+                    userId = _httpContext.User.Identity.GetUserId();
+                    userName = _httpContext.User.Identity.Name;
+                }
+                else if (action == "LOGIN" && entityId != null)
+                {
+                    // For LOGIN action, fetch the username from the database using entityId
+                    var user = _db.Users.Find(entityId);
+                    if (user != null)
+                    {
+                        userName = user.UserName;
+                    }
+                }
+                
                 var ipAddress = GetUserIPAddress();
                 var userAgent = _httpContext.Request.UserAgent;
                 var pageUrl = _httpContext.Request.Url?.AbsoluteUri;
