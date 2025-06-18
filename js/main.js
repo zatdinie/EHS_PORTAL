@@ -45,7 +45,7 @@ function updateSafetyStats() {
     const daysSinceAccident = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
     
     // Set total accidents this year - hardcoded value
-    const totalAccidentsThisYear = 2; // Hard-coded value
+    const totalAccidentsThisYear = 0; // Hard-coded value
     
     // Animate the counters
     animateCountUp('days-since-accident', daysSinceAccident);
@@ -62,7 +62,7 @@ function animateCountUp(elementId, targetValue) {
     element.textContent = '0';
     
     // Calculate animation duration and step based on target value
-    const duration = 3000; // ms
+    const duration = 2500; // ms
     const steps = 50;
     const stepValue = targetValue / steps;
     const stepDuration = duration / steps;
