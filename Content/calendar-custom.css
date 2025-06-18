@@ -1,0 +1,483 @@
+/* Custom Calendar Styles */
+
+/* Event icon styling */
+.event-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.event-svg-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.event-icon-active {
+    background-color: rgba(25, 135, 84, 0.2);
+    color: #198754;
+    border: 1px solid #198754;
+}
+
+.event-icon-expiring {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ff9500;
+    border: 1px solid #ff9500;
+}
+
+.event-icon-expired {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+/* Event category styling */
+.event-pm {
+    border-left: 3px solid #0dcaf0 !important;
+}
+
+.event-comp {
+    border-left: 3px solid #0d6efd !important;
+}
+
+.event-cof {
+    border-left: 3px solid #198754 !important;
+}
+
+/* Tooltip styling improvements */
+.tooltip {
+    opacity: 1 !important;
+    z-index: 10000 !important;
+    pointer-events: none;
+    position: absolute;
+}
+
+.bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before, 
+.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.tooltip-inner {
+    max-width: 300px !important;
+    background-color: #fff !important;
+    color: #212529 !important;
+    text-align: left !important;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    padding: 10px !important;
+    border-radius: 4px !important;
+    overflow: visible !important;
+}
+
+/* Fix for tooltip z-index issues */
+.fc-popover {
+    z-index: 1000 !important;
+}
+
+.fc-view-harness {
+    z-index: 0 !important;
+}
+
+.modal {
+    z-index: 1050 !important;
+}
+
+.tooltip-title {
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.tooltip-date, 
+.tooltip-status {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.tooltip-description {
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 5px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 5px;
+}
+
+/* Upcoming expiries styling */
+.upcoming-expired {
+    border-left: 3px solid #dc3545 !important;
+}
+
+.upcoming-expiring-soon {
+    border-left: 3px solid #ffc107 !important;
+}
+
+.upcoming-active {
+    border-left: 3px solid #198754 !important;
+}
+
+/* Calendar layout improvements */
+.fc-event {
+    border: none !important;
+    background: transparent !important;
+}
+
+.fc-daygrid-day-number {
+    font-weight: 500;
+}
+
+.fc-day-today {
+    background-color: rgba(0, 123, 255, 0.05) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .fc-header-toolbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .fc-toolbar-chunk {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .tooltip-inner {
+        max-width: 240px !important;
+    }
+}
+
+/* Week view enhancements */
+.fc-timeGridWeek-view .fc-col-header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.fc-timeGridWeek-view .fc-col-header-cell {
+    padding: 8px 0;
+}
+
+.fc-timeGridWeek-view .fc-col-header-cell-cushion {
+    padding: 6px;
+    font-weight: 600;
+}
+
+.fc-timegrid-slots tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.fc-timegrid-slot-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.fc-timegrid-event {
+    border-radius: 4px !important;
+    border: none !important;
+    margin: 1px 2px !important;
+}
+
+.fc-timegrid-event .fc-event-main {
+    padding: 4px 6px !important;
+}
+
+.fc-timegrid-event .fc-event-title {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.fc-timegrid-event .fc-event-time {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.fc-timegrid-now-indicator-line {
+    border-color: #dc3545 !important;
+    border-width: 2px !important;
+}
+
+.fc-timegrid-now-indicator-arrow {
+    border-color: #dc3545 !important;
+    border-width: 5px !important;
+}
+
+.fc-theme-standard .fc-timegrid-axis {
+    border-right: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.fc-theme-standard .fc-timegrid-axis-cushion {
+    padding: 8px 4px;
+    font-weight: 600;
+}
+
+.fc-timegrid-col.fc-day-today {
+    background-color: rgba(13, 110, 253, 0.05) !important;
+}
+
+.fc-timegrid-event-harness {
+    margin-right: 1px;
+}
+
+.fc-timegrid-col-events {
+    margin: 0 2px 0 2px !important;
+}
+
+/* All-day area in week view */
+.fc-timegrid-axis-frame {
+    background-color: #f8f9fa;
+}
+
+.fc-daygrid-day-events {
+    margin-bottom: 0 !important;
+}
+
+.fc-timegrid-allday-label {
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+/* Responsive adjustments for week view */
+@media (max-width: 768px) {
+    .fc-timegrid-event .fc-event-main {
+        padding: 2px 4px !important;
+    }
+    
+    .fc-timegrid-event .fc-event-title {
+        font-size: 0.8rem;
+    }
+    
+    .fc-timegrid-slot-label {
+        font-size: 0.75rem;
+    }
+    
+    .fc-timegrid-slot {
+        height: 40px !important;
+    }
+}
+
+/* Week view event styling */
+.week-event-content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 2px 0;
+}
+
+.week-event-title {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
+    font-size: 0.9rem;
+}
+
+.week-event-status {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Styling for different event states in week view */
+.fc-timegrid-event.event-expired {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border-left: 3px solid #dc3545 !important;
+}
+
+.fc-timegrid-event.event-expiring-soon {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+    border-left: 3px solid #ffc107 !important;
+}
+
+.fc-timegrid-event.event-active {
+    background-color: rgba(25, 135, 84, 0.1) !important;
+    border-left: 3px solid #198754 !important;
+}
+
+/* Ensure week view events remain visible */
+.fc-timegrid-event-harness {
+    margin: 1px 0;
+}
+
+.fc-timegrid-event {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24) !important;
+}
+
+/* Darker time slots for lunch hour */
+.fc-timegrid-slot[data-time="12:00:00"] {
+    background-color: rgba(0,0,0,0.02);
+}
+
+/* Create better contrast for time labels */
+.fc-timegrid-slot-label-cushion {
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Make sure the all-day section is visible enough */
+.fc-timegrid-allday-cushion {
+    min-height: 30px;
+    padding: 4px;
+}
+
+/* List view enhancements */
+.fc-list {
+    border: none !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    border-radius: 0.375rem !important;
+    overflow: hidden !important;
+}
+
+/* Fix for the duplicate day issue - force specific styling for date header */
+.fc-theme-standard .fc-list-day > th {
+    position: relative !important;
+    background-color: #f8f9fa !important;
+}
+
+/* Style the date text in the header and ensure it's not duplicated */
+.fc-list-day-text {
+    font-weight: 600 !important;
+    color: #495057 !important;
+    font-size: 1rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-block !important;
+    width: auto !important;
+}
+
+/* Always hide the side text that contributes to duplication */
+.fc-list-day-side-text {
+    display: none !important;
+}
+
+.fc-list-table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.fc-list-table th {
+    background-color: #f8f9fa !important;
+    color: #495057 !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1rem !important;
+}
+
+.fc-list-table td {
+    padding: 0.5rem 1rem !important;
+    border-top: 1px solid #f0f0f0 !important;
+    border-bottom: none !important;
+}
+
+.fc-list-day {
+    background-color: #f8f9fa !important;
+}
+
+.fc-list-day-cushion {
+    padding: 10px 14px !important;
+}
+
+.fc-list-event {
+    cursor: pointer !important;
+    transition: background-color 0.15s ease-in-out !important;
+    height: auto !important;
+}
+
+/* Hide time column */
+.fc-list-event-time {
+    display: none !important;
+}
+
+.fc-list-event-title {
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.fc-list-event-dot {
+    display: none !important; /* Hide the default dot */
+}
+
+.fc-list-empty {
+    background-color: transparent !important;
+    padding: 2rem !important;
+    text-align: center !important;
+    color: #6c757d !important;
+    font-style: italic !important;
+}
+
+/* Custom status indicators in list view */
+.fc-list-event.event-expired {
+    border-left-color: #dc3545 !important;
+}
+
+.fc-list-event.event-expired .fc-list-event-title::before {
+    content: "⚠️ ";
+    margin-right: 8px;
+}
+
+.fc-list-event.event-expiring-soon {
+    border-left-color: #ffc107 !important;
+}
+
+.fc-list-event.event-expiring-soon .fc-list-event-title::before {
+    content: "⚠️ ";
+    margin-right: 8px;
+}
+
+.fc-list-event.event-pm {
+    border-left-color: #0dcaf0 !important;
+}
+
+.fc-list-event.event-comp {
+    border-left-color: #0d6efd !important;
+}
+
+.fc-list-event.event-cof {
+    border-left-color: #198754 !important;
+}
+
+/* Enhanced bell icon styling */
+.event-icon-container .event-svg-icon {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.event-icon-container:hover .event-svg-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
+}
+
+/* Add specific glow effects for each status */
+.event-icon-expired .event-svg-icon {
+    filter: drop-shadow(0 0 2px rgba(220, 53, 69, 0.5));
+}
+
+.event-icon-expired:hover .event-svg-icon {
+    filter: drop-shadow(0 0 4px rgba(220, 53, 69, 0.7));
+}
+
+.event-icon-expiring .event-svg-icon {
+    filter: drop-shadow(0 0 2px rgba(255, 149, 0, 0.5));
+}
+
+.event-icon-expiring:hover .event-svg-icon {
+    filter: drop-shadow(0 0 4px rgba(255, 149, 0, 0.7));
+}
+
+.event-icon-active .event-svg-icon {
+    filter: drop-shadow(0 0 2px rgba(25, 135, 84, 0.5));
+}
+
+.event-icon-active:hover .event-svg-icon {
+    filter: drop-shadow(0 0 4px rgba(25, 135, 84, 0.7));
+}
