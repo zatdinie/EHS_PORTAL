@@ -24,7 +24,14 @@ namespace EHS_PORTAL
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap-grid.css",
+                      "~/Content/bootstrap-utilities.css",
+                      "~/Content/site.css",
+                      "~/Content/calendar-custom.css"));
+            
+            // Create a separate bundle for FullCalendar
+            bundles.Add(new StyleBundle("~/Content/fullcalendar").Include(
+                      "~/Content/fullcalendar.css"));
         }
     }
 }
