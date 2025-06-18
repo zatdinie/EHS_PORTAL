@@ -43,7 +43,7 @@
                                     @if (!string.IsNullOrEmpty(log.EntityName))
                                     {
                                         <span>@log.EntityName</span>
-                                        @if (!string.IsNullOrEmpty(log.EntityID))
+                                        if (!string.IsNullOrEmpty(log.EntityID))
                                         {
                                             <span class="text-muted"> (#@log.EntityID)</span>
                                         }

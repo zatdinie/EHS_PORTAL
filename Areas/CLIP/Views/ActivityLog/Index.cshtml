@@ -2,6 +2,11 @@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Activity Logs";
+    var searchTerm = ViewBag.CurrentSearchTerm as string;
+    var filterAction = ViewBag.CurrentFilterAction as string;
+    var filterEntity = ViewBag.CurrentFilterEntity as string;
+    var startDate = ViewBag.CurrentStartDate;
+    var endDate = ViewBag.CurrentEndDate;
 }
 
 <h2>Activity Logs</h2>
@@ -18,25 +23,31 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Search:</label>
                         <div class="col-md-8">
-                            @Html.TextBox("searchTerm", ViewBag.CurrentSearchTerm as string, new { @class = "form-control", placeholder = "Search by user, description, entity..." })
+                            <input type="text" name="searchTerm" value="@searchTerm" class="form-control" placeholder="Search by user, description, entity..." />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Action Type:</label>
                         <div class="col-md-8">
-                            @Html.DropDownList("filterAction", 
-                                new SelectList(ViewBag.Actions, ViewBag.CurrentFilterAction), 
-                                "-- All Actions --", 
-                                new { @class = "form-control" })
+                            <select name="filterAction" class="form-control">
+                                <option value="">-- All Actions --</option>
+                                @foreach (var action in ViewBag.Actions as List<string>)
+                                {
+                                    <option value="@action" @(action == filterAction ? "selected" : "")>@action</option>
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entity Type:</label>
                         <div class="col-md-8">
-                            @Html.DropDownList("filterEntity", 
-                                new SelectList(ViewBag.EntityNames, ViewBag.CurrentFilterEntity), 
-                                "-- All Entities --", 
-                                new { @class = "form-control" })
+                            <select name="filterEntity" class="form-control">
+                                <option value="">-- All Entities --</option>
+                                @foreach (var entity in ViewBag.EntityNames as List<string>)
+                                {
+                                    <option value="@entity" @(entity == filterEntity ? "selected" : "")>@entity</option>
+                                }
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -44,13 +55,13 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Start Date:</label>
                         <div class="col-md-8">
-                            @Html.TextBox("startDate", ViewBag.CurrentStartDate, new { @class = "form-control date-picker", placeholder = "From Date" })
+                            <input type="text" name="startDate" value="@startDate" class="form-control date-picker" placeholder="From Date" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">End Date:</label>
                         <div class="col-md-8">
-                            @Html.TextBox("endDate", ViewBag.CurrentEndDate, new { @class = "form-control date-picker", placeholder = "To Date" })
+                            <input type="text" name="endDate" value="@endDate" class="form-control date-picker" placeholder="To Date" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -105,7 +116,7 @@
                         @if (!string.IsNullOrEmpty(log.EntityName))
                         {
                             <span>@log.EntityName</span>
-                            @if (!string.IsNullOrEmpty(log.EntityID))
+                            if (!string.IsNullOrEmpty(log.EntityID))
                             {
                                 <span class="text-muted"> (#@log.EntityID)</span>
                             }
@@ -126,11 +137,11 @@
 <div class="text-center">
     @Html.PagedListPager(Model, page => Url.Action("Index", new {
         page,
-        searchTerm = ViewBag.CurrentSearchTerm,
-        filterAction = ViewBag.CurrentFilterAction,
-        filterEntity = ViewBag.CurrentFilterEntity,
-        startDate = ViewBag.CurrentStartDate,
-        endDate = ViewBag.CurrentEndDate
+        searchTerm = searchTerm,
+        filterAction = filterAction,
+        filterEntity = filterEntity,
+        startDate = startDate,
+        endDate = endDate
     }))
 </div>
 

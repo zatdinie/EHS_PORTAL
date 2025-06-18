@@ -504,7 +504,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             );
 
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Welcome", "Home", new { area = "CLIP" });
         }
 
         //
