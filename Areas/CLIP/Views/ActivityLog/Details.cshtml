@@ -18,14 +18,7 @@
 
                     <dt>User:</dt>
                     <dd>
-                        @if (!string.IsNullOrEmpty(Model.UserID))
-                        {
-                            <a href="@Url.Action("UserActivity", new { userId = Model.UserID })">@Model.UserName</a>
-                        }
-                        else
-                        {
-                            @Model.UserName
-                        }
+                        @Model.UserName
                     </dd>
 
                     <dt>Action:</dt>
