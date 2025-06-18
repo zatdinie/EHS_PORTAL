@@ -1,0 +1,960 @@
+@model EHS_PORTAL.Areas.CLIP.Controllers.CalendarSummaryViewModel
+@{
+    ViewBag.Title = "Expiry Calendar";
+    Layout = "~/Areas/CLIP/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="card shadow h-100">
+                <div class="card-header bg-info text-white d-flex align-items-center">
+                    <i class="bi bi-speedometer2 me-2"></i>
+                    <h5 class="m-0">Plant Monitoring</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="h1 mb-0 text-center">@Model.PlantMonitoring.Total</div>
+                                <div class="small text-muted text-center">Total</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="h1 mb-0 text-center text-danger">@Model.PlantMonitoring.Expired</div>
+                                <div class="small text-muted text-center">Expired</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-0">
+                                <div class="h1 mb-0 text-center text-warning">@Model.PlantMonitoring.ExpiringSoon</div>
+                                <div class="small text-muted text-center">Expiring Soon</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-0">
+                                <div class="h1 mb-0 text-center text-primary">@Model.PlantMonitoring.ExpiringThisMonth</div>
+                                <div class="small text-muted text-center">Next 90 Days</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-person-badge me-2"></i>
+                    <h5 class="m-0">Competency</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="h1 mb-0 text-center">@Model.Competency.Total</div>
+                                <div class="small text-muted text-center">Total</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="h1 mb-0 text-center text-danger">@Model.Competency.Expired</div>
+                                <div class="small text-muted text-center">Expired</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-0">
+                                <div class="h1 mb-0 text-center text-warning">@Model.Competency.ExpiringSoon</div>
+                                <div class="small text-muted text-center">Expiring Soon</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-0">
+                                <div class="h1 mb-0 text-center text-primary">@Model.Competency.ExpiringThisMonth</div>
+                                <div class="small text-muted text-center">Next 90 Days</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-header bg-success text-white d-flex align-items-center">
+                    <i class="bi bi-award me-2"></i>
+                    <h5 class="m-0">Certificate of Fitness</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="h1 mb-0 text-center">@Model.CertificateOfFitness.Total</div>
+                                <div class="small text-muted text-center">Total</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="h1 mb-0 text-center text-danger">@Model.CertificateOfFitness.Expired</div>
+                                <div class="small text-muted text-center">Expired</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-0">
+                                <div class="h1 mb-0 text-center text-warning">@Model.CertificateOfFitness.ExpiringSoon</div>
+                                <div class="small text-muted text-center">Expiring Soon</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-0">
+                                <div class="h1 mb-0 text-center text-primary">@Model.CertificateOfFitness.ExpiringThisMonth</div>
+                                <div class="small text-muted text-center">Next 90 Days</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="card shadow mb-3">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-funnel me-2"></i>
+                    <h5 class="m-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="showPlantMonitoring" checked>
+                        <label class="form-check-label" for="showPlantMonitoring">
+                            <span class="badge bg-info"><i class="bi bi-speedometer2 me-1"></i> Plant Monitoring</span>
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="showCompetency" checked>
+                        <label class="form-check-label" for="showCompetency">
+                            <span class="badge bg-primary"><i class="bi bi-person-badge me-1"></i> Competency</span>
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="showCertificate" checked>
+                        <label class="form-check-label" for="showCertificate">
+                            <span class="badge bg-success"><i class="bi bi-award me-1"></i> Certificate of Fitness</span>
+                        </label>
+                    </div>
+                    <hr>
+                    <div class="mb-2">
+                        <div class="d-flex align-items-center mb-1">
+                            <span class="badge bg-success me-2">&nbsp;</span>
+                            <span>Active</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-1">
+                            <span class="badge bg-warning me-2">&nbsp;</span>
+                            <span>Expiring Soon</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-danger me-2">&nbsp;</span>
+                            <span>Expired</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow">
+                <div class="card-header bg-info text-white d-flex align-items-center">
+                    <i class="bi bi-bell-fill me-2"></i>
+                    <h5 class="m-0">Upcoming Expiries (90 Days)</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush" id="upcomingExpiries">
+                        <li class="list-group-item text-center">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span class="ms-2">Loading...</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-bell-fill me-2"></i>
+                    <h4 class="m-0">Expiry Dates Calendar</h4>
+                </div>
+                <div class="card-body">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Event Details Modal -->
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel">Event Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="eventModalBody">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+    <link href="~/Content/calendar-custom.css" rel="stylesheet" />
+    <style>
+        /* Modal enhancements */
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        /* Improve badges in the modal */
+        #eventModalBody .badge {
+            font-size: 0.8rem;
+            padding: 0.35em 0.65em;
+        }
+        
+        /* Add hover effect to the upcoming expiries */
+        #upcomingExpiries .list-group-item {
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        
+        #upcomingExpiries .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* Tooltip styling */
+        .event-tooltip {
+            max-width: 300px;
+            font-size: 0.9rem;
+            z-index: 9999;
+        }
+        
+        .tooltip-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .tooltip-date {
+            margin-bottom: 3px;
+        }
+        
+        .tooltip-status {
+            margin-bottom: 3px;
+        }
+        
+        .tooltip-description {
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var allEvents = [];
+            
+            // Apply Bootstrap-compatible theme
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                themeSystem: 'bootstrap5',
+                initialView: 'dayGridMonth',
+                height: 'auto',
+                aspectRatio: 1.35, // Control the width/height ratio of the calendar
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,listMonth'
+                },
+                views: {
+                    listMonth: {
+                        // Use a completely custom format that doesn't duplicate the day name
+                        listDayFormat: function(date) {
+                            return moment(date).format('dddd, MMMM D, YYYY');
+                        },
+                        listDayAltFormat: null,
+                        displayEventTime: false,
+                        eventDidMount: function(info) {
+                            // Apply specific styling for list view events
+                            if (info.view.type === 'listMonth') {
+                                // Hide the time column completely
+                                var timeCell = info.el.querySelector('.fc-list-event-time');
+                                if (timeCell) {
+                                    timeCell.style.display = 'none';
+                                }
+                                
+                                // Set a fixed color for the event row based on status
+                                if (info.event.extendedProps.status === 'expired') {
+                                    info.el.style.backgroundColor = 'rgba(220, 53, 69, 0.1)';
+                                } else if (info.event.extendedProps.status === 'expiring-soon') {
+                                    info.el.style.backgroundColor = 'rgba(255, 193, 7, 0.1)';
+                                } else {
+                                    info.el.style.backgroundColor = 'rgba(25, 135, 84, 0.1)';
+                                }
+                            }
+                        }
+                    }
+                },
+                buttonIcons: {
+                    prev: 'chevron-left',
+                    next: 'chevron-right'
+                },
+                bootstrapFontAwesome: {
+                    prev: 'fa-chevron-left',
+                    next: 'fa-chevron-right'
+                },
+                // Add viewDidMount handler
+                viewDidMount: function(viewInfo) {
+                    // Apply layout adjustments after view is mounted
+                    setTimeout(function() {
+                        if (viewInfo.view.type === 'listMonth') {
+                            adjustListViewLayout();
+                        } else {
+                            adjustCalendarLayout();
+                        }
+                        initializeTooltips();
+                    }, 100);
+                },
+                // Add datesSet handler
+                datesSet: function(dateInfo) {
+                    // Apply layout adjustments when date range changes
+                    setTimeout(function() {
+                        if (calendar.view.type === 'listMonth') {
+                            adjustListViewLayout();
+                        } else {
+                            adjustCalendarLayout();
+                        }
+                        initializeTooltips();
+                    }, 100);
+                },
+                eventClick: function(info) {
+                    var modalBody = document.getElementById('eventModalBody');
+                    var event = info.event;
+                    
+                    var statusBadge = '';
+                    var statusColor = '';
+                    if (event.extendedProps.status === 'expired') {
+                        statusBadge = '<span class="badge bg-danger">Expired</span>';
+                        statusColor = '#dc3545';
+                    } else if (event.extendedProps.status === 'expiring-soon') {
+                        statusBadge = '<span class="badge bg-warning text-dark">Expiring Soon</span>';
+                        statusColor = '#ff9500';
+                    } else {
+                        statusBadge = '<span class="badge bg-success">Active</span>';
+                        statusColor = '#198754';
+                    }
+                    
+                    var typeBadge = '';
+                    if (event.extendedProps.type === 'Plant Monitoring') {
+                        typeBadge = '<span class="badge bg-info">Plant Monitoring</span>';
+                    } else if (event.extendedProps.type === 'Competency') {
+                        typeBadge = '<span class="badge bg-primary">Competency</span>';
+                    } else if (event.extendedProps.type === 'Certificate of Fitness') {
+                        typeBadge = '<span class="badge bg-success">Certificate of Fitness</span>';
+                    }
+                    
+                    var content = `
+                        <div class="mb-3">
+                            <h5 class="fw-bold d-flex align-items-center">
+                                <i class="bi bi-bell-fill me-2" style="color: ${statusColor};"></i>
+                                ${event.title}
+                            </h5>
+                            <div class="d-flex gap-2 mb-2">
+                                ${typeBadge}
+                                ${statusBadge}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-calendar-event me-2"></i>
+                                <span>${moment(event.start).format('MMMM D, YYYY')}</span>
+                            </div>
+                            ${event.extendedProps.daysUntil ? `
+                            <div class="d-flex align-items-center text-${event.extendedProps.status === 'expired' ? 'danger' : (event.extendedProps.status === 'expiring-soon' ? 'warning' : 'success')}">
+                                <i class="bi bi-clock me-2"></i>
+                                <span>${event.extendedProps.status === 'expired' ? 'Expired ' + Math.abs(event.extendedProps.daysUntil) + ' days ago' : event.extendedProps.daysUntil + ' days remaining'}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="fw-bold mb-1">Description</h6>
+                            <p>${event.extendedProps.description || 'No description available'}</p>
+                        </div>
+                    `;
+                    
+                    modalBody.innerHTML = content;
+                    
+                    var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+                    eventModal.show();
+                },
+                eventClassNames: function(arg) {
+                    var eventId = arg.event.id;
+                    var classNames = [];
+                    
+                    // Add type-based class
+                    if (eventId.startsWith('pm_')) {
+                        classNames.push('event-pm');
+                    } else if (eventId.startsWith('comp_')) {
+                        classNames.push('event-comp');
+                    } else if (eventId.startsWith('cof_')) {
+                        classNames.push('event-cof');
+                    }
+                    
+                    // Add status-based class
+                    if (arg.event.extendedProps.status === 'expired') {
+                        classNames.push('event-expired');
+                    } else if (arg.event.extendedProps.status === 'expiring-soon') {
+                        classNames.push('event-expiring-soon');
+                    }
+                    
+                    return classNames;
+                },
+                eventContent: function(arg) {
+                    var event = arg.event;
+                    var title = event.title;
+                    
+                    // For list view, add status badges to the title
+                    if (arg.view.type === 'listMonth') {
+                        var statusBadge = '';
+                        var daysText = '';
+                        
+                        if (event.extendedProps.daysUntil !== undefined) {
+                            if (event.extendedProps.status === 'expired') {
+                                statusBadge = '<span class="badge bg-danger ms-2">Expired</span>';
+                                daysText = `<span class="text-danger small"><i class="bi bi-clock-history me-1"></i>${Math.abs(event.extendedProps.daysUntil)} days ago</span>`;
+                            } else if (event.extendedProps.status === 'expiring-soon') {
+                                statusBadge = '<span class="badge bg-warning text-dark ms-2">Expiring Soon</span>';
+                                daysText = `<span class="text-warning small"><i class="bi bi-clock-history me-1"></i>${event.extendedProps.daysUntil} days left</span>`;
+                            } else {
+                                statusBadge = '<span class="badge bg-success ms-2">Active</span>';
+                                daysText = `<span class="text-success small"><i class="bi bi-clock-history me-1"></i>${event.extendedProps.daysUntil} days left</span>`;
+                            }
+                        }
+                        
+                        var typeIcon = '';
+                        if (event.id.startsWith('pm_')) {
+                            typeIcon = '<span class="badge rounded-pill bg-info me-2"><i class="bi bi-bell-fill"></i></span>';
+                        } else if (event.id.startsWith('comp_')) {
+                            typeIcon = '<span class="badge rounded-pill bg-primary me-2"><i class="bi bi-bell-fill"></i></span>';
+                        } else if (event.id.startsWith('cof_')) {
+                            typeIcon = '<span class="badge rounded-pill bg-success me-2"><i class="bi bi-bell-fill"></i></span>';
+                        }
+                        
+                        // Determine status color for icon
+                        var statusColor = '';
+                        if (event.extendedProps.status === 'expired') {
+                            statusColor = 'text-danger';
+                        } else if (event.extendedProps.status === 'expiring-soon') {
+                            statusColor = 'text-warning';
+                        } else {
+                            statusColor = 'text-success';
+                        }
+                        
+                        return { 
+                            html: `<div class="d-flex justify-content-between align-items-center w-100 py-2">
+                                      <div class="d-flex align-items-center">
+                                         ${typeIcon} <span class="fw-medium">${title}</span> ${statusBadge}
+                                      </div>
+                                      <div class="${statusColor}">
+                                         ${daysText}
+                                      </div>
+                                   </div>`
+                        };
+                    }
+                    
+                    // Use the bell icon for all events (reminder/notification icon)
+                    var iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="currentColor" class="event-svg-icon">
+                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                    </svg>`;
+                    
+                    // Add status indicator
+                    var statusClass = '';
+                    var iconColor = '';
+                    
+                    if (event.extendedProps.status === 'expired') {
+                        statusClass = 'event-icon-expired';
+                        iconColor = '#dc3545'; // Red for expired
+                    } else if (event.extendedProps.status === 'expiring-soon') {
+                        statusClass = 'event-icon-expiring';
+                        iconColor = '#ff9500'; // Orange for expiring soon
+                    } else {
+                        statusClass = 'event-icon-active';
+                        iconColor = '#198754'; // Green for active
+                    }
+                    
+                    // Replace the icon with a colored version
+                    iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="${iconColor}" class="event-svg-icon">
+                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                    </svg>`;
+                    
+                    // Create tooltip with full details
+                    var tooltipContent = `
+                        <div class="tooltip-title">
+                            <i class="bi bi-bell-fill me-2" style="color: ${iconColor};"></i>${title}
+                        </div>
+                        <div class="tooltip-date"><i class="bi bi-calendar3"></i> ${moment(event.start).format('MMM D, YYYY')}</div>
+                    `;
+                    
+                    if (event.extendedProps.daysUntil !== undefined) {
+                        var daysText = event.extendedProps.status === 'expired' 
+                            ? `Expired ${Math.abs(event.extendedProps.daysUntil)} days ago` 
+                            : `${event.extendedProps.daysUntil} days remaining`;
+                        var statusIconClass = event.extendedProps.status === 'expired' ? 'text-danger bi-exclamation-triangle-fill' :
+                                             (event.extendedProps.status === 'expiring-soon' ? 'text-warning bi-exclamation-circle-fill' : 'text-success bi-check-circle-fill');
+                        tooltipContent += `<div class="tooltip-status"><i class="bi ${statusIconClass}"></i> ${daysText}</div>`;
+                    }
+                    
+                    if (event.extendedProps.description) {
+                        tooltipContent += `<div class="tooltip-description">${event.extendedProps.description}</div>`;
+                    }
+                    
+                    // Create the HTML element with tooltip attributes and icon
+                    return { 
+                        html: `<div class="event-icon-container ${statusClass}" 
+                                  data-bs-toggle="tooltip" 
+                                  data-bs-placement="top" 
+                                  data-bs-html="true" 
+                                  data-bs-custom-class="event-tooltip"
+                                  title="${tooltipContent.replace(/"/g, '&quot;').replace(/'/g, '&#39;')}">
+                                  ${iconSvg}
+                              </div>`
+                    };
+                },
+                firstDay: 0, // Start with Sunday
+                dayMaxEvents: true, // Allow "more" link when too many events
+                dayMaxEventRows: 3,
+                fixedWeekCount: false,
+                showNonCurrentDates: true,
+                // Improve interactions
+                navLinks: true, // Allow clicking on day/week names to navigate views
+                selectable: true, // Allow selecting dates by clicking/dragging
+                nowIndicator: false, // No "now" indicator needed without week view
+                weekNumbers: false, // Hide week numbers
+                weekText: 'W',
+                // Force dimensions
+                contentHeight: 700,
+                stickyHeaderDates: true,
+                handleWindowResize: true,
+                windowResizeDelay: 100
+            });
+            
+            calendar.render();
+            
+            // Add click handlers for the view buttons to reset properly
+            document.querySelectorAll('.fc-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Check if this is the list button
+                    var isListButton = button.classList.contains('fc-listMonth-button');
+                    
+                    // Allow the calendar to update
+                    setTimeout(function() {
+                        if (calendar.view.type === 'listMonth') {
+                            // For list view, we want to forcibly reset all text elements
+                            var dayTexts = document.querySelectorAll('.fc-list-day-text');
+                            dayTexts.forEach(function(dayText) {
+                                var dateStr = dayText.closest('.fc-list-day').dataset.date;
+                                if (dateStr) {
+                                    var formattedDate = moment(dateStr).format('dddd, MMMM D, YYYY');
+                                    dayText.textContent = formattedDate;
+                                }
+                            });
+                            
+                            // Make sure side texts are always hidden
+                            var sideTexts = document.querySelectorAll('.fc-list-day-side-text');
+                            sideTexts.forEach(function(sideText) {
+                                sideText.style.display = 'none';
+                            });
+                            
+                            // Complete the rest of the layout adjustments
+                            adjustListViewLayout();
+                        } else {
+                            adjustCalendarLayout();
+                        }
+                    }, 100);
+                });
+            });
+            
+            // Fix cell heights after calendar is rendered
+            setTimeout(function() {
+                adjustCalendarLayout();
+                initializeTooltips();
+                
+                // Re-adjust on window resize
+                window.addEventListener('resize', function() {
+                    if (calendar.view.type === 'listMonth') {
+                        adjustListViewLayout();
+                    } else {
+                        adjustCalendarLayout();
+                    }
+                    initializeTooltips();
+                });
+            }, 200);
+            
+            function initializeTooltips() {
+                // Remove any existing tooltips first
+                var oldTooltips = document.querySelectorAll('.tooltip');
+                oldTooltips.forEach(function (tooltip) {
+                    tooltip.remove();
+                });
+                
+                // Destroy any existing tooltips
+                var tooltipElements = document.querySelectorAll('#calendar [data-bs-toggle="tooltip"]');
+                tooltipElements.forEach(function (el) {
+                    var tooltipInstance = bootstrap.Tooltip.getInstance(el);
+                    if (tooltipInstance) {
+                        tooltipInstance.dispose();
+                    }
+                });
+                
+                // Initialize all tooltips in the calendar with specific configuration
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('#calendar [data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                    new bootstrap.Tooltip(tooltipTriggerEl, {
+                        container: 'body',
+                        boundary: 'window',
+                        placement: 'top',
+                        html: true,
+                        sanitize: false,
+                        trigger: 'hover focus',
+                        offset: [0, 5],
+                        popperConfig: function (defaultBsPopperConfig) {
+                            // Adjust popper configuration for better positioning
+                            return {
+                                ...defaultBsPopperConfig,
+                                modifiers: [
+                                    ...defaultBsPopperConfig.modifiers,
+                                    {
+                                        name: 'preventOverflow',
+                                        options: {
+                                            boundary: 'viewport',
+                                            padding: 10
+                                        }
+                                    }
+                                ]
+                            };
+                        }
+                    });
+                });
+            }
+            
+            function adjustCalendarLayout() {
+                // Set fixed height for all day cells
+                var dayCells = document.querySelectorAll('.fc-daygrid-day');
+                
+                // Apply a consistent height to all cells
+                dayCells.forEach(function(cell) {
+                    cell.style.height = '120px';
+                    cell.style.maxHeight = '120px';
+                    cell.style.overflow = 'hidden';
+                });
+                
+                // Ensure day frames fill the height but don't exceed it
+                var dayFrames = document.querySelectorAll('.fc-daygrid-day-frame');
+                dayFrames.forEach(function(frame) {
+                    frame.style.height = '100%';
+                    frame.style.maxHeight = '120px';
+                    frame.style.overflow = 'hidden';
+                });
+                
+                // Make sure event content areas have proper constraints
+                var dayEvents = document.querySelectorAll('.fc-daygrid-day-events');
+                dayEvents.forEach(function(eventArea) {
+                    eventArea.style.minHeight = '60px';
+                    eventArea.style.maxHeight = '80px';
+                    eventArea.style.overflowY = 'auto';
+                    eventArea.style.overflowX = 'hidden';
+                });
+                
+                // Ensure event content doesn't cause stretching
+                var events = document.querySelectorAll('.fc-event');
+                events.forEach(function(event) {
+                    event.style.maxWidth = '100%';
+                    event.style.overflow = 'hidden';
+                    event.style.textOverflow = 'ellipsis';
+                });
+                
+                // Force table rows to maintain consistent height
+                var tableRows = document.querySelectorAll('.fc-daygrid-body tr');
+                tableRows.forEach(function(row) {
+                    row.style.height = '120px';
+                    row.style.maxHeight = '120px';
+                });
+            }
+            
+            function adjustListViewLayout() {
+                // Add list event indicators based on status
+                var listEvents = document.querySelectorAll('.fc-list-event');
+                
+                listEvents.forEach(function(event) {
+                    // Add custom padding
+                    event.style.padding = '0';
+                    
+                    // Make the table cell take full width
+                    var titleCell = event.querySelector('.fc-list-event-title');
+                    if (titleCell) {
+                        titleCell.style.width = '100%';
+                        titleCell.style.padding = '0.5rem 1rem';
+                    }
+                    
+                    // Hide the event time column since we're using displayEventTime: false
+                    var timeCell = event.querySelector('.fc-list-event-time');
+                    if (timeCell) {
+                        timeCell.style.display = 'none';
+                    }
+                });
+                
+                // Style the list days
+                var listDays = document.querySelectorAll('.fc-list-day');
+                listDays.forEach(function(day) {
+                    day.style.backgroundColor = '#f8f9fa';
+                });
+                
+                // Make sure day headers stand out
+                var dayCushions = document.querySelectorAll('.fc-list-day-cushion');
+                dayCushions.forEach(function(cushion) {
+                    cushion.style.padding = '10px 14px';
+                    cushion.style.fontWeight = 'bold';
+                });
+                
+                // Fix duplicate day names issue in header cells
+                var dayTexts = document.querySelectorAll('.fc-list-day-text');
+                dayTexts.forEach(function(dayText) {
+                    // Get the ISO date from the row's data attribute
+                    var dateStr = dayText.closest('.fc-list-day').dataset.date;
+                    if (dateStr) {
+                        // Format the date explicitly using moment.js
+                        var formattedDate = moment(dateStr).format('dddd, MMMM D, YYYY');
+                        // Set the text directly without using any existing content
+                        dayText.textContent = formattedDate;
+                    }
+                });
+                
+                // Ensure side-text (which often duplicates the day name) is hidden
+                var sideTexts = document.querySelectorAll('.fc-list-day-side-text');
+                sideTexts.forEach(function(sideText) {
+                    sideText.style.display = 'none';
+                });
+                
+                // Style the empty message if present
+                var emptyMessage = document.querySelector('.fc-list-empty');
+                if (emptyMessage) {
+                    emptyMessage.style.padding = '2rem';
+                    emptyMessage.style.textAlign = 'center';
+                    emptyMessage.style.fontStyle = 'italic';
+                    emptyMessage.style.color = '#6c757d';
+                }
+            }
+            
+            // Load events from server
+            fetch('@Url.Action("GetEvents", "Calendar", new { area = "CLIP" })')
+                .then(response => response.json())
+                .then(data => {
+                    // Process events to add necessary properties
+                    allEvents = data.map(function(event) {
+                        // Calculate days until expiry for sorting and display
+                        var today = moment().startOf('day');
+                        var eventDate = moment(event.start);
+                        var daysUntil = eventDate.diff(today, 'days');
+                        
+                        // Determine status based on days until expiry
+                        var status = 'active';
+                        if (daysUntil < 0) {
+                            status = 'expired';
+                        } else if (daysUntil <= 90) {
+                            status = 'expiring-soon';
+                        }
+                        
+                        // Set event type based on ID
+                        var type = 'Other';
+                        if (event.id.startsWith('pm_')) {
+                            type = 'Plant Monitoring';
+                        } else if (event.id.startsWith('comp_')) {
+                            type = 'Competency';
+                        } else if (event.id.startsWith('cof_')) {
+                            type = 'Certificate of Fitness';
+                        }
+                        
+                        // Add these properties to the event
+                        event.extendedProps = {
+                            ...event.extendedProps,
+                            daysUntil: daysUntil,
+                            status: status,
+                            type: type
+                        };
+                        
+                        return event;
+                    });
+                    
+                    updateEvents();
+                    updateUpcomingExpiries();
+                    
+                    // Re-adjust layout after events are loaded
+                    setTimeout(function() {
+                        adjustCalendarLayout();
+                        initializeTooltips();
+                        
+                        // Reinitialize tooltips periodically to catch any missed elements
+                        setInterval(initializeTooltips, 2000);
+                    }, 100);
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    document.getElementById('upcomingExpiries').innerHTML = 
+                        '<li class="list-group-item text-center text-danger">Error loading events. Please try refreshing the page.</li>';
+                });
+            
+            // Event filters
+            document.getElementById('showPlantMonitoring').addEventListener('change', function() {
+                updateEvents();
+                setTimeout(adjustCalendarLayout, 100);
+            });
+            document.getElementById('showCompetency').addEventListener('change', function() {
+                updateEvents();
+                setTimeout(adjustCalendarLayout, 100);
+            });
+            document.getElementById('showCertificate').addEventListener('change', function() {
+                updateEvents();
+                setTimeout(adjustCalendarLayout, 100);
+            });
+            
+            function updateEvents() {
+                var showPM = document.getElementById('showPlantMonitoring').checked;
+                var showComp = document.getElementById('showCompetency').checked;
+                var showCert = document.getElementById('showCertificate').checked;
+                
+                var filteredEvents = allEvents.filter(function(event) {
+                    if (event.id.startsWith('pm_') && !showPM) return false;
+                    if (event.id.startsWith('comp_') && !showComp) return false;
+                    if (event.id.startsWith('cof_') && !showCert) return false;
+                    return true;
+                });
+                
+                calendar.removeAllEvents();
+                calendar.addEventSource(filteredEvents);
+                
+                // Initialize tooltips after events are added
+                setTimeout(initializeTooltips, 100);
+            }
+            
+            function updateUpcomingExpiries() {
+                var today = moment().startOf('day');
+                var nextMonth = moment().add(90, 'days').endOf('day');
+                
+                // Sort events by date
+                var upcomingEvents = allEvents
+                    .filter(function(event) {
+                        var eventDate = moment(event.start);
+                        return eventDate.isSameOrAfter(today) && eventDate.isSameOrBefore(nextMonth);
+                    })
+                    .sort(function(a, b) {
+                        return moment(a.start).diff(moment(b.start));
+                    });
+                
+                var upcomingList = document.getElementById('upcomingExpiries');
+                upcomingList.innerHTML = '';
+                
+                if (upcomingEvents.length === 0) {
+                    upcomingList.innerHTML = '<li class="list-group-item text-center">No upcoming expiries in the next 90 days</li>';
+                    return;
+                }
+                
+                upcomingEvents.forEach(function(event) {
+                    var eventDate = moment(event.start);
+                    var daysUntil = eventDate.diff(today, 'days');
+                    var statusClass = '';
+                    
+                    if (event.extendedProps.status === 'expired') {
+                        statusClass = 'upcoming-expired';
+                    } else if (event.extendedProps.status === 'expiring-soon') {
+                        statusClass = 'upcoming-expiring-soon';
+                    } else {
+                        statusClass = 'upcoming-active';
+                    }
+                    
+                    // Get badge based on event type
+                    var typeBadge = '';
+                    if (event.id.startsWith('pm_')) {
+                        typeBadge = '<span class="badge bg-info"><i class="bi bi-bell-fill"></i></span>';
+                    } else if (event.id.startsWith('comp_')) {
+                        typeBadge = '<span class="badge bg-primary"><i class="bi bi-bell-fill"></i></span>';
+                    } else if (event.id.startsWith('cof_')) {
+                        typeBadge = '<span class="badge bg-success"><i class="bi bi-bell-fill"></i></span>';
+                    }
+                    
+                    // Color for the days indicator
+                    var daysColor = daysUntil <= 7 ? 'bg-danger' : 
+                                   (daysUntil <= 30 ? 'bg-warning text-dark' : 'bg-secondary');
+                    
+                    var listItem = document.createElement('li');
+                    listItem.className = 'list-group-item ' + statusClass;
+                    listItem.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="d-flex align-items-center gap-2">
+                                    ${typeBadge}
+                                    <span class="fw-bold">${eventDate.format('MMM D, YYYY')}</span>
+                                </div>
+                                <div class="small text-truncate" style="max-width: 180px;">${event.title}</div>
+                            </div>
+                            <span class="badge rounded-pill ${daysColor}">${daysUntil} days</span>
+                        </div>
+                    `;
+                    
+                    listItem.addEventListener('click', function() {
+                        // Store event ID for reference
+                        var eventId = event.id;
+                        
+                        // Navigate to the date
+                        calendar.gotoDate(eventDate.toDate());
+                        
+                        // Find and highlight the event
+                        setTimeout(function() {
+                            var calendarEvents = calendar.getEvents();
+                            var targetEvent = calendarEvents.find(e => e.id === eventId);
+                            
+                            if (targetEvent) {
+                                targetEvent.setProp('borderColor', '#000');
+                                targetEvent.setProp('borderWidth', '2px');
+                                
+                                setTimeout(function() {
+                                    targetEvent.setProp('borderColor', '');
+                                    targetEvent.setProp('borderWidth', '');
+                                }, 2000);
+                            }
+                            
+                            // Re-adjust layout after navigating
+                            adjustCalendarLayout();
+                        }, 100);
+                    });
+                    
+                    upcomingList.appendChild(listItem);
+                });
+            }
+        });
+    </script>
+} 
