@@ -1,6 +1,13 @@
 // EHS Portal JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS animations
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+    });
+
     // Add hover effect to cards
     const cards = document.querySelectorAll('.card');
     
@@ -26,12 +33,52 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update safety statistics
     updateSafetyStats();
 
+    // Initialize announcement banner close button
+    const announcementClose = document.querySelector('.announcement-close');
+    if (announcementClose) {
+        announcementClose.addEventListener('click', function() {
+            const banner = document.querySelector('.announcement-banner');
+            banner.style.height = banner.offsetHeight + 'px';
+            
+            // Force reflow
+            banner.offsetHeight;
+            
+            banner.style.height = '0';
+            banner.style.opacity = '0';
+            banner.style.overflow = 'hidden';
+            banner.style.transition = 'height 0.3s ease, opacity 0.3s ease, padding 0.3s ease';
+            banner.style.padding = '0';
+            
+            // Remove from DOM after animation
+            setTimeout(() => {
+                banner.remove();
+            }, 300);
+        });
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: target.offsetTop - 80, // Offset for header
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
     // Get current year for footer copyright
     const currentYear = new Date().getFullYear();
     const copyrightElement = document.querySelector('.footer-bottom p');
     if (copyrightElement) {
         copyrightElement.textContent = copyrightElement.textContent.replace('2025', currentYear);
     }
+
+    // Initialize progress bar animation
+    animateProgressBar();
 }); 
 
 // Function to update safety statistics
@@ -81,4 +128,57 @@ function animateCountUp(elementId, targetValue) {
         // Set the current value, rounded to nearest integer
         element.textContent = Math.round(currentValue);
     }, stepDuration);
+}
+
+// Function to animate progress bar
+function animateProgressBar() {
+    const progressBar = document.getElementById('safety-goal-progress');
+    if (!progressBar) return;
+    
+    // Start with width 0
+    progressBar.style.width = '0%';
+    
+    // Animate to target width
+    setTimeout(() => {
+        progressBar.style.width = '85%';
+    }, 500);
+}
+
+// Function to show a toast notification
+function showToast(message, type = 'info') {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+        <div class="toast-content">
+            <span>${message}</span>
+            <button class="toast-close">&times;</button>
+        </div>
+    `;
+    
+    // Add to document
+    document.body.appendChild(toast);
+    
+    // Force reflow
+    toast.offsetHeight;
+    
+    // Show toast
+    toast.classList.add('show');
+    
+    // Add close functionality
+    const closeBtn = toast.querySelector('.toast-close');
+    closeBtn.addEventListener('click', () => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    });
+    
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 5000);
 } 

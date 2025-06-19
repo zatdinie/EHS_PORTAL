@@ -10,6 +10,8 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,25 +22,34 @@
                 <img src="images/logo.png" alt="Inari Amertron Berhad Logo" class="company-logo">
                 <div class="logo">EHS <span>Portal</span></div>
             </div>
-            <div class="company-name">Inari Amertron Berhad</div>
+            <div class="company-name">Inari Amertron Berhad
+                <a class="company-name-text" href="mailto:ehs.notification@inari-amertron.com.my"><i class="fas fa-envelope"></i> ehs.notification@inari-amertron.com.my</a>
+            </div>
+            
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Environment, Health & Safety Portal</h1>
-            <p>Your central hub for EHS resources, tools, and information to ensure a safe and sustainable workplace.
-            </p>
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <h1>Environment, Health & Safety Portal</h1>
+                <p>Your central hub for EHS resources, tools, and information to ensure a safe and sustainable workplace.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary">Explore Services</a>
+                    <a href="mailto:ehs.notification@inari-amertron.com.my" class="btn btn-secondary">Report Incident</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <br/>
     <!-- Safety Statistics Section -->
     <section class="safety-stats">
         <div class="container">
+            <br/>
+            <h2 class="section-title" data-aos="fade-in" data-aos-delay="50">Safety Performance</h2>
             <div class="stats-container">
-                <div class="stat-card">
+                <div class="stat-card" data-aos="fade-in" data-aos-delay="100">
                     <div class="stat-icon">
                         <i class="fas fa-calendar-check"></i>
                     </div>
@@ -47,7 +58,7 @@
                         <div class="stat-value" id="days-since-accident">154</div>
                     </div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" data-aos="fade-in" data-aos-delay="100">
                     <div class="stat-icon">
                         <i class="fas fa-chart-bar"></i>
                     </div>
@@ -56,14 +67,26 @@
                         <div class="stat-value" id="total-accidents">2</div>
                     </div>
                 </div>
+                <div class="stat-card" data-aos="fade-in" data-aos-delay="100">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Safety Goal Completion</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="safety-goal-progress"></div>
+                        </div>
+                        <div class="progress-text">85%</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Cards Section -->
-    <section class="cards-section">
+    <section id="services" class="cards-section">
         <div class="container">
-            <h2 class="section-title">SERVICES</h2>
+            <h2 class="section-title">OUR SERVICES</h2>
             <div class="cards-grid">
                 <!-- Sustainability Data Entry System -->
                 <a href="http://10.21.11.60:8081/Login.aspx" class="card" target="_blank">
@@ -74,6 +97,7 @@
                         <h3 class="card-title">Sustainability Data Entry System</h3>
                         <p class="card-description">Record and track sustainability metrics and environmental
                             performance data.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
                 <!-- Fire Extinguisher Tracking System -->
@@ -84,6 +108,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Fire Extinguisher Tracking System</h3>
                         <p class="card-description">Track the location of fire extinguishers and their expiry dates.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
@@ -95,6 +120,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Competency, License & Important Permit</h3>
                         <p class="card-description">View and manage competency, licenses, and important permits.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
@@ -106,6 +132,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Personal Protective Equipment Management</h3>
                         <p class="card-description">Request and manage personal protective equipment.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
@@ -117,11 +144,13 @@
                     <div class="card-content">
                         <h3 class="card-title">Permit To Work</h3>
                         <p class="card-description">Request and manage permit to work.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
                 <!-- Training Portal -->
-                <a href="Services/Training/index.html" class="card" target="_blank">
+                <a href="Services/Training/index.html" class="card" target="_blank"
+                >
                     <div class="card-icon">
                         <img src="images/training.png" alt="Training Portal" class="card-image">
                     </div>
@@ -129,10 +158,42 @@
                         <h3 class="card-title">Training Portal</h3>
                         <p class="card-description">Complete required EHS training, certifications, and learning
                             modules.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
+            </div>
+        </div>
+    </section>
 
-
+    <!-- Quick Access Section -->
+    <section class="quick-access-section">
+        <div class="container">
+            <h2 class="section-title">Quick Access</h2>
+            <div class="quick-access-grid">
+                <a href="images/RC - 1792 - Permit To Work - Rev 02.pdf" class="quick-access-item" target="_blank">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Permit to Work Forms</span>
+                </a>
+                <a href="#" class="quick-access-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Training Calendar</span>
+                </a>
+                <a href="#" class="quick-access-item">
+                    <i class="fas fa-book"></i>
+                    <span>EHS Manual</span>
+                </a>
+                <a href="#" class="quick-access-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Performance Dashboard</span>
+                </a>
+                <a href="#" class="quick-access-item">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Emergency Procedures</span>
+                </a>
+                <a href="images/Emergency Contact Number.pdf" class="quick-access-item" target="_blank">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>Contact Directory</span>
+                </a>
             </div>
         </div>
     </section>
@@ -164,10 +225,10 @@
                 <div class="footer-column">
                     <h3>Contact EHS</h3>
                     <ul>
-                        <li><a href="mailto:ehs.notification@inari-amertron.com.my" target="_blank">ehs.notification@inari-amertron.com.my</a></li>
-                        <li><a href="tel:+15551234567" target="_blank">Emergency: 999</a></li>
-                        <li><a href="#" target="_blank">Submit Feedback</a></li>
-                        <li><a href="#" target="_blank">EHS Team Directory</a></li>
+                        <li><a href="mailto:ehs.notification@inari-amertron.com.my" target="_blank"><i class="fas fa-envelope"></i> ehs.notification@inari-amertron.com.my</a></li>
+                        <li><a href="tel:+15551234567" target="_blank"><i class="fas fa-phone-alt"></i> Emergency: 999</a></li>
+                        <li><a href="#" target="_blank"><i class="fas fa-comment"></i> Submit Feedback</a></li>
+                        <li><a href="#" target="_blank"><i class="fas fa-users"></i> EHS Team Directory</a></li>
                     </ul>
                 </div>
             </div>
@@ -177,6 +238,8 @@
         </div>
     </footer>
 
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/main.js"></script>
     <!-- <script src="js/lanyard.js"></script> -->
 </body>
