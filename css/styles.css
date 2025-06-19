@@ -92,9 +92,12 @@ header {
   color: var(--white);
   text-decoration: none;
   transition: var(--transition);
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 5px;
+  white-space: nowrap;
 }
 
 .company-name-text:hover {
@@ -309,7 +312,7 @@ header {
 /* Cards Section */
 .cards-section {
   padding: 60px 0;
-  background-color: var(--light-gray);
+  background-color: var(--white);
 }
 
 .section-title {
@@ -470,6 +473,7 @@ header {
 
 .pic-content {
   padding: 20px;
+  text-align: center;
 }
 
 .pic-content h3 {
@@ -486,14 +490,15 @@ header {
 .pic-contact, .pic-email {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   margin-bottom: 5px;
   font-size: 14px;
 }
 
 .pic-email {
-  word-break: break-word;
+  word-break: break-all;
+  max-width: 100%;
 }
 
 /* Quick Access Section */
@@ -503,9 +508,10 @@ header {
 }
 
 .quick-access-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -514,6 +520,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   padding: 20px;
   border-radius: 10px;
@@ -521,6 +528,7 @@ header {
   transition: var(--transition);
   text-decoration: none;
   color: var(--primary-color);
+  width: 180px;
 }
 
 .quick-access-item:hover {
@@ -588,13 +596,16 @@ footer {
   color: var(--white);
   text-decoration: none;
   transition: var(--transition);
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  flex-wrap: nowrap;
+  word-break: break-all;
 }
 
 .footer-column a i {
   margin-right: 10px;
   font-size: 16px;
+  flex-shrink: 0;
 }
 
 .footer-column a:hover {
@@ -691,6 +702,15 @@ footer {
   
   .logo {
     margin-bottom: 10px;
+  }
+
+  .company-name {
+    align-items: center;
+  }
+
+  .company-name-text {
+    justify-content: center;
+    font-size: 13px;
   }
   
   .quick-access-grid {
