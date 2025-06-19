@@ -259,9 +259,10 @@ ORDER BY p.PlantName", conn))
                     using (SqlCommand cmd = new SqlCommand(@"
                         SELECT 
                             p.PlantName,
-                            MIN(CASE WHEN fe.DateExpired >= GETDATE() THEN fe.DateExpired ELSE NULL END) as NextExpiryDate
+                            MIN(CASE WHEN fe.DateExpired >= GETDATE() AND s.StatusName <> 'Under Service' THEN fe.DateExpired ELSE NULL END) as NextExpiryDate
                         FROM FETS.Plants p
                         LEFT JOIN FETS.FireExtinguishers fe ON p.PlantID = fe.PlantID
+                        LEFT JOIN FETS.Status s ON fe.StatusID = s.StatusID
                         GROUP BY p.PlantName
                         ORDER BY p.PlantName", conn))
                     {
