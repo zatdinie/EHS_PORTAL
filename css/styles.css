@@ -432,6 +432,70 @@ header {
   transform: translateX(5px);
 }
 
+/* Person In Charge Section */
+.pic-section {
+  padding: 60px 0;
+  background-color: var(--white);
+}
+
+.pic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.pic-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  padding: 0;
+  border: 1px solid var(--medium-gray);
+  text-align: center;
+  overflow: hidden;
+}
+
+.pic-image {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  margin: 0;
+}
+
+.pic-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pic-content {
+  padding: 20px;
+}
+
+.pic-content h3 {
+  color: var(--primary-color);
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.pic-position {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.pic-contact, .pic-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.pic-email {
+  word-break: break-word;
+}
+
 /* Quick Access Section */
 .quick-access-section {
   padding: 60px 0;
@@ -697,5 +761,28 @@ footer {
     right: 20px;
     bottom: 20px;
     max-width: none;
+  }
+}
+
+/* Add responsive styles for the PIC section */
+@media (max-width: 1024px) {
+  .pic-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .pic-image {
+    height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pic-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .pic-image {
+    height: 280px;
   }
 } 
