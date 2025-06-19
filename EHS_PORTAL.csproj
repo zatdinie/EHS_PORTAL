@@ -679,6 +679,8 @@
     <None Include="Areas\FETS\Properties\PublishProfiles\FolderProfile4.pubxml" />
     <None Include="Areas\FETS\Properties\PublishProfiles\FolderProfile5.pubxml" />
     <None Include="Areas\FETS\Properties\PublishProfiles\FolderProfile6.pubxml" />
+    <Content Include="Scripts\moment.min.js.map" />
+    <Content Include="Scripts\moment-with-locales.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

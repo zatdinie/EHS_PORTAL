@@ -149,8 +149,8 @@
                                 <label class="form-label fw-bold">Quotation Date</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                    <input type="datetime-local" class="form-control" id="quoteDate" name="QuoteDate" 
-                                           value="@(Model.QuoteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    <input type="date" class="form-control" id="quoteDate" name="QuoteDate" 
+                                           value="@(Model.QuoteDate?.ToString("yyyy-MM-dd") ?? "")">
                                     <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Quotation request was initiated">
                                         <i class="bi bi-info-circle"></i>
                                     </span>
@@ -160,8 +160,8 @@
                                 <label class="form-label fw-bold">Complete Date</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                    <input type="datetime-local" class="form-control" id="quoteCompleteDate" name="QuoteCompleteDate" 
-                                           value="@(Model.QuoteCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                    <input type="date" class="form-control" id="quoteCompleteDate" name="QuoteCompleteDate" 
+                                           value="@(Model.QuoteCompleteDate?.ToString("yyyy-MM-dd") ?? "")">
                                     <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Quotation was approved and completed. PIC required to choose the most cost-efficient pricing offered by Vendors. Kindly include the Quotation if possible.">
                                         <i class="bi bi-info-circle"></i>
                                     </span>
@@ -290,8 +290,8 @@
                                     <label class="form-label fw-bold">EPR Date</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                        <input type="datetime-local" class="form-control" id="eprDate" name="EprDate" 
-                                            value="@(Model.EprDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <input type="date" class="form-control" id="eprDate" name="EprDate" 
+                                            value="@(Model.EprDate?.ToString("yyyy-MM-dd") ?? "")">
                                         <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the ePR was initiated in the system">
                                             <i class="bi bi-info-circle"></i>
                                         </span>
@@ -301,8 +301,8 @@
                                     <label class="form-label fw-bold">Complete Date</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                        <input type="datetime-local" class="form-control" id="eprCompleteDate" name="EprCompleteDate" 
-                                            value="@(Model.EprCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <input type="date" class="form-control" id="eprCompleteDate" name="EprCompleteDate" 
+                                            value="@(Model.EprCompleteDate?.ToString("yyyy-MM-dd") ?? "")">
                                         <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the ePR was approved and completed">
                                             <i class="bi bi-info-circle"></i>
                                         </span>
@@ -435,8 +435,8 @@
                                     <label class="form-label fw-bold">Work Initiate Date</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                        <input type="datetime-local" class="form-control" id="workDate" name="WorkDate" 
-                                            value="@(Model.WorkDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <input type="date" class="form-control" id="workDate" name="WorkDate" 
+                                            value="@(Model.WorkDate?.ToString("yyyy-MM-dd") ?? "")">
                                         <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Work Execution Phase started">
                                             <i class="bi bi-info-circle"></i>
                                         </span>
@@ -446,8 +446,8 @@
                                     <label class="form-label fw-bold">Work Start Date</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                        <input type="datetime-local" class="form-control" id="workSubmitDate" name="WorkSubmitDate" 
-                                            value="@(Model.WorkSubmitDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <input type="date" class="form-control" id="workSubmitDate" name="WorkSubmitDate" 
+                                            value="@(Model.WorkSubmitDate?.ToString("yyyy-MM-dd") ?? "")">
                                         <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the Work is Executed">
                                             <i class="bi bi-info-circle"></i>
                                         </span>
@@ -457,8 +457,8 @@
                                     <label class="form-label fw-bold">Complete Date</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
-                                        <input type="datetime-local" class="form-control" id="workCompleteDate" name="WorkCompleteDate" 
-                                            value="@(Model.WorkCompleteDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")">
+                                        <input type="date" class="form-control" id="workCompleteDate" name="WorkCompleteDate" 
+                                            value="@(Model.WorkCompleteDate?.ToString("yyyy-MM-dd") ?? "")">
                                         <span class="input-group-text" data-bs-toggle="tooltip" title="Date when the work was verified and accepted as complete. Reminder to use date stated on the Final Report.">
                                             <i class="bi bi-info-circle"></i>
                                         </span>
@@ -700,82 +700,55 @@
                 }
             });
 
-            // Date validation functions
+            // Function to validate quotation dates
             function validateQuotationDates() {
                 var quoteDate = $('#quoteDate').val();
-                var quoteSubmitDate = $('#quoteSubmitDate').val();
                 var quoteCompleteDate = $('#quoteCompleteDate').val();
-
-                // Set min date for submit date
-                $('#quoteSubmitDate').attr('min', quoteDate || '');
+                
+                // Validate date format
+                if (validateDateFormat(quoteDate, 'quoteDate') === false) return;
+                if (validateDateFormat(quoteCompleteDate, 'quoteCompleteDate') === false) return;
                 
                 // Set min date for complete date
-                $('#quoteCompleteDate').attr('min', quoteSubmitDate || quoteDate || '');
-
-                // Validate submit date
-                if (quoteSubmitDate && quoteDate && new Date(quoteSubmitDate) < new Date(quoteDate)) {
-                    alert('Submit date cannot be earlier than start date');
-                    $('#quoteSubmitDate').val('');
-                }
-
+                $('#quoteCompleteDate').attr('min', quoteDate || '');
+                
                 // Validate complete date
-                if (quoteCompleteDate) {
-                    var minDate = quoteSubmitDate || quoteDate;
-                    if (minDate && new Date(quoteCompleteDate) < new Date(minDate)) {
-                        alert('Complete date cannot be earlier than submit date or start date');
-                        $('#quoteCompleteDate').val('');
-                    }
-
-                    // Auto-set EPR start date when quotation is completed
-                    if (!eprDate.val()) {
-                        eprDate.val(quoteCompleteDate);
-                        validateEprDates();
-                        // Show notification
-                        showNotification('EPR date automatically set');
-                    }
+                if (quoteCompleteDate && quoteDate && new Date(quoteCompleteDate) < new Date(quoteDate)) {
+                    showError('Complete date cannot be earlier than start date', 'quoteCompleteDate');
+                    $('#quoteCompleteDate').val('');
                 }
             }
-
+            
+            // Function to validate ePR dates
             function validateEprDates() {
                 var eprDate = $('#eprDate').val();
-                var eprSubmitDate = $('#eprSubmitDate').val();
                 var eprCompleteDate = $('#eprCompleteDate').val();
-
-                // Set min date for submit date
-                $('#eprSubmitDate').attr('min', eprDate || '');
+                
+                // Validate date format
+                if (validateDateFormat(eprDate, 'eprDate') === false) return;
+                if (validateDateFormat(eprCompleteDate, 'eprCompleteDate') === false) return;
                 
                 // Set min date for complete date
-                $('#eprCompleteDate').attr('min', eprSubmitDate || eprDate || '');
-
-                // Validate submit date
-                if (eprSubmitDate && eprDate && new Date(eprSubmitDate) < new Date(eprDate)) {
-                    alert('Submit date cannot be earlier than start date');
-                    $('#eprSubmitDate').val('');
-                }
-
+                $('#eprCompleteDate').attr('min', eprDate || '');
+                
                 // Validate complete date
-                if (eprCompleteDate) {
-                    var minDate = eprSubmitDate || eprDate;
-                    if (minDate && new Date(eprCompleteDate) < new Date(minDate)) {
-                        alert('Complete date cannot be earlier than submit date or start date');
-                        $('#eprCompleteDate').val('');
-                    }
-
-                    // Auto-set Work start date when EPR is completed
-                    if (!workDate.val()) {
-                        workDate.val(eprCompleteDate);
-                        validateWorkDates();
-                        // Show notification
-                        showNotification('Work date automatically set');
-                    }
+                if (eprCompleteDate && eprDate && new Date(eprCompleteDate) < new Date(eprDate)) {
+                    showError('Complete date cannot be earlier than start date', 'eprCompleteDate');
+                    $('#eprCompleteDate').val('');
                 }
             }
-
+            
+            // Function to validate work dates
             function validateWorkDates() {
                 var workDate = $('#workDate').val();
                 var workSubmitDate = $('#workSubmitDate').val();
                 var workCompleteDate = $('#workCompleteDate').val();
-
+                
+                // Validate date format
+                if (validateDateFormat(workDate, 'workDate') === false) return;
+                if (validateDateFormat(workSubmitDate, 'workSubmitDate') === false) return;
+                if (validateDateFormat(workCompleteDate, 'workCompleteDate') === false) return;
+                
                 // Set min date for submit date
                 $('#workSubmitDate').attr('min', workDate || '');
                 
@@ -784,7 +757,7 @@
 
                 // Validate submit date
                 if (workSubmitDate && workDate && new Date(workSubmitDate) < new Date(workDate)) {
-                    alert('Submit date cannot be earlier than start date');
+                    showError('Submit date cannot be earlier than start date', 'workSubmitDate');
                     $('#workSubmitDate').val('');
                 }
 
@@ -792,7 +765,7 @@
                 if (workCompleteDate) {
                     var minDate = workSubmitDate || workDate;
                     if (minDate && new Date(workCompleteDate) < new Date(minDate)) {
-                        alert('Complete date cannot be earlier than submit date or start date');
+                        showError('Complete date cannot be earlier than submit date or start date', 'workCompleteDate');
                         $('#workCompleteDate').val('');
                     }
 
@@ -803,6 +776,43 @@
                         showNotification('Expiry date will be set based on frequency');
                     }
                 }
+            }
+            
+            // Function to validate date format and completeness
+            function validateDateFormat(dateValue, fieldId) {
+                if (!dateValue) return true; // Skip empty fields
+                
+                // Check if it's a valid date
+                var date = new Date(dateValue);
+                if (isNaN(date.getTime())) {
+                    showError('Please enter a valid date', fieldId);
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Function to show error message
+            function showError(message, fieldId) {
+                // Create error message element if it doesn't exist
+                var errorId = fieldId + '-error';
+                if ($('#' + errorId).length === 0) {
+                    $('#' + fieldId).after('<div id="' + errorId + '" class="invalid-feedback" style="display: block;">' + message + '</div>');
+                } else {
+                    $('#' + errorId).text(message).show();
+                }
+                
+                // Add error class to input
+                $('#' + fieldId).addClass('is-invalid');
+                
+                // Show alert
+                alert(message);
+                
+                // Hide error after 5 seconds
+                setTimeout(function() {
+                    $('#' + errorId).hide();
+                    $('#' + fieldId).removeClass('is-invalid');
+                }, 5000);
             }
             
             // Function to show a notification
@@ -823,8 +833,8 @@
             var expDate = $('#ExpDate');
 
             // Attach date validation events
-            $('#quoteDate, #quoteSubmitDate, #quoteCompleteDate').on('change', validateQuotationDates);
-            $('#eprDate, #eprSubmitDate, #eprCompleteDate').on('change', validateEprDates);
+            $('#quoteDate, #quoteCompleteDate').on('change', validateQuotationDates);
+            $('#eprDate, #eprCompleteDate').on('change', validateEprDates);
             $('#workDate, #workSubmitDate, #workCompleteDate').on('change', validateWorkDates);
             
             // Set up tab change listeners
@@ -837,7 +847,6 @@
                     if (quoteCompleteDate && !$('#eprDate').val()) {
                         $('#eprDate').val(quoteCompleteDate);
                         validateEprDates();
-                        // No notification here - only on save
                     }
                 }
                 
@@ -847,7 +856,6 @@
                     if (eprCompleteDate && !$('#workDate').val()) {
                         $('#workDate').val(eprCompleteDate);
                         validateWorkDates();
-                        // No notification here - only on save
                     }
                 }
             });
@@ -855,6 +863,16 @@
             // Form submission validation
             $('form').on('submit', function(e) {
                 var isValid = true;
+                
+                // Validate all date inputs that have values
+                $(this).find('input[type="date"]').each(function() {
+                    var value = $(this).val();
+                    if (value) {
+                        if (!validateDateFormat(value, $(this).attr('id'))) {
+                            isValid = false;
+                        }
+                    }
+                });
                 
                 // Validate file uploads
                 $(this).find('.file-upload').each(function() {
@@ -875,7 +893,7 @@
                 // Validate assignee fields
                 $(this).find('.assignee-field').each(function() {
                     if ($(this).val().trim() === '') {
-                        if ($(this).closest('.card-body').find('input[type="datetime-local"]').filter(function() { 
+                        if ($(this).closest('.card-body').find('input[type="date"]').filter(function() { 
                             return $(this).val() !== ''; 
                         }).length > 0) {
                             // Only validate if any date field in this section has a value
@@ -887,6 +905,10 @@
                     }
                 });
                 
+                if (!isValid) {
+                    e.preventDefault();
+                }
+                
                 return isValid;
             });
             
@@ -895,6 +917,12 @@
                 if ($(this).val().trim() !== '') {
                     $(this).removeClass('is-invalid');
                 }
+            });
+            
+            // Clear validation on date input
+            $('input[type="date"]').on('input', function() {
+                $(this).removeClass('is-invalid');
+                $('#' + $(this).attr('id') + '-error').hide();
             });
 
             // Auto-fill dates on page load based on completed phases
@@ -908,14 +936,12 @@
                 if (quoteCompleteDate && !eprDate) {
                     $('#eprDate').val(quoteCompleteDate);
                     validateEprDates();
-                    // No notification here - only on save
                 }
                 
                 // If EPR is completed and Work date is empty, fill it
                 if (eprCompleteDate && !workDate) {
                     $('#workDate').val(eprCompleteDate);
                     validateWorkDates();
-                    // No notification here - only on save
                 }
             }
             
@@ -963,7 +989,6 @@
                 if (quoteCompleteDate && !$('#eprDate').val()) {
                     $('#eprDate').val(quoteCompleteDate);
                     validateEprDates();
-                    // No notification here - only on save
                 }
             }
             
@@ -973,7 +998,6 @@
                 if (eprCompleteDate && !$('#workDate').val()) {
                     $('#workDate').val(eprCompleteDate);
                     validateWorkDates();
-                    // No notification here - only on save
                 }
             }
         }
