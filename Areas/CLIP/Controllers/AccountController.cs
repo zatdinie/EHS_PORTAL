@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using EHS_PORTAL.Areas.CLIP.Models;
 using System.Collections.Generic;
 using System.Web.Mvc.Html;
+using EHS_PORTAL.Areas.CLIP.Services;
+using EHS_PORTAL.Areas.CLIP.Filters;
 
 namespace EHS_PORTAL.Areas.CLIP.Controllers
 {
@@ -19,15 +21,18 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _db;
 
         public AccountController()
         {
+            _db = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _db = new ApplicationDbContext();
         }
 
         public ApplicationSignInManager SignInManager
@@ -88,6 +93,15 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    // Log successful login
+                    var logger = new ActivityLogger(_db, HttpContext);
+                    logger.LogActivity(
+                        action: "LOGIN",
+                        description: "User logged into the system",
+                        entityName: "User",
+                        entityId: user.Id
+                    );
+                    
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -461,6 +475,16 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        
+                        // Log successful login after sign in
+                        var logger = new ActivityLogger(_db, HttpContext);
+                        logger.LogActivity(
+                            action: "LOGIN",
+                            description: "User logged into the system via external provider",
+                            entityName: "User",
+                            entityId: user.Id
+                        );
+                        
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -477,8 +501,20 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            // Log user logout before signing out
+            var userId = User.Identity.GetUserId();
+            var userName = User.Identity.Name;
+            
+            var logger = new ActivityLogger(_db, HttpContext);
+            logger.LogActivity(
+                action: "LOGOUT",
+                description: "User logged out of the system",
+                entityName: "User",
+                entityId: userId
+            );
+
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Login", "Account", new { area = "CLIP" });
+            return RedirectToAction("Welcome", "Home", new { area = "CLIP" });
         }
 
         //

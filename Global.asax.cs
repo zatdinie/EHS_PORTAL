@@ -10,6 +10,7 @@ using EHS_PORTAL.Areas.CLIP.Models;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace EHS_PORTAL
 {
@@ -39,6 +40,39 @@ namespace EHS_PORTAL
             // Set up timer to update certificate statuses daily
             _statusUpdateTimer = new Timer(UpdateCertificateStatusesCallback, null, 
                 _updateInterval, _updateInterval);
+        }
+        
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            // Initialize session
+            Session["LastActivity"] = DateTime.Now;
+        }
+        
+        protected void Session_End(object sender, EventArgs e)
+        {
+            // Session has ended - could log this event if desired
+            try
+            {
+                if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    // Log session timeout
+                    using (var db = new ApplicationDbContext())
+                    {
+                        var logger = new Areas.CLIP.Services.ActivityLogger(db, new HttpContextWrapper(HttpContext.Current));
+                        logger.LogActivity(
+                            action: "SESSION_TIMEOUT",
+                            description: "User session timed out due to inactivity",
+                            entityName: "User",
+                            entityId: HttpContext.Current.User.Identity.GetUserId()
+                        );
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception but don't throw
+                System.Diagnostics.Debug.WriteLine($"Error in Session_End: {ex.Message}");
+            }
         }
         
         protected void Application_Error(object sender, EventArgs e)

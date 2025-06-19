@@ -5,29 +5,29 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Infrastructure;
 using EHS_PORTAL.Areas.CLIP.Models;
+using EHS_PORTAL.Areas.CLIP.Filters;
+using Newtonsoft.Json;
 
 namespace EHS_PORTAL.Areas.CLIP.Controllers
 {
-    public class CompetencyController : Controller
+    [Authorize]
+    public class CompetencyController : BaseController
     {
-        [Authorize]
         public ActionResult Index()
         {
             // Get list of all competency modules
-            var db = new ApplicationDbContext();
-            var competencyModules = db.CompetencyModules.ToList();
+            var competencyModules = _db.CompetencyModules.ToList();
+            
             
             return View("Competency", competencyModules);
         }
 
-        [Authorize]
         public ActionResult Add()
         {
             return View("AddCompetency");
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Add(CompetencyModule model)
         {
@@ -42,10 +42,8 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             if (ModelState.IsValid)
             {
-                var db = new ApplicationDbContext();
-
                 // Check for existing module with the same name
-                bool nameExists = db.CompetencyModules.Any(c => c.ModuleName == model.ModuleName);
+                bool nameExists = _db.CompetencyModules.Any(c => c.ModuleName == model.ModuleName);
                 if (nameExists)
                 {
                     ModelState.AddModelError("ModuleName", "A competency module with this name already exists.");
@@ -54,8 +52,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
                 try
                 {
-                    db.CompetencyModules.Add(model);
-                    db.SaveChanges();
+                    _db.CompetencyModules.Add(model);
+                    _db.SaveChanges();
+                    
+                    // Log the creation
+                    LogCreation("CompetencyModule", model.Id.ToString(), $"Created competency module: {model.ModuleName}");
                     
                     TempData["SuccessMessage"] = "Competency module added successfully.";
                     return RedirectToAction("Index");
@@ -77,11 +78,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             return View("AddCompetency", model);
         }
 
-        [Authorize]
         public ActionResult Edit(int id)
         {
-            var db = new ApplicationDbContext();
-            var competency = db.CompetencyModules.Find(id);
+            var competency = _db.CompetencyModules.Find(id);
 
             if (competency == null)
             {
@@ -89,12 +88,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Log the view action
+            LogView("CompetencyModule", id.ToString(), $"Viewed competency module: {competency.ModuleName}");
+
             return View("EditCompetency", competency);  
-            
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CompetencyModule model)
         {
@@ -109,8 +109,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             if (ModelState.IsValid)
             {
-                var db = new ApplicationDbContext();
-                var competency = db.CompetencyModules.Find(model.Id);
+                var competency = _db.CompetencyModules.Find(model.Id);
                 
                 if (competency == null)
                 {
@@ -119,7 +118,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 }
 
                 // Check for existing module with the same name (excluding current module)
-                bool nameExists = db.CompetencyModules
+                bool nameExists = _db.CompetencyModules
                     .Any(c => c.ModuleName == model.ModuleName && c.Id != model.Id);
                 
                 if (nameExists)
@@ -130,11 +129,32 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 
                 try
                 {
+                    // Store old values for logging
+                    string oldValues = JsonConvert.SerializeObject(new {
+                        competency.ModuleName,
+                        competency.Description,
+                        competency.CompetencyType,
+                        competency.AnnualPointDeduction
+                    });
+                    
                     // Update the competency properties
                     competency.ModuleName = model.ModuleName;
                     competency.Description = model.Description;
                     competency.CompetencyType = model.CompetencyType;
-                    db.SaveChanges();
+                    competency.AnnualPointDeduction = model.AnnualPointDeduction;
+                    _db.SaveChanges();
+                    
+                    // Store new values for logging
+                    string newValues = JsonConvert.SerializeObject(new {
+                        competency.ModuleName,
+                        competency.Description,
+                        competency.CompetencyType,
+                        competency.AnnualPointDeduction
+                    });
+                    
+                    // Log the update
+                    LogUpdate("CompetencyModule", model.Id.ToString(), oldValues, newValues, 
+                        $"Updated competency module: {model.ModuleName}");
                     
                     TempData["SuccessMessage"] = "Competency module updated successfully.";
                     return RedirectToAction("Index");
@@ -157,17 +177,15 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            var db = new ApplicationDbContext();
-            var competency = db.CompetencyModules.Find(id);
+            var competency = _db.CompetencyModules.Find(id);
             
             if (competency != null)
             {
                 // Check if the competency is in use before deleting
-                bool isInUse = db.UserCompetencies.Any(uc => uc.CompetencyModuleId == id);
+                bool isInUse = _db.UserCompetencies.Any(uc => uc.CompetencyModuleId == id);
                 
                 if (isInUse)
                 {
@@ -175,8 +193,14 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 }
                 else
                 {
-                    db.CompetencyModules.Remove(competency);
-                    db.SaveChanges();
+                    string moduleName = competency.ModuleName;
+                    
+                    _db.CompetencyModules.Remove(competency);
+                    _db.SaveChanges();
+                    
+                    // Log the deletion
+                    LogDeletion("CompetencyModule", id.ToString(), $"Deleted competency module: {moduleName}");
+                    
                     TempData["SuccessMessage"] = "Competency module deleted successfully.";
                 }
             }

@@ -1,0 +1,117 @@
+@model IEnumerable<EHS_PORTAL.Areas.CLIP.Models.ActivityLog>
+@{
+    ViewBag.Title = "User Activity";
+}
+
+<br />
+<h1>User Activity: @ViewBag.UserName</h1>
+
+<div class="card mb-4">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">
+            <i class="bi bi-person-lines-fill"></i> Activity History
+        </h5>
+    </div>
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                No activity logs found for this user.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover" id="userActivityTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Date/Time</th>
+                            <th>Action</th>
+                            <th>Description</th>
+                            <th>Entity</th>
+                            <th>IP Address</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var log in Model)
+                        {
+                            <tr>
+                                <td>@log.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td>
+                                    <span class="badge @GetActionBadgeClass(log.Action)">@log.Action</span>
+                                </td>
+                                <td>@log.Description</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(log.EntityName))
+                                    {
+                                        <span>@log.EntityName</span>
+                                        if (!string.IsNullOrEmpty(log.EntityID))
+                                        {
+                                            <span class="text-muted"> (#@log.EntityID)</span>
+                                        }
+                                    }
+                                </td>
+                                <td>@log.IPAddress</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("Details", new { id = log.LogID })" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Details">
+                                        <i class="bi bi-info-circle"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+    <div class="card-footer">
+        <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // DataTable initialization if it's available
+            if ($.fn.DataTable) {
+                $('#userActivityTable').DataTable({
+                    "ordering": true,
+                    "responsive": true,
+                    "pageLength": 25,
+                    "language": {
+                        "zeroRecords": "No activity logs found"
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+@functions {
+    public string GetActionBadgeClass(string action)
+    {
+        switch (action?.ToUpper())
+        {
+            case "LOGIN":
+            case "LOGOUT":
+                return "bg-secondary";
+            case "CREATE":
+                return "bg-success";
+            case "UPDATE":
+                return "bg-primary";
+            case "DELETE":
+                return "bg-danger";
+            case "VIEW":
+                return "bg-info";
+            default:
+                return "bg-secondary";
+        }
+    }
+} 

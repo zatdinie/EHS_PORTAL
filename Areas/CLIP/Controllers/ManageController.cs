@@ -10,6 +10,9 @@ using EHS_PORTAL.Areas.CLIP.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.IO;
+using System.Net;
+using EHS_PORTAL.Areas.CLIP.Services;
 
 namespace EHS_PORTAL.Areas.CLIP.Controllers
 {
@@ -18,15 +21,18 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
     {
         private EHS_PORTAL.ApplicationSignInManager _signInManager;
         private EHS_PORTAL.ApplicationUserManager _userManager;
+        private ApplicationDbContext _db;
 
         public ManageController()
         {
+            _db = new ApplicationDbContext();
         }
 
         public ManageController(EHS_PORTAL.ApplicationUserManager userManager, EHS_PORTAL.ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _db = new ApplicationDbContext();
         }
 
         public EHS_PORTAL.ApplicationSignInManager SignInManager
@@ -390,6 +396,15 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    
+                    // Log password change activity
+                    var logger = new ActivityLogger(_db, HttpContext);
+                    logger.LogActivity(
+                        action: "UPDATE",
+                        description: "User changed password",
+                        entityName: "User",
+                        entityId: user.Id
+                    );
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
@@ -419,6 +434,15 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     if (user != null)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        
+                        // Log set password activity
+                        var logger = new ActivityLogger(_db, HttpContext);
+                        logger.LogActivity(
+                            action: "UPDATE",
+                            description: "User set password",
+                            entityName: "User",
+                            entityId: user.Id
+                        );
                     }
                     return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
@@ -951,10 +975,19 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && _userManager != null)
+            if (disposing)
             {
-                _userManager.Dispose();
-                _userManager = null;
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+                
+                if (_db != null)
+                {
+                    _db.Dispose();
+                    _db = null;
+                }
             }
 
             base.Dispose(disposing);

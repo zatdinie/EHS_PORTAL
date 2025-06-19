@@ -95,5 +95,126 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    
+    <!-- Idle Timeout Script -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Idle timeout settings
+            var idleTime = 0;
+            var idleInterval;
+            var idleTimeout = 30; // Idle timeout in minutes
+            var warningTime = 1; // Warning time in minutes before logout
+            var warningDisplayed = false;
+            var heartbeatInterval;
+            
+            // Reset the idle timer on user activity
+            function resetIdleTime() {
+                idleTime = 0;
+                if (warningDisplayed) {
+                    $('#idleTimeoutWarning').modal('hide');
+                    warningDisplayed = false;
+                }
+            }
+            
+            // Send a heartbeat to the server to keep the session alive
+            function sendHeartbeat() {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("KeepAlive", "Session", new { area = "CLIP" })',
+                    success: function(data) {
+                        console.log("Session heartbeat successful");
+                    },
+                    error: function(error) {
+                        console.log("Session heartbeat failed");
+                    }
+                });
+            }
+            
+            // Start the idle timer
+            function startIdleTimer() {
+                // Reset the idle timer on various user interactions
+                $(document).on('mousemove keypress click scroll', function() {
+                    resetIdleTime();
+                    
+                    // Send a heartbeat to the server when user is active
+                    // but limit it to once every 5 minutes to reduce server load
+                    if (!heartbeatInterval) {
+                        sendHeartbeat();
+                        heartbeatInterval = setTimeout(function() {
+                            heartbeatInterval = null;
+                        }, 300000); // 5 minutes
+                    }
+                });
+                
+                // Increment the idle time counter every minute
+                idleInterval = setInterval(function() {
+                    idleTime += 1;
+                    
+                    // Show warning when approaching timeout
+                    if (idleTime >= (idleTimeout - warningTime) && !warningDisplayed) {
+                        warningDisplayed = true;
+                        $('#idleTimeoutWarning').modal('show');
+                        
+                        // Start countdown in the warning modal
+                        var countdown = warningTime * 60;
+                        var countdownInterval = setInterval(function() {
+                            countdown -= 1;
+                            var minutes = Math.floor(countdown / 60);
+                            var seconds = countdown % 60;
+                            $('#countdown').text(minutes + ':' + (seconds < 10 ? '0' : '') + seconds);
+                            
+                            if (countdown <= 0) {
+                                clearInterval(countdownInterval);
+                            }
+                        }, 1000);
+                    }
+                    
+                    // Log out when idle timeout is reached
+                    if (idleTime >= idleTimeout) {
+                        clearInterval(idleInterval);
+                        document.getElementById('logoutForm').submit();
+                    }
+                }, 60000); // Check every minute
+            }
+            
+            // Start the idle timer when the page loads
+            startIdleTimer();
+            
+            // Stay active button in the warning modal
+            $('#stayActiveBtn').on('click', function() {
+                resetIdleTime();
+                sendHeartbeat(); // Explicitly send a heartbeat when user clicks "Stay Active"
+            });
+        });
+    </script>
+    
+    <!-- Idle Timeout Warning Modal -->
+    <div class="modal fade" id="idleTimeoutWarning" data-bs-backdrop="static" tabindex="-1" aria-labelledby="idleTimeoutWarningLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="idleTimeoutWarningLabel">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Session Timeout Warning
+                    </h5>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Your session is about to expire due to inactivity.</p>
+                    <p>You will be logged out in <strong><span id="countdown">2:00</span></strong> minutes.</p>
+                    <p>Do you want to stay signed in?</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="stayActiveBtn" class="btn btn-primary">
+                        <i class="fas fa-check me-1"></i>
+                        Yes, Keep Me Signed In
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('logoutForm').submit();">
+                        <i class="fas fa-sign-out-alt me-1"></i>
+                        Log Out Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
