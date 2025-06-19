@@ -109,8 +109,8 @@ function animateCountUp(elementId, targetValue) {
     element.textContent = '0';
     
     // Calculate animation duration and step based on target value
-    const duration = 2500; // ms
-    const steps = 50;
+    const duration = 5000; // ms
+    const steps = 100;
     const stepValue = targetValue / steps;
     const stepDuration = duration / steps;
     
