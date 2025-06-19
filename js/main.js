@@ -77,8 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         copyrightElement.textContent = copyrightElement.textContent.replace('2025', currentYear);
     }
 
-    // Initialize progress bar animation
-    animateProgressBar();
+    // Progress bar animation removed as it's no longer needed
 }); 
 
 // Function to update safety statistics
@@ -97,6 +96,7 @@ function updateSafetyStats() {
     // Animate the counters
     animateCountUp('days-since-accident', daysSinceAccident);
     animateCountUp('total-accidents', totalAccidentsThisYear);
+    animateCountUp('safety-inspections', 42); // Hardcoded value for safety inspections
 }
 
 // Function to animate count up effect
@@ -130,19 +130,7 @@ function animateCountUp(elementId, targetValue) {
     }, stepDuration);
 }
 
-// Function to animate progress bar
-function animateProgressBar() {
-    const progressBar = document.getElementById('safety-goal-progress');
-    if (!progressBar) return;
-    
-    // Start with width 0
-    progressBar.style.width = '0%';
-    
-    // Animate to target width
-    setTimeout(() => {
-        progressBar.style.width = '85%';
-    }, 500);
-}
+// Function to animate progress bar - removed since we no longer use the progress bar
 
 // Function to show a toast notification
 function showToast(message, type = 'info') {
