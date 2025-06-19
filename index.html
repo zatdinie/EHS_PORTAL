@@ -10,6 +10,8 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
@@ -20,25 +22,35 @@
                 <img src="images/logo.png" alt="Inari Amertron Berhad Logo" class="company-logo">
                 <div class="logo">EHS <span>Portal</span></div>
             </div>
-            <div class="company-name">Inari Amertron Berhad</div>
+            <div class="company-name">
+                <span>Inari Amertron Berhad</span>
+                <a class="company-name-text" href="mailto:ehs.notification@inari-amertron.com.my"><i class="fas fa-envelope"></i> ehs.notification@inari-amertron.com.my</a>
+            </div>
+            
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Environment, Health & Safety Portal</h1>
-            <p>Your central hub for EHS resources, tools, and information to ensure a safe and sustainable workplace.
-            </p>
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <h1>Environment, Health & Safety Portal</h1>
+                <p>Centralized access to critical EHS information, tools, and analytics to support a safe, compliant, and responsible working environment.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary">Explore Services</a>
+                    <a href="mailto:ehs.notification@inari-amertron.com.my" class="btn btn-secondary">Report Incident</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <br/>
     <!-- Safety Statistics Section -->
     <section class="safety-stats">
         <div class="container">
+            <br/>
+            <h2 class="section-title" data-aos="fade-in" data-aos-delay="100">SAFETY PERFORMANCE</h2>
             <div class="stats-container">
-                <div class="stat-card">
+                <div class="stat-card" data-aos="fade-in" data-aos-delay="100">
                     <div class="stat-icon">
                         <i class="fas fa-calendar-check"></i>
                     </div>
@@ -47,7 +59,7 @@
                         <div class="stat-value" id="days-since-accident">154</div>
                     </div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" data-aos="fade-in" data-aos-delay="100">
                     <div class="stat-icon">
                         <i class="fas fa-chart-bar"></i>
                     </div>
@@ -56,12 +68,21 @@
                         <div class="stat-value" id="total-accidents">2</div>
                     </div>
                 </div>
+                <div class="stat-card" data-aos="fade-in" data-aos-delay="100">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Completed Inspections</h3>
+                        <div class="stat-value" id="safety-inspections">42</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Cards Section -->
-    <section class="cards-section">
+    <section id="services" class="cards-section">
         <div class="container">
             <h2 class="section-title">SERVICES</h2>
             <div class="cards-grid">
@@ -74,6 +95,7 @@
                         <h3 class="card-title">Sustainability Data Entry System</h3>
                         <p class="card-description">Record and track sustainability metrics and environmental
                             performance data.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
                 <!-- Fire Extinguisher Tracking System -->
@@ -84,6 +106,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Fire Extinguisher Tracking System</h3>
                         <p class="card-description">Track the location of fire extinguishers and their expiry dates.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
@@ -95,6 +118,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Competency, License & Important Permit</h3>
                         <p class="card-description">View and manage competency, licenses, and important permits.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
@@ -106,6 +130,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Personal Protective Equipment Management</h3>
                         <p class="card-description">Request and manage personal protective equipment.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
@@ -115,24 +140,118 @@
                         <img src="images/ptw.png" alt="Health & Wellness" class="card-image">
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">Permit To Work</h3>
-                        <p class="card-description">Request and manage permit to work.</p>
+                        <h3 class="card-title">Permit To Work<br/>System</h3>
+                        <p class="card-description">Request and manage work permits with full oversight.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
 
                 <!-- Training Portal -->
-                <a href="Services/Training/index.html" class="card" target="_blank">
+                <a href="Services/Training/index.html" class="card" target="_blank"
+                >
                     <div class="card-icon">
                         <img src="images/training.png" alt="Training Portal" class="card-image">
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">Training Portal</h3>
+                        <h3 class="card-title">Training Portal & Materials</h3>
                         <p class="card-description">Complete required EHS training, certifications, and learning
                             modules.</p>
+                        <span class="card-link">Access System <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
+            </div>
+        </div>
+    </section>
 
+    <!-- Person In Charge Section -->
+    <section class="pic-section">
+        <div class="container">
+            <h2 class="section-title">SAFETY OFFICER</h2>
+            <div class="pic-grid">
+                <!-- PIC Plant 1 -->
+                <div class="pic-card">
+                    <div class="pic-image">
+                        <img src="images/P135.jpg" alt="Plant 135 PIC">
+                    </div>
+                    <div class="pic-content">
+                        <p class="pic-position">P1, 3 & 5</p>
+                        <h3 class="pic-name">Faris Shahidin</h3>
+                        <p class="pic-contact"><i class="fas fa-phone"></i> 017-240 7009</p>
+                        <p class="pic-email"><i class="fas fa-envelope"></i> faris.shahidin@inari-amertron.com.my</p>
+                    </div>
+                </div>
+                
+                <!-- PIC Plant 2 -->
+                <div class="pic-card">
+                    <div class="pic-image">
+                        <img src="images/P13.jpg" alt="Plant 13 PIC">
+                    </div>
+                    <div class="pic-content">
+                        <p class="pic-position">P13, 55</p>
+                        <h3 class="pic-name">Maheerah Hanum</h3>
+                        <p class="pic-contact"><i class="fas fa-phone"></i> 012-565 2721</p>
+                        <p class="pic-email"><i class="fas fa-envelope"></i> maheerah-hanum.zainul@inari-amertron.com.my</p>
+                    </div>
+                </div>
+                
+                <!-- PIC Plant 3 -->
+                <div class="pic-card">
+                    <div class="pic-image">
+                        <img src="images/P21.jpg" alt="Plant 21 PIC">
+                    </div>
+                    <div class="pic-content">
+                        <p class="pic-position">P21</p>
+                        <h3 class="pic-name">Fawwaz</h3>
+                        <p class="pic-contact"><i class="fas fa-phone"></i> 013-223 4437</p>
+                        <p class="pic-email"><i class="fas fa-envelope"></i> fawwaz.anuar@inari-amertron.com.my</p>
+                    </div>
+                </div>
+                
+                <!-- PIC Plant 4 -->
+                <div class="pic-card">
+                    <div class="pic-image">
+                        <img src="images/P34.jpg" alt="Plant 34 PIC">
+                    </div>
+                    <div class="pic-content">
+                        <p class="pic-position">P34</p>
+                        <h3 class="pic-name">Nabilah</h3>
+                        <p class="pic-contact"><i class="fas fa-phone"></i> 011-6248 3578</p>
+                        <p class="pic-email"><i class="fas fa-envelope"></i> nabilah.maulana@inari-amertron.com.my</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Quick Access Section -->
+    <section class="quick-access-section">
+        <div class="container">
+            <h2 class="section-title">QUICK ACCESS</h2>
+            <div class="quick-access-grid">
+                <!-- <a href="#" class="quick-access-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>EHS<br/>Calendar</span>
+                </a> -->
+                <a href="images/RC - 1792 - Permit To Work - Rev 02.pdf" class="quick-access-item" target="_blank">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Permit to Work<br/>Form</span>
+                </a>
+                <a href="images/RC-G0028.03_PPE Requisition and Issuance Form.pdf" class="quick-access-item" target="_blank">
+                    <i class="fas fa-hard-hat"></i>
+                    <span>PPE Requisition<br/>Form</span>
+                </a>
+                <!-- <a href="#" class="quick-access-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Performance Dashboard</span>
+                </a> -->
+                <!-- <a href="#" class="quick-access-item">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Emergency Procedures</span>
+                </a> -->
+                <a href="images/Emergency Contact Number.pdf" class="quick-access-item" target="_blank">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>Contact<br/>Directory</span>
+                </a>
             </div>
         </div>
     </section>
@@ -152,7 +271,7 @@
                         <li><a href="Services/Training/index.html" target="_blank">Training Portal</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
+                <!-- <div class="footer-column">
                     <h3>Resources</h3>
                     <ul>
                         <li><a href="#" target="_blank">Forms & Documents</a></li>
@@ -160,14 +279,14 @@
                         <li><a href="#" target="_blank">Regulatory Updates</a></li>
                         <li><a href="#" target="_blank">EHS News</a></li>
                     </ul>
-                </div>
+                </div> -->
                 <div class="footer-column">
                     <h3>Contact EHS</h3>
                     <ul>
-                        <li><a href="mailto:ehs.notification@inari-amertron.com.my" target="_blank">ehs.notification@inari-amertron.com.my</a></li>
-                        <li><a href="tel:+15551234567" target="_blank">Emergency: 999</a></li>
-                        <li><a href="#" target="_blank">Submit Feedback</a></li>
-                        <li><a href="#" target="_blank">EHS Team Directory</a></li>
+                        <li><a href="mailto:ehs.notification@inari-amertron.com.my" target="_blank"><i class="fas fa-envelope"></i> ehs.notification@inari-amertron.com.my</a></li>
+                        <li><a href="tel:+15551234567" target="_blank"><i class="fas fa-phone-alt"></i> Emergency: 999</a></li>
+                        <li><a href="mailto:ehs.notification@inari-amertron.com.my" target="_blank"><i class="fas fa-comment"></i> Submit Feedback</a></li>
+                        <li><a href="#" target="_blank"><i class="fas fa-users"></i> EHS Team Directory</a></li>
                     </ul>
                 </div>
             </div>
@@ -177,6 +296,8 @@
         </div>
     </footer>
 
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/main.js"></script>
     <!-- <script src="js/lanyard.js"></script> -->
 </body>

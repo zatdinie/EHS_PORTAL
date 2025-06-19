@@ -249,6 +249,10 @@
     <Content Include="images\favicon.ico" />
     <Content Include="images\fets.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\P13.jpg" />
+    <Content Include="images\P135.jpg" />
+    <Content Include="images\P21.jpg" />
+    <Content Include="images\P34.jpg" />
     <Content Include="images\person.jpeg" />
     <Content Include="images\ppe.png" />
     <Content Include="images\ptw.png" />
@@ -289,6 +293,9 @@
     <Content Include="Areas\CLIP\Views\ActivityLog\Details.cshtml" />
     <Content Include="Areas\CLIP\Views\ActivityLog\Index.cshtml" />
     <Content Include="Areas\CLIP\Views\ActivityLog\UserActivity.cshtml" />
+    <Content Include="images\Emergency Contact Number.pdf" />
+    <Content Include="images\RC-G0028.03_PPE Requisition and Issuance Form.pdf" />
+    <Content Include="images\RC - 1792 - Permit To Work - Rev 02.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
