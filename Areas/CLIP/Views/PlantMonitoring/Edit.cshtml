@@ -37,7 +37,12 @@
                                         <label class="col-sm-3 form-label"><strong>Monitoring Type</strong></label>
                                         <div class="col-sm-9">
                                             <div class="input-group">
-                                                @Html.DropDownList("MonitoringID", (SelectList)ViewBag.MonitoringID, new { @class = "form-select", required = "required" })
+                                                <select id="MonitoringID" name="MonitoringID" class="form-select" required="required">
+                                                                @foreach (var item in (SelectList)ViewBag.MonitoringID)
+                                                                {
+                                                                    <option value="@item.Value" @(item.Value == Model.MonitoringID.ToString() ? "selected" : "")>@item.Text</option>
+                                                                }
+                                                            </select>
                                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Select the monitoring type">
                                                     <i class="bi bi-info-circle"></i>
                                                 </span>
