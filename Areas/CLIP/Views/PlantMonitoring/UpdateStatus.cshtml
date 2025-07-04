@@ -705,6 +705,9 @@
                 var quoteDate = $('#quoteDate').val();
                 var quoteCompleteDate = $('#quoteCompleteDate').val();
                 
+                // Skip validation if fields are empty or incomplete
+                if (!isCompleteDateValue(quoteDate) || !isCompleteDateValue(quoteCompleteDate)) return;
+                
                 // Validate date format
                 if (validateDateFormat(quoteDate, 'quoteDate') === false) return;
                 if (validateDateFormat(quoteCompleteDate, 'quoteCompleteDate') === false) return;
@@ -723,6 +726,9 @@
             function validateEprDates() {
                 var eprDate = $('#eprDate').val();
                 var eprCompleteDate = $('#eprCompleteDate').val();
+                
+                // Skip validation if fields are empty or incomplete
+                if (!isCompleteDateValue(eprDate) || !isCompleteDateValue(eprCompleteDate)) return;
                 
                 // Validate date format
                 if (validateDateFormat(eprDate, 'eprDate') === false) return;
@@ -743,6 +749,9 @@
                 var workDate = $('#workDate').val();
                 var workSubmitDate = $('#workSubmitDate').val();
                 var workCompleteDate = $('#workCompleteDate').val();
+                
+                // Skip validation if fields are empty or incomplete
+                if (!isCompleteDateValue(workDate) || !isCompleteDateValue(workSubmitDate) || !isCompleteDateValue(workCompleteDate)) return;
                 
                 // Validate date format
                 if (validateDateFormat(workDate, 'workDate') === false) return;
@@ -776,6 +785,13 @@
                         showNotification('Expiry date will be set based on frequency');
                     }
                 }
+            }
+            
+            // Helper function to check if a date value is complete (YYYY-MM-DD)
+            function isCompleteDateValue(dateValue) {
+                if (!dateValue) return false;
+                // Check if the date string has the proper length for a complete date
+                return dateValue.length >= 10; // YYYY-MM-DD is 10 characters
             }
             
             // Function to validate date format and completeness
@@ -832,10 +848,10 @@
             var workDate = $('#workDate');
             var expDate = $('#ExpDate');
 
-            // Attach date validation events
-            $('#quoteDate, #quoteCompleteDate').on('change', validateQuotationDates);
-            $('#eprDate, #eprCompleteDate').on('change', validateEprDates);
-            $('#workDate, #workSubmitDate, #workCompleteDate').on('change', validateWorkDates);
+            // Attach date validation events to blur (not change)
+            $('#quoteDate, #quoteCompleteDate').on('blur', validateQuotationDates);
+            $('#eprDate, #eprCompleteDate').on('blur', validateEprDates);
+            $('#workDate, #workSubmitDate, #workCompleteDate').on('blur', validateWorkDates);
             
             // Set up tab change listeners
             $('#phasesTabs button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -846,7 +862,10 @@
                     var quoteCompleteDate = $('#quoteCompleteDate').val();
                     if (quoteCompleteDate && !$('#eprDate').val()) {
                         $('#eprDate').val(quoteCompleteDate);
-                        validateEprDates();
+                        // Validate on tab change only if the date is complete
+                        if (isCompleteDateValue(quoteCompleteDate)) {
+                            validateEprDates();
+                        }
                     }
                 }
                 
@@ -855,7 +874,10 @@
                     var eprCompleteDate = $('#eprCompleteDate').val();
                     if (eprCompleteDate && !$('#workDate').val()) {
                         $('#workDate').val(eprCompleteDate);
-                        validateWorkDates();
+                        // Validate on tab change only if the date is complete
+                        if (isCompleteDateValue(eprCompleteDate)) {
+                            validateWorkDates();
+                        }
                     }
                 }
             });
@@ -867,7 +889,7 @@
                 // Validate all date inputs that have values
                 $(this).find('input[type="date"]').each(function() {
                     var value = $(this).val();
-                    if (value) {
+                    if (value && isCompleteDateValue(value)) {
                         if (!validateDateFormat(value, $(this).attr('id'))) {
                             isValid = false;
                         }
@@ -935,13 +957,19 @@
                 // If Quotation is completed and EPR date is empty, fill it
                 if (quoteCompleteDate && !eprDate) {
                     $('#eprDate').val(quoteCompleteDate);
-                    validateEprDates();
+                    // Only validate if the date is complete
+                    if (isCompleteDateValue(quoteCompleteDate)) {
+                        validateEprDates();
+                    }
                 }
                 
                 // If EPR is completed and Work date is empty, fill it
                 if (eprCompleteDate && !workDate) {
                     $('#workDate').val(eprCompleteDate);
-                    validateWorkDates();
+                    // Only validate if the date is complete
+                    if (isCompleteDateValue(eprCompleteDate)) {
+                        validateWorkDates();
+                    }
                 }
             }
             
@@ -988,7 +1016,10 @@
                 var quoteCompleteDate = $('#quoteCompleteDate').val();
                 if (quoteCompleteDate && !$('#eprDate').val()) {
                     $('#eprDate').val(quoteCompleteDate);
-                    validateEprDates();
+                    // Only validate if the date is complete
+                    if (isCompleteDateValue(quoteCompleteDate)) {
+                        validateEprDates();
+                    }
                 }
             }
             
@@ -997,9 +1028,19 @@
                 var eprCompleteDate = $('#eprCompleteDate').val();
                 if (eprCompleteDate && !$('#workDate').val()) {
                     $('#workDate').val(eprCompleteDate);
-                    validateWorkDates();
+                    // Only validate if the date is complete
+                    if (isCompleteDateValue(eprCompleteDate)) {
+                        validateWorkDates();
+                    }
                 }
             }
+        }
+        
+        // Helper function to check if a date value is complete (YYYY-MM-DD)
+        function isCompleteDateValue(dateValue) {
+            if (!dateValue) return false;
+            // Check if the date string has the proper length for a complete date
+            return dateValue.length >= 10; // YYYY-MM-DD is 10 characters
         }
     </script>
 }
