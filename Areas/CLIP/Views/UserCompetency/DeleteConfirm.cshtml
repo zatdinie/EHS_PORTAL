@@ -1,4 +1,5 @@
 @model EHS_PORTAL.Areas.CLIP.Models.UserCompetency
+@using EHS_PORTAL.Areas.CLIP.Core
 @{
     ViewBag.Title = "Delete Competency";
 }
@@ -42,10 +43,10 @@
                     </dd>
                     
                     <dt class="col-sm-3">Completion Date:</dt>
-                    <dd class="col-sm-9">@(Model.CompletionDate.HasValue ? Model.CompletionDate.Value.ToShortDateString() : "-")</dd>
+                    <dd class="col-sm-9">@Model.CompletionDate.FormatDate()</dd>
                     
                     <dt class="col-sm-3">Expiry Date:</dt>
-                    <dd class="col-sm-9">@(Model.ExpiryDate.HasValue ? Model.ExpiryDate.Value.ToShortDateString() : "-")</dd>
+                    <dd class="col-sm-9">@Model.ExpiryDate.FormatDate()</dd>
                 </dl>
             </div>
             

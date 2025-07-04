@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNet.Identity;
+using System.Globalization;
 
 namespace EHS_PORTAL
 {
@@ -23,6 +24,17 @@ namespace EHS_PORTAL
 
         protected void Application_Start()
         {
+            // Set default culture to use dd/MM/yyyy date format
+            var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            customCulture.DateTimeFormat.DateSeparator = "/";
+            Thread.CurrentThread.CurrentCulture = customCulture;
+            Thread.CurrentThread.CurrentUICulture = customCulture;
+            
+            // Register custom model binder for DateTime
+            ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
+            ModelBinders.Binders.Add(typeof(DateTime?), new DateTimeModelBinder());
+            
             // Disable database migration check
             Database.SetInitializer<ApplicationDbContext>(null);
 
@@ -40,6 +52,16 @@ namespace EHS_PORTAL
             // Set up timer to update certificate statuses daily
             _statusUpdateTimer = new Timer(UpdateCertificateStatusesCallback, null, 
                 _updateInterval, _updateInterval);
+        }
+        
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            // Set culture for each request
+            var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            customCulture.DateTimeFormat.DateSeparator = "/";
+            Thread.CurrentThread.CurrentCulture = customCulture;
+            Thread.CurrentThread.CurrentUICulture = customCulture;
         }
         
         protected void Session_Start(object sender, EventArgs e)

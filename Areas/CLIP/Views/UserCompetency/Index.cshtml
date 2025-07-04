@@ -1,4 +1,5 @@
 @model IEnumerable<EHS_PORTAL.Areas.CLIP.Models.CompetencyModule>
+@using EHS_PORTAL.Areas.CLIP.Core
 @{
     ViewBag.Title = "Competencies";
     
@@ -123,21 +124,21 @@
                                                     break;
                                             }
                                         </td>
-                                        <td>@(userCompetency.CompletionDate.HasValue ? userCompetency.CompletionDate.Value.ToShortDateString() : "-")</td>
+                                        <td>@userCompetency.CompletionDate.FormatDate()</td>
                                         <td>
                                             @if (userCompetency.ExpiryDate.HasValue)
                                             {
                                                 if (userCompetency.ExpiryDate.Value < DateTime.Today)
                                                 {
-                                                    <span class="badge bg-danger">@userCompetency.ExpiryDate.Value.ToShortDateString()</span>
+                                                    <span class="badge bg-danger">@userCompetency.ExpiryDate.Value.FormatDate()</span>
                                                 }
                                                 else if (userCompetency.ExpiryDate.Value < DateTime.Today.AddMonths(1))
                                                 {
-                                                    <span class="badge bg-warning text-dark">@userCompetency.ExpiryDate.Value.ToShortDateString()</span>
+                                                    <span class="badge bg-warning text-dark">@userCompetency.ExpiryDate.Value.FormatDate()</span>
                                                 }
                                                 else
                                                 {
-                                                    @userCompetency.ExpiryDate.Value.ToShortDateString()
+                                                    @userCompetency.ExpiryDate.Value.FormatDate()
                                                 }
                                             }
                                             else

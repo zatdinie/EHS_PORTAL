@@ -1,4 +1,5 @@
 @model IEnumerable<EHS_PORTAL.Areas.CLIP.Models.UserCompetency>
+@using EHS_PORTAL.Areas.CLIP.Core
 @{
     ViewBag.Title = "User Competencies";
 }
@@ -183,21 +184,21 @@
                                             break;
                                     }
                                 </td>
-                                <td>@(item.CompletionDate.HasValue ? item.CompletionDate.Value.ToShortDateString() : "-")</td>
+                                <td>@item.CompletionDate.FormatDate()</td>
                                 <td>
                                     @if (item.ExpiryDate.HasValue)
                                     {
                                         if (item.ExpiryDate.Value < DateTime.Today)
                                         {
-                                            <span class="text-danger">@item.ExpiryDate.Value.ToShortDateString()</span>
+                                            <span class="text-danger">@item.ExpiryDate.Value.FormatDate()</span>
                                         }
                                         else if (item.ExpiryDate.Value < DateTime.Today.AddMonths(1))
                                         {
-                                            <span class="text-warning">@item.ExpiryDate.Value.ToShortDateString()</span>
+                                            <span class="text-warning">@item.ExpiryDate.Value.FormatDate()</span>
                                         }
                                         else
                                         {
-                                            @item.ExpiryDate.Value.ToShortDateString()
+                                            @item.ExpiryDate.Value.FormatDate()
                                         }
                                     }
                                     else

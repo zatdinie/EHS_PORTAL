@@ -64,7 +64,7 @@
                             <label for="ExpiryDate" class="form-label"><strong>Expiry Date</strong></label>
                             <div class="input-group">
                                 <input type="date" id="ExpiryDate" name="ExpiryDate" class="form-control" required="required" 
-                                       value="@Model.ExpiryDate.ToString("yyyy-MM-dd")" />
+                                       value="@Model.ExpiryDate.ToString("yyyy-MM-dd")" data-display-format="dd/MM/yyyy" />
                                 <span class="input-group-text" data-bs-toggle="tooltip" title="Status will be updated automatically based on expiry date">
                                     <i class="bi bi-info-circle"></i>
                                 </span>
@@ -187,7 +187,7 @@
             $('[data-bs-toggle="tooltip"]').tooltip();
             
             // Ensure date is correctly set
-            var expiryDate = '@Model.ExpiryDate.ToString("yyyy-MM-dd")';
+            var expiryDate = '@Model.ExpiryDate.ToString("yyyy-MM-dd")'; // ISO format for JavaScript
             $("#ExpiryDate").val(expiryDate);
             
             // Bootstrap form validation
