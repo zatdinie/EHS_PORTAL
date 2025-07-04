@@ -22,7 +22,7 @@
                         </div>
                     }
 
-                    @using (Html.BeginForm("Edit", "PlantMonitoring", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                    @using (Html.BeginForm("Edit", "PlantMonitoring", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
@@ -143,6 +143,28 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong>Document</strong></label>
+                                            <div>
+                                                @if (!string.IsNullOrEmpty(Model.QuoteDoc))
+                                                {
+                                                    <div class="mb-2">
+                                                        <a href="@Url.Content(Model.QuoteDoc)" target="_blank" class="btn btn-sm btn-info">
+                                                            <i class="fas fa-file-download me-1"></i> View Current Document
+                                                        </a>
+                                                        @Html.HiddenFor(model => model.QuoteDoc)
+                                                    </div>
+                                                }
+                                                <div class="input-group">
+                                                    <input type="file" name="quoteDocument" class="form-control" />
+                                                    <span class="input-group-text" data-bs-toggle="tooltip" title="Upload a new document for quotation phase">
+                                                        <i class="bi bi-upload"></i>
+                                                    </span>
+                                                </div>
+                                                <small class="text-muted">Leave empty to keep current document</small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -188,6 +210,28 @@
                                                 <span class="input-group-text" data-bs-toggle="tooltip" title="User assigned to ePR phase">
                                                     <i class="bi bi-person"></i>
                                                 </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong>Document</strong></label>
+                                            <div>
+                                                @if (!string.IsNullOrEmpty(Model.EprDoc))
+                                                {
+                                                    <div class="mb-2">
+                                                        <a href="@Url.Content(Model.EprDoc)" target="_blank" class="btn btn-sm btn-info">
+                                                            <i class="fas fa-file-download me-1"></i> View Current Document
+                                                        </a>
+                                                        @Html.HiddenFor(model => model.EprDoc)
+                                                    </div>
+                                                }
+                                                <div class="input-group">
+                                                    <input type="file" name="eprDocument" class="form-control" />
+                                                    <span class="input-group-text" data-bs-toggle="tooltip" title="Upload a new document for ePR phase">
+                                                        <i class="bi bi-upload"></i>
+                                                    </span>
+                                                </div>
+                                                <small class="text-muted">Leave empty to keep current document</small>
                                             </div>
                                         </div>
                                     </div>
@@ -246,6 +290,28 @@
                                                 <span class="input-group-text" data-bs-toggle="tooltip" title="User assigned to work execution">
                                                     <i class="bi bi-person"></i>
                                                 </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong>Document</strong></label>
+                                            <div>
+                                                @if (!string.IsNullOrEmpty(Model.WorkDoc))
+                                                {
+                                                    <div class="mb-2">
+                                                        <a href="@Url.Content(Model.WorkDoc)" target="_blank" class="btn btn-sm btn-info">
+                                                            <i class="fas fa-file-download me-1"></i> View Current Document
+                                                        </a>
+                                                        @Html.HiddenFor(model => model.WorkDoc)
+                                                    </div>
+                                                }
+                                                <div class="input-group">
+                                                    <input type="file" name="workDocument" class="form-control" />
+                                                    <span class="input-group-text" data-bs-toggle="tooltip" title="Upload a new document for work execution phase">
+                                                        <i class="bi bi-upload"></i>
+                                                    </span>
+                                                </div>
+                                                <small class="text-muted">Leave empty to keep current document</small>
                                             </div>
                                         </div>
                                     </div>

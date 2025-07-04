@@ -400,6 +400,14 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 .OrderBy(u => u.UserName)
                 .ToList();
             
+            // If user is admin, include all users
+            if (User.IsInRole("Admin"))
+            {
+                users = _db.Users
+                    .OrderBy(u => u.UserName)
+                    .ToList();
+            }
+            
             // Create SelectList for user assignments
             ViewBag.UsersList = new SelectList(users, "UserName", "UserName");
             
@@ -410,12 +418,13 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(PlantMonitoring plantMonitoring)
+        public ActionResult Edit(PlantMonitoring plantMonitoring, HttpPostedFileBase quoteDocument, HttpPostedFileBase eprDocument, HttpPostedFileBase workDocument)
         {
             if (ModelState.IsValid)
             {
                 // Fetch the original entity for logging
                 var original = _db.PlantMonitorings.AsNoTracking().FirstOrDefault(p => p.Id == plantMonitoring.Id);
+                
                 // If WorkCompleteDate is present (meaning the monitoring is completed),
                 // set the renewal date (ExpDate) based on monitoring frequency
                 if (plantMonitoring.WorkCompleteDate.HasValue)
@@ -428,6 +437,88 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                         int frequencyMonths = monitoring.MonitoringFreq;
                         plantMonitoring.ExpDate = plantMonitoring.WorkCompleteDate.Value.AddMonths(frequencyMonths);
                     }
+                }
+                
+                // Handle file uploads
+                if (quoteDocument != null && quoteDocument.ContentLength > 0)
+                {
+                    // Check file size (20MB limit)
+                    if (quoteDocument.ContentLength > 20 * 1024 * 1024)
+                    {
+                        ModelState.AddModelError("", "The quote document exceeds the maximum file size of 20MB.");
+                        ViewBag.PlantID = new SelectList(_db.Plants.OrderBy(p => p.PlantName), "Id", "PlantName", plantMonitoring.PlantID);
+                        ViewBag.MonitoringID = new SelectList(_db.Monitorings.OrderBy(m => m.MonitoringName), "MonitoringID", "MonitoringName", plantMonitoring.MonitoringID);
+                        return View(plantMonitoring);
+                    }
+
+                    string fileName = Path.GetFileName(quoteDocument.FileName);
+                    string uniqueFileName = $"Quote_{plantMonitoring.Id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
+                    string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
+                    
+                    // Ensure directory exists
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    
+                    quoteDocument.SaveAs(path);
+                    plantMonitoring.QuoteDoc = "~/Uploads/Monitoring/" + uniqueFileName;
+                }
+                else if (original != null)
+                {
+                    // Preserve the existing document path if no new document is uploaded
+                    plantMonitoring.QuoteDoc = original.QuoteDoc;
+                }
+                
+                if (eprDocument != null && eprDocument.ContentLength > 0)
+                {
+                    // Check file size (20MB limit)
+                    if (eprDocument.ContentLength > 20 * 1024 * 1024)
+                    {
+                        ModelState.AddModelError("", "The EPR document exceeds the maximum file size of 20MB.");
+                        ViewBag.PlantID = new SelectList(_db.Plants.OrderBy(p => p.PlantName), "Id", "PlantName", plantMonitoring.PlantID);
+                        ViewBag.MonitoringID = new SelectList(_db.Monitorings.OrderBy(m => m.MonitoringName), "MonitoringID", "MonitoringName", plantMonitoring.MonitoringID);
+                        return View(plantMonitoring);
+                    }
+
+                    string fileName = Path.GetFileName(eprDocument.FileName);
+                    string uniqueFileName = $"EPR_{plantMonitoring.Id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
+                    string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
+                    
+                    // Ensure directory exists
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    
+                    eprDocument.SaveAs(path);
+                    plantMonitoring.EprDoc = "~/Uploads/Monitoring/" + uniqueFileName;
+                }
+                else if (original != null)
+                {
+                    // Preserve the existing document path if no new document is uploaded
+                    plantMonitoring.EprDoc = original.EprDoc;
+                }
+                
+                if (workDocument != null && workDocument.ContentLength > 0)
+                {
+                    // Check file size (20MB limit)
+                    if (workDocument.ContentLength > 20 * 1024 * 1024)
+                    {
+                        ModelState.AddModelError("", "The Work document exceeds the maximum file size of 20MB.");
+                        ViewBag.PlantID = new SelectList(_db.Plants.OrderBy(p => p.PlantName), "Id", "PlantName", plantMonitoring.PlantID);
+                        ViewBag.MonitoringID = new SelectList(_db.Monitorings.OrderBy(m => m.MonitoringName), "MonitoringID", "MonitoringName", plantMonitoring.MonitoringID);
+                        return View(plantMonitoring);
+                    }
+
+                    string fileName = Path.GetFileName(workDocument.FileName);
+                    string uniqueFileName = $"Work_{plantMonitoring.Id}_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{fileName}";
+                    string path = Path.Combine(Server.MapPath("~/Uploads/Monitoring"), uniqueFileName);
+                    
+                    // Ensure directory exists
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    
+                    workDocument.SaveAs(path);
+                    plantMonitoring.WorkDoc = "~/Uploads/Monitoring/" + uniqueFileName;
+                }
+                else if (original != null)
+                {
+                    // Preserve the existing document path if no new document is uploaded
+                    plantMonitoring.WorkDoc = original.WorkDoc;
                 }
                 
                 plantMonitoring.CalculateStatuses();
@@ -451,6 +542,9 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                     if (original.ExpStatus != plantMonitoring.ExpStatus) changedFields.Add($"ExpStatus: {original.ExpStatus} → {plantMonitoring.ExpStatus}");
                     if (original.ExpDate != plantMonitoring.ExpDate) changedFields.Add($"ExpDate: {original.ExpDate} → {plantMonitoring.ExpDate}");
                     if (original.Remarks != plantMonitoring.Remarks) changedFields.Add($"Remarks changed");
+                    if (original.QuoteDoc != plantMonitoring.QuoteDoc) changedFields.Add("Quotation document updated");
+                    if (original.EprDoc != plantMonitoring.EprDoc) changedFields.Add("EPR document updated");
+                    if (original.WorkDoc != plantMonitoring.WorkDoc) changedFields.Add("Work document updated");
                     changes = changedFields.Count > 0 ? string.Join("; ", changedFields) : "No fields changed";
                 }
                 LogUpdate(
@@ -463,6 +557,11 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             }
             ViewBag.PlantID = new SelectList(_db.Plants.OrderBy(p => p.PlantName), "Id", "PlantName", plantMonitoring.PlantID);
             ViewBag.MonitoringID = new SelectList(_db.Monitorings.OrderBy(m => m.MonitoringName), "MonitoringID", "MonitoringName", plantMonitoring.MonitoringID);
+            
+            // Create SelectList for user assignments
+            var users = _db.Users.OrderBy(u => u.UserName).ToList();
+            ViewBag.UsersList = new SelectList(users, "UserName", "UserName");
+            
             return View(plantMonitoring);
         }
 
