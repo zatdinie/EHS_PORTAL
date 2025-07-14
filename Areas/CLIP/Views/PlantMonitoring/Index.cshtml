@@ -24,7 +24,7 @@
 
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Monitoring</h1>
+        <h1 class="h3 mb-0">Monitoring & Permit</h1>
     </div>
 
     @if (ViewBag.Notifications != null)
@@ -171,7 +171,7 @@
     <!-- Results Table -->
         <div class="card-header py-3 bg-light">
             <h6 class="m-0 fw-bold">
-                <i class="bi bi-table me-1"></i> Monitoring Records 
+                <i class="bi bi-table me-1"></i> Monitoring & Permit Records 
                 @if(!string.IsNullOrEmpty(ViewBag.SelectedCategory) || !string.IsNullOrEmpty(ViewBag.SelectedPlantFilter) || 
                     !string.IsNullOrEmpty(ViewBag.SelectedStatus) || !string.IsNullOrEmpty(ViewBag.SelectedMonitoringType) || 
                     ViewBag.SelectedFrequency > 0)
