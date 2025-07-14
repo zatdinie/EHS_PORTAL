@@ -159,6 +159,7 @@
                                             <td>
                                                 <span class="badge bg-@(competency.Status == "Active" ? "success" : 
                                                                 competency.Status == "In Progress" ? "warning" : 
+                                                                competency.Status == "Expiring Soon" ? "warning" :
                                                                 competency.Status == "Expired" ? "danger" : "secondary")">
                                                     @competency.Status
                                                 </span>

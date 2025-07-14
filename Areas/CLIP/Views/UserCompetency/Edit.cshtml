@@ -52,6 +52,10 @@
                             <div class="invalid-feedback">
                                 Please select a status.
                             </div>
+                            @if (Model.CompetencyModule.CompetencyType != "Environment")
+                            {
+                                <small class="text-muted">Status will automatically update based on expiry date changes.</small>
+                            }
                         </div>
 
                         <div class="mb-3">
@@ -337,6 +341,36 @@
                     var yyyy = today.getFullYear();
                     today = yyyy + '-' + mm + '-' + dd;
                     $('#CompletionDate').val(today);
+                }
+            });
+            
+            // Auto-update status based on expiry date (for client-side preview)
+            $('#ExpiryDate').on('change', function() {
+                var competencyType = '@Model.CompetencyModule.CompetencyType';
+                
+                // Only apply for non-Environment competencies
+                if (competencyType !== 'Environment') {
+                    var expiryDate = new Date($(this).val());
+                    var today = new Date();
+                    var ninetyDaysFromNow = new Date();
+                    ninetyDaysFromNow.setDate(today.getDate() + 90);
+                    
+                    // Clear time portion for accurate date comparison
+                    today.setHours(0, 0, 0, 0);
+                    ninetyDaysFromNow.setHours(0, 0, 0, 0);
+                    
+                    var $statusSelect = $('#Status');
+                    
+                    if (expiryDate < today) {
+                        // Expired
+                        $statusSelect.val('Expired');
+                    } else if (expiryDate < ninetyDaysFromNow) {
+                        // Expiring Soon
+                        $statusSelect.val('Expiring Soon');
+                    } else {
+                        // Active
+                        $statusSelect.val('Active');
+                    }
                 }
             });
             

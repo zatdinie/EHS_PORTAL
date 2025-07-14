@@ -490,6 +490,7 @@
     <Compile Include="Areas\CLIP\Controllers\SessionController.cs" />
     <Compile Include="Areas\CLIP\Controllers\UserCompetencyController.cs" />
     <Compile Include="Areas\CLIP\Core\CustomAttributes.cs" />
+    <Compile Include="Areas\CLIP\Core\DateFormatHelper.cs" />
     <Compile Include="Areas\CLIP\Filters\ActivityLoggerAttribute.cs" />
     <Compile Include="Areas\CLIP\Controllers\CalendarController.cs" />
     <Compile Include="Areas\CLIP\Migrations\202504240642424_InitIdentity.cs" />

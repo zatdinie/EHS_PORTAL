@@ -36,5 +36,24 @@ namespace EHS_PORTAL.Areas.CLIP.Models
         
         [ForeignKey("CompetencyModuleId")]
         public virtual CompetencyModule CompetencyModule { get; set; }
+        
+        // Helper method to calculate status based on expiry date
+        public void CalculateStatus()
+        {
+            // Skip if this is an Environment type competency (they don't expire)
+            if (CompetencyModule != null && CompetencyModule.CompetencyType == "Environment")
+                return;
+                
+            // Only update status if expiry date is set
+            if (ExpiryDate.HasValue)
+            {
+                if (ExpiryDate < DateTime.Today)
+                    Status = "Expired";
+                else if (ExpiryDate < DateTime.Today.AddDays(90))
+                    Status = "Expiring Soon";
+                else
+                    Status = "Active";
+            }
+        }
     }
 } 

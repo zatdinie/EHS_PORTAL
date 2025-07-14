@@ -94,25 +94,31 @@
                 </div>
                 <div class="card-body">
                     <div class="row text-center">
-                        <div class="col-md-3">
+                        <div class="col">
                             <div class="d-flex flex-column align-items-center">
                                 <div class="display-4">@Model.Count()</div>
                                 <span>Total</span>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <div class="d-flex flex-column align-items-center">
                                 <div class="display-4 text-success">@Model.Count(uc => uc.Status == "Active")</div>
                                 <span>Active</span>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
                             <div class="d-flex flex-column align-items-center">
                                 <div class="display-4 text-info">@Model.Count(uc => uc.Status == "Pending")</div>
                                 <span>Pending</span>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="display-4 text-warning">@Model.Count(uc => uc.Status == "Expiring Soon")</div>
+                                <span>Expiring Soon</span>
+                            </div>
+                        </div>
+                        <div class="col">
                             <div class="d-flex flex-column align-items-center">
                                 <div class="display-4 text-danger">@Model.Count(uc => uc.Status == "Expired")</div>
                                 <span>Expired</span>
@@ -175,6 +181,9 @@
                                             break;
                                         case "Pending":
                                             <span class="badge bg-info">Pending</span>
+                                            break;
+                                        case "Expiring Soon":
+                                            <span class="badge bg-warning text-dark">Expiring Soon</span>
                                             break;
                                         case "Expired":
                                             <span class="badge bg-danger">Expired</span>

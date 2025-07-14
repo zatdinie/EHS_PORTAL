@@ -138,6 +138,7 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             {
                 "Active",
                 "Pending",
+                "Expiring Soon",
                 "Expired"
             };
             
@@ -184,7 +185,6 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 var oldBuilding = userCompetency.Building;
                 
                 // Update properties
-                userCompetency.Status = model.Status;
                 userCompetency.CompletionDate = model.CompletionDate;
                 
                 // Get the competency module type
@@ -193,11 +193,22 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
                 {
                     // For Environment type, no expiry date is needed
                     userCompetency.ExpiryDate = null;
+                    userCompetency.Status = model.Status; // Use status from form for Environment type
                 }
                 else
                 {
                     // For other types (Safety), use the expiry date from the form
                     userCompetency.ExpiryDate = model.ExpiryDate;
+                    
+                    // If expiry date changed, automatically update the status
+                    if (oldExpiryDate != model.ExpiryDate)
+                    {
+                        userCompetency.CalculateStatus();
+                    }
+                    else
+                    {
+                        userCompetency.Status = model.Status; // Use status from form if expiry date didn't change
+                    }
                 }
                 
                 userCompetency.Remarks = model.Remarks;

@@ -31,7 +31,8 @@
         var userCount = item.UserCompetencies.Count();
         var ActiveCount = item.UserCompetencies.Count(uc => uc.Status == "Active");
         var PendingCount = item.UserCompetencies.Count(uc => uc.Status == "Pending");
-        var ExpiredCount = item.UserCompetencies.Count(uc => uc.ExpiryDate.HasValue && uc.ExpiryDate.Value < DateTime.Today);
+        var ExpiringSoonCount = item.UserCompetencies.Count(uc => uc.Status == "Expiring Soon");
+        var ExpiredCount = item.UserCompetencies.Count(uc => uc.Status == "Expired");
         var moduleId = $"module-{item.Id}";
         
         var typeIcon = "fas fa-book";
@@ -72,6 +73,10 @@
                         @if(PendingCount > 0)
                         {
                             <span class="badge bg-secondary rounded-pill">@PendingCount Pending</span>
+                        }
+                        @if(ExpiringSoonCount > 0)
+                        {
+                            <span class="badge bg-warning text-dark rounded-pill">@ExpiringSoonCount Expiring Soon</span>
                         }
                         @if(ExpiredCount > 0)
                         {
@@ -118,6 +123,12 @@
                                                     break;
                                                 case "Active":
                                                     <span class="badge bg-success">Active</span>
+                                                    break;
+                                                case "Expiring Soon":
+                                                    <span class="badge bg-warning text-dark">Expiring Soon</span>
+                                                    break;
+                                                case "Expired":
+                                                    <span class="badge bg-danger">Expired</span>
                                                     break;
                                                 default:
                                                     <span class="badge bg-secondary">@userCompetency.Status</span>
