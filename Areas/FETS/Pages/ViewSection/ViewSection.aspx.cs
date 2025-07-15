@@ -1452,7 +1452,7 @@ namespace FETS.Pages.ViewSection
                         
                         // First check if the EmailRecipients table exists
                         bool tableExists = false;
-                        string checkTableQuery = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'FETS.EmailRecipients'";
+                        string checkTableQuery = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'FETS' AND TABLE_NAME = 'EmailRecipients'";
                         using (SqlCommand checkCmd = new SqlCommand(checkTableQuery, conn))
                         {
                             int tableCount = (int)checkCmd.ExecuteScalar();
