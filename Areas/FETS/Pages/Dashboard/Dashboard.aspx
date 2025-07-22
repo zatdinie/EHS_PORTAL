@@ -614,12 +614,43 @@
             min-width: 80px;
             text-align: center;
         }
+
+        /* Add button styles for the user guide button */
+        .btn-user-guide {
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .btn-user-guide:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            margin-bottom: 10px;
+        }
     </style>
 </asp:Content>
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="dashboard-container">
         <div class="dashboard-header">
+            <div class="header-actions">
+                <a href="../PublicDashboard/UserGuideHandler.ashx" class="btn-user-guide" target="_blank">
+                    <i class="fas fa-file-pdf"></i> User Guide
+                </a>
+            </div>
             <h2>Fire Extinguisher Tracking System</h2>
         </div>
 

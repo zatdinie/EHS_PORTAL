@@ -423,6 +423,11 @@
         
         <div class="dashboard-container">
             <div class="dashboard-header uniform-width-container">
+                <div style="display: flex; justify-content: flex-end; width: 100%;">
+                    <a href="UserGuideHandler.ashx" class="btn-login" target="_blank" style="margin-bottom: 10px;">
+                        <i class="fas fa-file-pdf"></i> User Guide
+                    </a>
+                </div>
                 <div class="logo-container">
                     <img src="<%=ResolveUrl("~/Areas/FETS/Uploads/misc/logo.png")%>" alt="INARI Logo" class="logo" />
                 </div>

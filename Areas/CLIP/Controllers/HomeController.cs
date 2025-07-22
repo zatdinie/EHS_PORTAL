@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EHS_PORTAL.Areas.CLIP.Models;
+using System.IO;
 
 namespace EHS_PORTAL.Areas.CLIP.Controllers
 {
@@ -272,6 +273,26 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             
             return View(model);
+        }
+
+        [Authorize]
+        public ActionResult OpenFile()
+        {
+            // Path to the file you want to open
+            string filePath = Server.MapPath("~/Areas/CLIP/uploads/CLIP USER GUIDE.pdf");
+            
+            // Check if file exists
+            if (!System.IO.File.Exists(filePath))
+            {
+                TempData["ErrorMessage"] = "The requested file does not exist.";
+                return RedirectToAction("Index");
+            }
+            
+            // Set response headers to display in browser
+            Response.AppendHeader("Content-Disposition", "inline; filename=\"CLIP USER GUIDE.pdf\"");
+            
+            // Return the file to be displayed in the browser
+            return File(filePath, "application/pdf");
         }
 
         // Class to hold plant monitoring summary data
