@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/Areas/Training/favicon.ico" type="image/x-icon">
+    <title>@ViewBag.Title - EHS Portal Training</title>
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
+    }
+    else
+    {
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/site.css" rel="stylesheet" />
+    }
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - EHS Portal Training</p>
+        </footer>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

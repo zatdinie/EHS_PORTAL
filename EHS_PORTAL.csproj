@@ -219,6 +219,9 @@
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Areas\CLIP\Scripts\modernizr-2.8.3.js" />
+    <Content Include="Areas\Training\favicon.ico" />
+    <Content Include="Areas\Training\Images\training_session.jpg" />
+    <Content Include="Areas\Training\Images\wallpaper.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -297,6 +300,10 @@
     <Content Include="images\RC-G0028.03_PPE Requisition and Issuance Form.pdf" />
     <Content Include="images\RC - 1792 - Permit To Work - Rev 02.pdf" />
     <Content Include="images\PPE Rev.4.pdf" />
+    <Content Include="Areas\Training\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Training\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Training\Views\web.config" />
+    <Content Include="Areas\Training\Views\Shared\_Layout.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -552,6 +559,8 @@
     <Compile Include="Areas\CLIP\Models\UserCompetency.cs" />
     <Compile Include="Areas\CLIP\Models\UserPlant.cs" />
     <Compile Include="Areas\CLIP\Services\ActivityLogger.cs" />
+    <Compile Include="Areas\Training\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Training\TrainingAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -704,6 +713,7 @@
     <Folder Include="Areas\CLIP\uploads\Monitoring\" />
     <Folder Include="Areas\CLIP\uploads\UserCompetency\" />
     <Folder Include="Areas\CLIP\Views\Dashboard\" />
+    <Folder Include="Areas\Training\Models\" />
     <Folder Include="Uploads\Maps\" />
   </ItemGroup>
   <ItemGroup>
