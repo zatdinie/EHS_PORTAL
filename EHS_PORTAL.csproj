@@ -297,6 +297,10 @@
     <Content Include="images\RC-G0028.03_PPE Requisition and Issuance Form.pdf" />
     <Content Include="images\RC - 1792 - Permit To Work - Rev 02.pdf" />
     <Content Include="images\PPE Rev.4.pdf" />
+    <Content Include="Areas\Training\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Training\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Training\Views\web.config" />
+    <Content Include="Areas\Training\Views\Shared\_Layout.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -552,6 +556,8 @@
     <Compile Include="Areas\CLIP\Models\UserCompetency.cs" />
     <Compile Include="Areas\CLIP\Models\UserPlant.cs" />
     <Compile Include="Areas\CLIP\Services\ActivityLogger.cs" />
+    <Compile Include="Areas\Training\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Training\TrainingAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -704,6 +710,7 @@
     <Folder Include="Areas\CLIP\uploads\Monitoring\" />
     <Folder Include="Areas\CLIP\uploads\UserCompetency\" />
     <Folder Include="Areas\CLIP\Views\Dashboard\" />
+    <Folder Include="Areas\Training\Models\" />
     <Folder Include="Uploads\Maps\" />
   </ItemGroup>
   <ItemGroup>
