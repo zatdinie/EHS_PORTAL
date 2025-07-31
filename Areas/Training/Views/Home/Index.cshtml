@@ -2,5 +2,170 @@
     ViewBag.Title = "Training Home";
 }
 
-<h2>Training Area</h2>
-<p>Welcome to the Training Area of the EHS Portal.</p>
+<div class="training-dashboard">
+    <div class="training-header">
+        <h1 class="display-1">Training Portal & Materials</h1>
+        <p class="lead">Your gateway to workplace safety and environmental health excellence</p>
+    </div>
+
+    <div class="training-categories">
+        <a href="@Url.Action("General", "Training")" class="category-card">
+            <i class="fas fa-book"></i>
+            <h3>General Training</h3>
+            <p>Basic training modules and fundamental courses</p>
+            <span class="card-hint">Click to explore General Courses</span>
+        </a>
+
+        <a href="@Url.Action("Environment", "Training")" class="category-card">
+            <i class="fas fa-leaf"></i>
+            <h3>Environment</h3>
+            <p>Environmental protection and sustainability training</p>
+            <span class="card-hint">Click to explore Environment Courses</span>
+        </a>
+
+        <a href="@Url.Action("SafetyHealth", "Training")" class="category-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Safety & Health</h3>
+            <p>Workplace safety and occupational health training</p>
+            <span class="card-hint">Click to explore Safety & Health Courses</span>
+        </a>
+    </div>
+</div>
+
+<style>
+.training-dashboard {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: white; /* Optional: nice soft backdrop */
+}
+
+.training-header {
+    height: 55vh;
+    text-align: center;
+    margin-bottom: 5rem;
+    color: white;
+    padding: 6rem 1rem;
+    position: relative;
+    overflow: hidden;
+    background: url('@Url.Content("~/Areas/Training/Images/wallpaper.jpg")') center center;
+    background-size: cover;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.training-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(30,136,229,0.7) 0%, rgba(21,101,192,0.8) 100%);
+    z-index: 1;
+}
+
+.training-header h1, .training-header p {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.training-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem auto;
+    padding: 0 15rem;
+    max-width: 100%;
+}
+
+.category-card {
+    display: block;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-top: 4px solid transparent;
+}
+
+/* General Training - Blue */
+.category-card:nth-child(1) {
+    border-color: #1e88e5;
+}
+.category-card:nth-child(1) i {
+    color: #1e88e5;
+}
+.category-card:nth-child(1):hover {
+    background: #e3f2fd;
+}
+
+/* Environment - Green */
+.category-card:nth-child(2) {
+    border-color: #2e7d32;
+}
+.category-card:nth-child(2) i {
+    color: #2e7d32;
+}
+.category-card:nth-child(2):hover {
+    background: #e8f5e9;
+}
+
+/* Safety & Health - Yellow */
+.category-card:nth-child(3) {
+    border-color: #ffc107;
+}
+.category-card:nth-child(3) i {
+    color: #ffc107;
+}
+.category-card:nth-child(3):hover {
+    background: #fff8e1;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.category-card i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.card-hint {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+    opacity: 0.8;
+}
+
+/* Color-specific card hints */
+.category-card:nth-child(1):hover .card-hint {
+    color: #1e88e5;
+    opacity: 1;
+}
+
+.category-card:nth-child(2):hover .card-hint {
+    color: #2e7d32;
+    opacity: 1;
+}
+
+.category-card:nth-child(3):hover .card-hint {
+    color: #ffc107;
+    opacity: 1;
+}
+
+
+</style>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+}
