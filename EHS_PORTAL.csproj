@@ -296,6 +296,7 @@
     <Content Include="images\Emergency Contact Number.pdf" />
     <Content Include="images\RC-G0028.03_PPE Requisition and Issuance Form.pdf" />
     <Content Include="images\RC - 1792 - Permit To Work - Rev 02.pdf" />
+    <Content Include="images\PPE Rev.4.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
