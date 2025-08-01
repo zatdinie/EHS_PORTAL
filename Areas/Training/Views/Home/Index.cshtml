@@ -8,7 +8,7 @@
         <h1 class="display-1 welcome-title"><i class="fas fa-graduation-cap"></i> Welcome to the Training Portal & Materials</h1>
         <p class="lead welcome-lead">Your gateway to workplace safety and environmental health excellence</p>
         <div class="training-categories" id="categories">
-            <a href="/Training/General" class="category-card redesigned-card">
+            <a href="@Url.Action("Index", "General", new { area = "Training" })" class="category-card redesigned-card">
                 <img src="@Url.Content("~/Areas/Training/Images/general.png")" alt="General Training" class="card-icon general-icon">
                 <h3>General</h3>
                 <p>Basic training modules and fundamental courses</p>
@@ -18,7 +18,7 @@
                 <h3>Environment</h3>
                 <p>Environmental protection and sustainability training</p>
             </a>
-            <a href="/Training/Safety&Health" class="category-card redesigned-card">
+            <a href="/Training/SafetyHealth" class="category-card redesigned-card">
                 <img src="@Url.Content("~/Areas/Training/Images/safety.png")" alt="Safety & Health" class="card-icon safety-icon">
                 <h3>Safety & Health</h3>
                 <p>Workplace safety and occupational health training</p>
