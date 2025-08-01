@@ -3,167 +3,317 @@
 }
 
 <div class="training-dashboard">
-    <div class="training-header">
-        <h1 class="display-1">Training Portal & Materials</h1>
-        <p class="lead">Your gateway to workplace safety and environmental health excellence</p>
-    </div>
-
-    <div class="training-categories">
-        <a href="@Url.Action("General", "Training")" class="category-card">
-            <i class="fas fa-book"></i>
-            <h3>General Training</h3>
-            <p>Basic training modules and fundamental courses</p>
-            <span class="card-hint">Click to explore General Courses</span>
-        </a>
-
-        <a href="@Url.Action("Environment", "Training")" class="category-card">
-            <i class="fas fa-leaf"></i>
-            <h3>Environment</h3>
-            <p>Environmental protection and sustainability training</p>
-            <span class="card-hint">Click to explore Environment Courses</span>
-        </a>
-
-        <a href="@Url.Action("SafetyHealth", "Training")" class="category-card">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Safety & Health</h3>
-            <p>Workplace safety and occupational health training</p>
-            <span class="card-hint">Click to explore Safety & Health Courses</span>
-        </a>
+    <div class="background-overlay"></div>
+    <div class="dashboard-content">
+        <h1 class="display-1 welcome-title"><i class="fas fa-graduation-cap"></i> Welcome to the Training Portal & Materials</h1>
+        <p class="lead welcome-lead">Your gateway to workplace safety and environmental health excellence</p>
+        <div class="training-categories" id="categories">
+            <a href="@Url.Action("Index", "General", new { area = "Training" })" class="category-card redesigned-card">
+                <img src="@Url.Content("~/Areas/Training/Images/general.png")" alt="General Training" class="card-icon general-icon">
+                <h3>General</h3>
+                <p>Basic training modules and fundamental courses</p>
+            </a>
+            <a href="/Training/Environment" class="category-card redesigned-card">
+                <img src="@Url.Content("~/Areas/Training/Images/environment.png")" alt="Environment" class="card-icon environment-icon">
+                <h3>Environment</h3>
+                <p>Environmental protection and sustainability training</p>
+            </a>
+            <a href="/Training/SafetyHealth" class="category-card redesigned-card">
+                <img src="@Url.Content("~/Areas/Training/Images/safety.png")" alt="Safety & Health" class="card-icon safety-icon">
+                <h3>Safety & Health</h3>
+                <p>Workplace safety and occupational health training</p>
+            </a>
+        </div>
     </div>
 </div>
 
 <style>
 .training-dashboard {
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    background-color: white; /* Optional: nice soft backdrop */
-}
-
-.training-header {
-    height: 55vh;
-    text-align: center;
-    margin-bottom: 5rem;
-    color: white;
-    padding: 6rem 1rem;
     position: relative;
-    overflow: hidden;
-    background: url('@Url.Content("~/Areas/Training/Images/wallpaper.jpg")') center center;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    background: url('@Url.Content("~/Areas/Training/Images/wallpaper.jpg")') center bottom no-repeat;
     background-size: cover;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-.training-header::before {
-    content: '';
+.background-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(30,136,229,0.7) 0%, rgba(21,101,192,0.8) 100%);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(120,120,120,0.7) 0%, rgba(80,80,80,0.7) 100%);
     z-index: 1;
 }
-
-.training-header h1, .training-header p {
+.dashboard-content {
     position: relative;
     z-index: 2;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
-
+.welcome-title {
+    color: #fff;
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(30,136,229,0.4), 0 1px 0 #0002;
+}
+.welcome-title .fa-graduation-cap {
+    color: #ffc107;
+    margin-right: 0.5rem;
+}
+.welcome-lead {
+    color: #fff;
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 10rem;
+    text-shadow: 0 2px 8px rgba(30,136,229,0.3), 0 1px 0 #0002;
+}
+.welcome-card .cta-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 2.5rem;
+    background: #1e88e5;
+    color: #fff;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(30,136,229,0.2);
+    transition: background 0.3s, transform 0.2s;
+}
+.welcome-card .cta-btn:hover {
+    background: #1565c0;
+    transform: translateY(-2px) scale(1.04);
+}
 .training-categories {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    margin: 2rem auto;
-    padding: 0 15rem;
-    max-width: 100%;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
 }
-
-.category-card {
-    display: block;
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+.category-card.glass-card {
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.17);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.18);
     text-align: center;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
+    color: #222;
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     cursor: pointer;
-    border-top: 4px solid transparent;
+    position: relative;
+    overflow: hidden;
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-
-/* General Training - Blue */
-.category-card:nth-child(1) {
-    border-color: #1e88e5;
+.category-card.glass-card i {
+    font-size: 3.5rem;
+    margin-bottom: 1.2rem;
+    transition: color 0.3s, transform 0.3s;
 }
-.category-card:nth-child(1) i {
+.category-card.glass-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.category-card.glass-card p {
+    font-size: 1.05rem;
+    margin-bottom: 0.7rem;
+    color: #333;
+}
+.category-card.glass-card .card-hint {
+    font-size: 0.95rem;
+    color: #1e88e5;
+    opacity: 0.85;
+    margin-top: 0.5rem;
+    transition: color 0.3s, opacity 0.3s;
+}
+.category-card.glass-card:nth-child(1) i {
     color: #1e88e5;
 }
-.category-card:nth-child(1):hover {
-    background: #e3f2fd;
-}
-
-/* Environment - Green */
-.category-card:nth-child(2) {
-    border-color: #2e7d32;
-}
-.category-card:nth-child(2) i {
+.category-card.glass-card:nth-child(2) i {
     color: #2e7d32;
 }
-.category-card:nth-child(2):hover {
-    background: #e8f5e9;
-}
-
-/* Safety & Health - Yellow */
-.category-card:nth-child(3) {
-    border-color: #ffc107;
-}
-.category-card:nth-child(3) i {
+.category-card.glass-card:nth-child(3) i {
     color: #ffc107;
 }
-.category-card:nth-child(3):hover {
-    background: #fff8e1;
+.category-card.glass-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 24px rgba(30,136,229,0.18);
+    background: rgba(255,255,255,0.35);
+}
+.category-card.glass-card:hover i {
+    transform: scale(1.15) rotate(-6deg);
+}
+.category-card.glass-card:nth-child(1):hover i {
+    color: #1976d2;
+}
+.category-card.glass-card:nth-child(2):hover i {
+    color: #388e3c;
+}
+.category-card.glass-card:nth-child(3):hover i {
+    color: #ffb300;
+}
+.category-card.glass-card:hover .card-hint {
+    color: #1565c0;
+    opacity: 1;
+}
+/* Redesigned category cards */
+.category-card.redesigned-card {
+    background: rgba(30, 136, 229, 0.85);
+    box-shadow: 0 8px 32px 0 rgba(30,136,229,0.18);
+    border-radius: 20px;
+    border: none;
+    color: #fff;
+    padding: 2rem 1.2rem 1.5rem 1.2rem;
+    margin: 0;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-.category-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+/* Individual card colors */
+.category-card.redesigned-card:nth-child(1) {
+    background: rgba(21, 101, 192, 0.85);
+    box-shadow: 0 8px 32px 0 rgba(21,101,192,0.18);
 }
 
-.category-card i {
-    font-size: 3rem;
+.category-card.redesigned-card:nth-child(2) {
+    background: rgba(27, 94, 32, 0.85);
+    box-shadow: 0 8px 32px 0 rgba(27,94,32,0.18);
+}
+
+.category-card.redesigned-card:nth-child(3) {
+    background: rgba(255, 152, 0, 0.85);
+    box-shadow: 0 8px 32px 0 rgba(255,152,0,0.18);
+}
+.category-card.redesigned-card:hover {
+    transform: translateY(-8px) scale(1.04);
+}
+
+.category-card.redesigned-card:nth-child(1):hover {
+    box-shadow: 0 16px 32px rgba(21,101,192,0.25);
+    background: rgba(21, 101, 192, 0.95);
+}
+
+.category-card.redesigned-card:nth-child(2):hover {
+    box-shadow: 0 16px 32px rgba(27,94,32,0.25);
+    background: rgba(27, 94, 32, 0.95);
+}
+
+.category-card.redesigned-card:nth-child(3):hover {
+    box-shadow: 0 16px 32px rgba(255,152,0,0.25);
+    background: rgba(255, 152, 0, 0.95);
+}
+.card-icon {
+    font-size: 2.8rem;
     margin-bottom: 1rem;
-    transition: color 0.3s ease;
+    margin-top: 0.2rem;
+    transition: color 0.3s, transform 0.3s;
 }
 
-.card-hint {
-    display: block;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: #666;
-    opacity: 0.8;
+.environment-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+    filter: brightness(1.1) contrast(1.1);
 }
 
-/* Color-specific card hints */
-.category-card:nth-child(1):hover .card-hint {
-    color: #1e88e5;
-    opacity: 1;
+.general-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+    filter: brightness(1.1) contrast(1.1);
 }
 
-.category-card:nth-child(2):hover .card-hint {
-    color: #2e7d32;
-    opacity: 1;
+.safety-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+    filter: brightness(1.1) contrast(1.1);
+}
+.card-icon-blue { color: #90caf9; }
+.card-icon-green { color: #81c784; }
+.card-icon-yellow { color: #ffd54f; }
+.category-card.redesigned-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+.category-card.redesigned-card p {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    color: #e3f2fd;
+    text-decoration: none;
 }
 
-.category-card:nth-child(3):hover .card-hint {
-    color: #ffc107;
-    opacity: 1;
+.category-card.redesigned-card:active {
+    transform: scale(0.98);
 }
-
-
+@@media (max-width: 900px) {
+    .dashboard-content {
+        padding: 2rem 0.5rem 1rem 0.5rem;
+    }
+    .training-categories {
+        gap: 1.2rem;
+        padding: 0 0.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .welcome-card {
+        padding: 1.5rem 0.5rem 1.2rem 0.5rem;
+    }
+}
+@@media (max-width: 600px) {
+    .dashboard-content {
+        padding: 1rem 0.2rem 0.5rem 0.2rem;
+    }
+    .welcome-card {
+        font-size: 1rem;
+        padding: 1rem 0.2rem 0.7rem 0.2rem;
+    }
+    .training-categories {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 0.2rem;
+    }
+    .category-card.glass-card {
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
+        min-height: 180px;
+    }
+}
+@@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 </style>
 
 @section Scripts {

@@ -15,11 +15,146 @@
         <link href="~/Content/site.css" rel="stylesheet" />
     }
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - EHS Portal Training</p>
-        </footer>
+</head>
+<body>
+    @RenderBody()
+    
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-graduation-cap"></i> EHS Training Portal</h4>
+                <p>Empowering workplace safety and environmental excellence</p>
+            </div>
+            <div class="footer-section">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="@Url.Action("Index", "Home", new { area = "Training" })">Home</a></li>
+                    <li><a href="@Url.Action("General", "Training")">General</a></li>
+                    <li><a href="@Url.Action("Environment", "Training")">Environment</a></li>
+                    <li><a href="@Url.Action("SafetyHealth", "Training")">Safety & Health</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Contact</h5>
+                <p><i class="fas fa-envelope"></i> ehs.notification@inari-amertron.com.my</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; @DateTime.Now.Year - EHS Portal Training. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+    .modern-footer {
+        background: rgba(30, 136, 229, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 2rem 0 0 0;
+        margin-top: 3rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .footer-section h4 {
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .footer-section h4 i {
+        color: #ffc107;
+    }
+    
+    .footer-section h5 {
+        color: #e3f2fd;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 0.3rem;
+    }
+    
+    .footer-section p {
+        color: #e3f2fd;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .footer-section ul li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-section ul li a {
+        color: #e3f2fd;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.3s, transform 0.2s;
+        display: inline-block;
+    }
+    
+    .footer-section ul li a:hover {
+        color: #fff;
+        transform: translateX(5px);
+    }
+    
+    .footer-section p i {
+        color: #90caf9;
+        margin-right: 0.5rem;
+        width: 16px;
+    }
+    
+    .footer-bottom {
+        background: rgba(21, 101, 192, 0.8);
+        padding: 1rem 0;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-bottom p {
+        color: #e3f2fd;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+    
+    @@media (max-width: 768px) {
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .footer-section {
+            text-align: center;
+        }
+        
+        .footer-section h4 {
+            justify-content: center;
+        }
+    }
+    </style>
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
