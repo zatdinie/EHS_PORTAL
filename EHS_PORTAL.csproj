@@ -309,6 +309,10 @@
     <Content Include="Areas\Training\Views\General\Index.cshtml" />
     <Content Include="Areas\Training\Views\Environment\Index.cshtml" />
     <Content Include="Areas\Training\Views\SafetyHealth\Index.cshtml" />
+    <Content Include="Areas\Training\Views\General\ChemicalSpill.cshtml" />
+    <Content Include="Areas\Training\Views\General\EmergencyProcedures.cshtml" />
+    <Content Include="Areas\Training\Views\General\FireExtinguisher.cshtml" />
+    <Content Include="Areas\Training\Views\General\PPE.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
