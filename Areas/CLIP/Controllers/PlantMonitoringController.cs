@@ -1509,50 +1509,45 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             
             try
             {
-                // Create a new monitoring cycle from the existing one
-                var newMonitoring = new PlantMonitoring
-                {
-                    PlantID = plantMonitoring.PlantID,
-                    MonitoringID = plantMonitoring.MonitoringID,
-                    Area = plantMonitoring.Area,
-                    ProcStatus = "Not Started",
-                    
-                    // Assign the same users if they exist
-                    QuoteUserAssign = plantMonitoring.QuoteUserAssign,
-                    EprUserAssign = plantMonitoring.EprUserAssign,
-                    WorkUserAssign = plantMonitoring.WorkUserAssign,
-                    
-                    // Set current date as the start date for the new cycle
-                    QuoteDate = DateTime.Now,
-                    
-                    // Copy remarks if needed
-                    Remarks = $"Renewed from previous monitoring cycle (ID: {plantMonitoring.Id}) that expired on {plantMonitoring.ExpDate?.ToString("dd/MM/yyyy") ?? "N/A"}"
-                };
+                // Reset the current monitoring cycle
+                plantMonitoring.QuoteDate = null; // Set to null instead of DateTime.Now
+                plantMonitoring.QuoteCompleteDate = null;
+                plantMonitoring.EprDate = null;
+                plantMonitoring.EprCompleteDate = null;
+                plantMonitoring.WorkDate = null;
+                plantMonitoring.WorkSubmitDate = null;
+                plantMonitoring.WorkCompleteDate = null;
+                plantMonitoring.QuoteDoc = null;
+                plantMonitoring.EprDoc = null;
+                plantMonitoring.WorkDoc = null;
+                plantMonitoring.ProcStatus = "Not Started";
+                plantMonitoring.Remarks = $"Cycle reset on {DateTime.Now:dd/MM/yyyy HH:mm}";
+                // Do NOT reset ExpDate; keep previous expiry date
+                // plantMonitoring.ExpDate = null;
                 
-                // Calculate statuses
-                newMonitoring.CalculateStatuses();
-                
-                // Add to database
-                _db.PlantMonitorings.Add(newMonitoring);
+                // Recalculate statuses
+                plantMonitoring.CalculateStatuses();
+
+                _db.Entry(plantMonitoring).State = System.Data.Entity.EntityState.Modified;
                 _db.SaveChanges();
-                
-                // Get plant and monitoring names for logging
-                var plant = _db.Plants.Find(newMonitoring.PlantID);
-                var monitoringType = _db.Monitorings.Find(newMonitoring.MonitoringID);
+
+                // Log reset
+                var plant = _db.Plants.Find(plantMonitoring.PlantID);
+                var monitoringType = _db.Monitorings.Find(plantMonitoring.MonitoringID);
                 string plantName = plant != null ? plant.PlantName : "Unknown Plant";
                 string monitoringName = monitoringType != null ? monitoringType.MonitoringName : "Unknown Monitoring";
-                
-                // Log creation
-                LogCreation(
+                LogUpdate(
                     "PlantMonitoring",
-                    newMonitoring.Id.ToString(),
-                    $"Created PlantMonitoring for Plant: {plantName}, Monitoring: {monitoringName}, Status: {newMonitoring.ProcStatus}"
+                    plantMonitoring.Id.ToString(),
+                    null, null,
+                    $"Reset PlantMonitoring for Plant: {plantName}, Monitoring: {monitoringName}, Status: {plantMonitoring.ProcStatus}"
                 );
-                return RedirectToAction("Details", new { id = newMonitoring.Id });
+                TempData["SuccessMessage"] = "Monitoring cycle has been reset.";
+                return RedirectToAction("Details", new { id = plantMonitoring.Id });
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Error renewing monitoring: " + ex.Message;
+                TempData["ErrorMessage"] = "Error resetting monitoring: " + ex.Message;
                 return RedirectToAction("Details", new { id = id });
             }
         }
