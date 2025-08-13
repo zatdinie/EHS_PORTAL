@@ -313,6 +313,11 @@
     <Content Include="Areas\Training\Views\General\EmergencyProcedures.cshtml" />
     <Content Include="Areas\Training\Views\General\FireExtinguisher.cshtml" />
     <Content Include="Areas\Training\Views\General\PPE.cshtml" />
+    <Content Include="Areas\Training\Views\SafetyHealth\EHSWorkplaceInspection.cshtml" />
+    <Content Include="Areas\CLIP\uploads\CLIP USER GUIDE.pdf" />
+    <Content Include="Areas\FETS\Uploads\FETS_USER GUIDE.pdf" />
+    <Content Include="Areas\FETS\Pages\PublicDashboard\UserGuideHandler.ashx" />
+    <Content Include="images\RC-G0028.04_PPE Requisition and Issuance Form.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />

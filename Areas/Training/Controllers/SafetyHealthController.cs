@@ -8,5 +8,12 @@ namespace EHS_PORTAL.Areas.Training.Controllers
         {
             return View();
         }
+
+        public ActionResult EHSWorkplaceInspection()
+        {
+            return View();
+        }
     }
+
+
 }

@@ -1,0 +1,1168 @@
+@{
+    ViewData["Title"] = "EHS Workplace Inspection";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #007acc;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .company-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .inspection-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .category-section {
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #007acc, #005c99);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .category-content {
+            padding: 20px;
+        }
+        
+        .inspection-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .inspection-table th {
+            background-color: #f8f9fa;
+            padding: 12px 8px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .inspection-table td {
+            padding: 10px 8px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .inspection-table .item-description {
+            text-align: left;
+            font-weight: 500;
+            min-width: 300px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .checkbox-option input[type="radio"] {
+            margin: 0;
+        }
+        
+        .checkbox-option label {
+            margin: 0;
+            font-size: 0.9em;
+            font-weight: normal;
+        }
+        
+        .compliance-legend {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .signature-box {
+            text-align: center;
+        }
+        
+        .signature-line {
+            border-bottom: 2px solid #333;
+            margin: 20px 0 10px 0;
+            height: 40px;
+        }
+        
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        @@media (max-width: 768px) {
+            .inspection-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .signature-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .inspection-table {
+                font-size: 0.8em;
+            }
+            
+            .checkbox-container {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>EHS Workplace Inspection</h1>
+            <div class="company-info">
+                <strong>INARI TECHNOLOGY SDN BHD</strong><br>
+                Environmental Inspection Checklist for Office / Production / Store<br>
+                Document No: RC-G0079 | Revision: 08
+            </div>
+        </div>
+
+        <form method="post" asp-action="SubmitInspection">
+            <div class="inspection-details">
+                <div class="form-group">
+                    <label for="inspectedArea">Inspected Area:</label>
+                    <input type="text" id="inspectedArea" name="InspectedArea" required />
+                </div>
+                <div class="form-group">
+                    <label for="inspectionYear">Year:</label>
+                    <input type="number" id="inspectionYear" name="InspectionYear" value="@DateTime.Now.Year" min="2020" max="2030" required />
+                </div>
+                <div class="form-group">
+                    <label for="inspectionDate">Date Inspected:</label>
+                    <input type="date" id="inspectionDate" name="InspectionDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                </div>
+            </div>
+
+            <div class="compliance-legend">
+                <strong>Instructions:</strong> Tick "P" for compliance, "X" for non-compliance, "N/A" for not applicable.<br>
+                Non-compliance shall be logged into Non-Conformance Report (NCR) (RC-G0098) for necessary corrective & preventive action.
+            </div>
+
+            <!-- Paper Saving Section -->
+            <div class="category-section">
+                <div class="category-header">📄 Paper Saving</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var paperSavingItems = new string[] {
+                                    "Use both sides of paper in printers / faxes / photocopier?",
+                                    "Use electronic media for circulation / communication to minimize using of paper?",
+                                    "Use paper without unnecessary cover page?",
+                                    "Recycle bin for recyclable paper is adequately located?",
+                                    "Reuse of box files, envelopes and other materials until worn out?"
+                                };
+                            }
+                            @for (int i = 0; i < paperSavingItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @paperSavingItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="paper_@(i)_@(month)_p" name="PaperSaving[@i].Month[@month]" value="P" />
+                                                    <label for="paper_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="paper_@(i)_@(month)_x" name="PaperSaving[@i].Month[@month]" value="X" />
+                                                    <label for="paper_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="paper_@(i)_@(month)_na" name="PaperSaving[@i].Month[@month]" value="N/A" />
+                                                    <label for="paper_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Water Conservation Section -->
+            <div class="category-section">
+                <div class="category-header">💧 Water Conservation</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var waterConservationItems = new string[] {
+                                    "\"Save Water\" stickers are properly placed?",
+                                    "No running tap or water leakage is observed?"
+                                };
+                            }
+                            @for (int i = 0; i < waterConservationItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @waterConservationItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="water_@(i)_@(month)_p" name="WaterConservation[@i].Month[@month]" value="P" />
+                                                    <label for="water_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="water_@(i)_@(month)_x" name="WaterConservation[@i].Month[@month]" value="X" />
+                                                    <label for="water_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="water_@(i)_@(month)_na" name="WaterConservation[@i].Month[@month]" value="N/A" />
+                                                    <label for="water_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Energy Conservation Section -->
+            <div class="category-section">
+                <div class="category-header">⚡ Energy Conservation</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var energyConservationItems = new string[] {
+                                    "Switch off all electrical appliances when they are not in use or after working hours?",
+                                    "\"Energy Saving\" stickers are properly placed?",
+                                    "The temperature of air-conditioners is set at 20-25ºC?",
+                                    "Computers are in energy saving mode when idle for 20 minutes or less?"
+                                };
+                            }
+                            @for (int i = 0; i < energyConservationItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @energyConservationItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="energy_@(i)_@(month)_p" name="EnergyConservation[@i].Month[@month]" value="P" />
+                                                    <label for="energy_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="energy_@(i)_@(month)_x" name="EnergyConservation[@i].Month[@month]" value="X" />
+                                                    <label for="energy_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="energy_@(i)_@(month)_na" name="EnergyConservation[@i].Month[@month]" value="N/A" />
+                                                    <label for="energy_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Waste Management Section -->
+            <div class="category-section">
+                <div class="category-header">🗂️ Waste Management</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var wasteManagementItems = new string[] {
+                                    "Spent toner cartridges of printers are return to supplier?",
+                                    "Computer accessories are reused in other computers/ systems wherever practicable?",
+                                    "Computer waste are collected centrally for proper disposal?",
+                                    "Use environmentally friendly stationery wherever possible? (Eg. Rechargeable batteries, refillable)",
+                                    "Reusable cups & glasses are used?",
+                                    "Environmental friendly cleaning products are used? (Eg.Refillable soap)",
+                                    "Cloths and towels are used in pantry?",
+                                    "Recyclable wastes (e.g. carton boxes, paper) are segregated and collected properly?"
+                                };
+                            }
+                            @for (int i = 0; i < wasteManagementItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @wasteManagementItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="waste_@(i)_@(month)_p" name="WasteManagement[@i].Month[@month]" value="P" />
+                                                    <label for="waste_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="waste_@(i)_@(month)_x" name="WasteManagement[@i].Month[@month]" value="X" />
+                                                    <label for="waste_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="waste_@(i)_@(month)_na" name="WasteManagement[@i].Month[@month]" value="N/A" />
+                                                    <label for="waste_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Resource Conservation Section -->
+            <div class="category-section">
+                <div class="category-header">♻️ Resource Conservation</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var resourceConservationItems = new string[] {
+                                    "Are the raw materials stored in good condition?",
+                                    "Are the electrical appliances and equipment been switch off when they are not in use?",
+                                    "Are the N₂ cabinet being closed?",
+                                    "Good housekeeping is observed?",
+                                    "Switch off electrical appliances and equipment when they are not in use?",
+                                    "Good housekeeping and storage condition is observed?",
+                                    "Temperature is set at 18-26ºC and humidity at 40% - 70%?"
+                                };
+                            }
+                            @for (int i = 0; i < resourceConservationItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @resourceConservationItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="resource_@(i)_@(month)_p" name="ResourceConservation[@i].Month[@month]" value="P" />
+                                                    <label for="resource_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="resource_@(i)_@(month)_x" name="ResourceConservation[@i].Month[@month]" value="X" />
+                                                    <label for="resource_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="resource_@(i)_@(month)_na" name="ResourceConservation[@i].Month[@month]" value="N/A" />
+                                                    <label for="resource_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Scheduled Waste Management Section -->
+            <div class="category-section">
+                <div class="category-header">☢️ Scheduled Waste Management</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var scheduledWasteItems = new string[] {
+                                    "Are the scheduled wastes segregated and labeled properly?",
+                                    "Are the scheduled wastes stored at compatible & durable containers?",
+                                    "Are the containers of scheduled wastes closed during storage?",
+                                    "Are the scheduled wastes disposal records properly maintained?",
+                                    "No scheduled waste stored than 4 months.",
+                                    "Only trained workers are allowed to transfer scheduled waste to scheduled waste area?",
+                                    "Is the PPE in good condition & readily accessible & attached with proper signage?",
+                                    "Is secondary containment available for liquid wastes?",
+                                    "Is the secondary containment in good condition?",
+                                    "Is chemicals spillage kits readily accessible?",
+                                    "Are items inside chemical spillage kit tally as per the list?"
+                                };
+                            }
+                            @for (int i = 0; i < scheduledWasteItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @scheduledWasteItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="scheduled_@(i)_@(month)_p" name="ScheduledWaste[@i].Month[@month]" value="P" />
+                                                    <label for="scheduled_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="scheduled_@(i)_@(month)_x" name="ScheduledWaste[@i].Month[@month]" value="X" />
+                                                    <label for="scheduled_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="scheduled_@(i)_@(month)_na" name="ScheduledWaste[@i].Month[@month]" value="N/A" />
+                                                    <label for="scheduled_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Chemicals Handling and Storage Section -->
+            <div class="category-section">
+                <div class="category-header">🧪 Chemicals Handling and Storage</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var chemicalHandlingItems = new string[] {
+                                    "Are the containers used appropriate to the substances contained (eg: corrosions resistant)",
+                                    "Has chemical container design to minimize spill?",
+                                    "Is the entire container keeps upright to prevent spill?",
+                                    "Are the containers maintain in good condition and covers are securely closed?",
+                                    "Is secondary containment available for liquid chemical?",
+                                    "Is the secondary containment in good condition?",
+                                    "Is chemical spillage kits readily accessible?",
+                                    "Are items inside chemical spillage kit tally as per the list?",
+                                    "Are all the chemicals used in production registered in chemical list, RC-657?",
+                                    "Are the SDS accessible to the chemical user?",
+                                    "Are the chemicals labeled properly? (clear & readable?)",
+                                    "Is the label following CLASS requirement?",
+                                    "Has the chemical users/ handlers gone through training?",
+                                    "Is there any PPE signage available?",
+                                    "Are the respective workers wear appropriate PPE?",
+                                    "Is the PPE in good condition & readily accessible?",
+                                    "List of emergency contact person is available & up to date?"
+                                };
+                            }
+                            @for (int i = 0; i < chemicalHandlingItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @chemicalHandlingItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="chemical_@(i)_@(month)_p" name="ChemicalHandling[@i].Month[@month]" value="P" />
+                                                    <label for="chemical_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="chemical_@(i)_@(month)_x" name="ChemicalHandling[@i].Month[@month]" value="X" />
+                                                    <label for="chemical_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="chemical_@(i)_@(month)_na" name="ChemicalHandling[@i].Month[@month]" value="N/A" />
+                                                    <label for="chemical_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Safety Equipment Sections -->
+            <div class="category-section">
+                <div class="category-header">🛡️ Safety Equipment & Emergency Preparedness</div>
+                <div class="category-content">
+                    <!-- First Aid Kit -->
+                    <h4>First Aid Kit</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var firstAidItems = new string[] {
+                                    "Is First Aid Kit available?",
+                                    "Is First Aid Kit locked?",
+                                    "Is the contact no for person in charged being identified and displayed?",
+                                    "Is there any expired item?",
+                                    "Are items inside First Aid Box tally as per the list?"
+                                };
+                            }
+                            @for (int i = 0; i < firstAidItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @firstAidItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="firstaid_@(i)_@(month)_p" name="FirstAid[@i].Month[@month]" value="P" />
+                                                    <label for="firstaid_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="firstaid_@(i)_@(month)_x" name="FirstAid[@i].Month[@month]" value="X" />
+                                                    <label for="firstaid_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="firstaid_@(i)_@(month)_na" name="FirstAid[@i].Month[@month]" value="N/A" />
+                                                    <label for="firstaid_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Eyewash Station -->
+                    <h4>Eyewash Station</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var eyewashItems = new string[] {
+                                    "Change the water content monthly",
+                                    "Is there any eyewash signage available?"
+                                };
+                            }
+                            @for (int i = 0; i < eyewashItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @eyewashItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="eyewash_@(i)_@(month)_p" name="Eyewash[@i].Month[@month]" value="P" />
+                                                    <label for="eyewash_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="eyewash_@(i)_@(month)_x" name="Eyewash[@i].Month[@month]" value="X" />
+                                                    <label for="eyewash_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="eyewash_@(i)_@(month)_na" name="Eyewash[@i].Month[@month]" value="N/A" />
+                                                    <label for="eyewash_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Fire Fighting Equipment -->
+                    <h4>Fire Fighting Equipment</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var fireEquipmentItems = new string[] {
+                                    "Is the evacuation plan accurate vs actual layout?",
+                                    "Are fire extinguisher and hose reel signage available and kept clear of any obstructions?"
+                                };
+                            }
+                            @for (int i = 0; i < fireEquipmentItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @fireEquipmentItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="fire_@(i)_@(month)_p" name="FireEquipment[@i].Month[@month]" value="P" />
+                                                    <label for="fire_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="fire_@(i)_@(month)_x" name="FireEquipment[@i].Month[@month]" value="X" />
+                                                    <label for="fire_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="fire_@(i)_@(month)_na" name="FireEquipment[@i].Month[@month]" value="N/A" />
+                                                    <label for="fire_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Additional Safety Sections -->
+            <div class="category-section">
+                <div class="category-header">🏭 Production & Equipment Safety</div>
+                <div class="category-content">
+                    <!-- General Waste Management -->
+                    <h4>General Waste Management</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var generalWasteItems = new string[] {
+                                    "Are the general waste segregated from scheduled waste?",
+                                    "Are the recyclable waste (paper & plastic) segregated from general waste?"
+                                };
+                            }
+                            @for (int i = 0; i < generalWasteItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @generalWasteItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="genWaste_@(i)_@(month)_p" name="GeneralWaste[@i].Month[@month]" value="P" />
+                                                    <label for="genWaste_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="genWaste_@(i)_@(month)_x" name="GeneralWaste[@i].Month[@month]" value="X" />
+                                                    <label for="genWaste_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="genWaste_@(i)_@(month)_na" name="GeneralWaste[@i].Month[@month]" value="N/A" />
+                                                    <label for="genWaste_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Water Pollution Control -->
+                    <h4>Water Pollution Control</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="item-description">1. Are the drip trays provided underneath equipment for operation, fuelling and maintenance?</td>
+                                @for (int month = 1; month <= 12; month++)
+                                {
+                                    <td>
+                                        <div class="checkbox-container">
+                                            <div class="checkbox-option">
+                                                <input type="radio" id="waterPollution_0_@(month)_p" name="WaterPollution[0].Month[@month]" value="P" />
+                                                <label for="waterPollution_0_@(month)_p">P</label>
+                                            </div>
+                                            <div class="checkbox-option">
+                                                <input type="radio" id="waterPollution_0_@(month)_x" name="WaterPollution[0].Month[@month]" value="X" />
+                                                <label for="waterPollution_0_@(month)_x">X</label>
+                                            </div>
+                                            <div class="checkbox-option">
+                                                <input type="radio" id="waterPollution_0_@(month)_na" name="WaterPollution[0].Month[@month]" value="N/A" />
+                                                <label for="waterPollution_0_@(month)_na">N/A</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Air Pollution Control -->
+                    <h4>Air Pollution Control</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var airPollutionItems = new string[] {
+                                    "Any abnormal fume / smell emitted from machine or oven?",
+                                    "Ventilation systems are properly maintained and in good conditions?",
+                                    "Has the ventilation hoods installed at the soldering process area?"
+                                };
+                            }
+                            @for (int i = 0; i < airPollutionItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @airPollutionItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="airPollution_@(i)_@(month)_p" name="AirPollution[@i].Month[@month]" value="P" />
+                                                    <label for="airPollution_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="airPollution_@(i)_@(month)_x" name="AirPollution[@i].Month[@month]" value="X" />
+                                                    <label for="airPollution_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="airPollution_@(i)_@(month)_na" name="AirPollution[@i].Month[@month]" value="N/A" />
+                                                    <label for="airPollution_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Noise Pollution Control -->
+                    <h4>Noise Pollution Control</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var noisePollutionItems = new string[] {
+                                    "Any abnormal noise emitted from equipments and operations?",
+                                    "If above the permission noise limit - Have the workers wear hearing protector?",
+                                    "If above the permission noise limit - Has the warning sign provided?",
+                                    "If above the permission noise limit - Have the worker gone through related training?",
+                                    "If above the permission noise limit - Have the workers sent for audiometric test?"
+                                };
+                            }
+                            @for (int i = 0; i < noisePollutionItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @noisePollutionItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="noise_@(i)_@(month)_p" name="NoisePollution[@i].Month[@month]" value="P" />
+                                                    <label for="noise_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="noise_@(i)_@(month)_x" name="NoisePollution[@i].Month[@month]" value="X" />
+                                                    <label for="noise_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="noise_@(i)_@(month)_na" name="NoisePollution[@i].Month[@month]" value="N/A" />
+                                                    <label for="noise_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Restricted Substances -->
+                    <h4>Restricted Substances</h4>
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="item-description">1. Is there any non lead free material use on the production shop-floor?</td>
+                                @for (int month = 1; month <= 12; month++)
+                                {
+                                    <td>
+                                        <div class="checkbox-container">
+                                            <div class="checkbox-option">
+                                                <input type="radio" id="restricted_0_@(month)_p" name="RestrictedSubstances[0].Month[@month]" value="P" />
+                                                <label for="restricted_0_@(month)_p">P</label>
+                                            </div>
+                                            <div class="checkbox-option">
+                                                <input type="radio" id="restricted_0_@(month)_x" name="RestrictedSubstances[0].Month[@month]" value="X" />
+                                                <label for="restricted_0_@(month)_x">X</label>
+                                            </div>
+                                            <div class="checkbox-option">
+                                                <input type="radio" id="restricted_0_@(month)_na" name="RestrictedSubstances[0].Month[@month]" value="N/A" />
+                                                <label for="restricted_0_@(month)_na">N/A</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Handling, Transportation and Storage -->
+            <div class="category-section">
+                <div class="category-header">🚛 Handling, Transportation and Storage</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var handlingItems = new string[] {
+                                    "Are Forklifts maintenance done per the schedule PM?",
+                                    "Only trained competent personnel allow to operate the Forklift?",
+                                    "Are pallets, racks and shelving in good condition? Undamaged?",
+                                    "Are exits clearly marked and clear of obstruction?",
+                                    "Are materials stack properly, not leaning?"
+                                };
+                            }
+                            @for (int i = 0; i < handlingItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @handlingItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="handling_@(i)_@(month)_p" name="Handling[@i].Month[@month]" value="P" />
+                                                    <label for="handling_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="handling_@(i)_@(month)_x" name="Handling[@i].Month[@month]" value="X" />
+                                                    <label for="handling_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="handling_@(i)_@(month)_na" name="Handling[@i].Month[@month]" value="N/A" />
+                                                    <label for="handling_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- X-Ray Machine Control -->
+            <div class="category-section">
+                <div class="category-header">☢️ X-Ray Machine Control and Monitoring</div>
+                <div class="category-content">
+                    <table class="inspection-table">
+                        <thead>
+                            <tr>
+                                <th>Items to be checked</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var xrayItems = new string[] {
+                                    "The license for X-ray machine still valid?",
+                                    "X-ray film is sent for testing according to the schedule?",
+                                    "Are the X-ray machine operated by authorized person only?",
+                                    "Is the warning sign available?"
+                                };
+                            }
+                            @for (int i = 0; i < xrayItems.Length; i++)
+                            {
+                                <tr>
+                                    <td class="item-description">@((i + 1)). @xrayItems[i]</td>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <td>
+                                            <div class="checkbox-container">
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="xray_@(i)_@(month)_p" name="XRayMachine[@i].Month[@month]" value="P" />
+                                                    <label for="xray_@(i)_@(month)_p">P</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="xray_@(i)_@(month)_x" name="XRayMachine[@i].Month[@month]" value="X" />
+                                                    <label for="xray_@(i)_@(month)_x">X</label>
+                                                </div>
+                                                <div class="checkbox-option">
+                                                    <input type="radio" id="xray_@(i)_@(month)_na" name="XRayMachine[@i].Month[@month]" value="N/A" />
+                                                    <label for="xray_@(i)_@(month)_na">N/A</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Signature Section -->
+            <div class="signature-section">
+                <div class="signature-box">
+                    <label for="inspectedBy">Inspected By:</label>
+                    <input type="text" id="inspectedBy" name="InspectedBy" required />
+                    <div class="signature-line"></div>
+                    <p>Signature & Date</p>
+                </div>
+                <div class="signature-box">
+                    <label for="approvedBy">Approved By:</label>
+                    <input type="text" id="approvedBy" name="ApprovedBy" required />
+                    <div class="signature-line"></div>
+                    <p>Signature & Date</p>
+                </div>
+                <div class="signature-box">
+                    <label for="reviewedBy">Reviewed By:</label>
+                    <input type="text" id="reviewedBy" name="ReviewedBy" />
+                    <div class="signature-line"></div>
+                    <p>Signature & Date</p>
+                </div>
+            </div>
+
+            <!-- Submit Section -->
+            <div class="submit-section">
+                <button type="submit" class="btn-submit">Submit EHS Inspection Report</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Add some basic form validation and user experience enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-expand sections on focus
+            const tables = document.querySelectorAll('.inspection-table');
+            tables.forEach(table => {
+                table.addEventListener('focusin', function() {
+                    this.closest('.category-section').style.boxShadow = '0 4px 20px rgba(0,122,204,0.2)';
+                });
+                table.addEventListener('focusout', function() {
+                    this.closest('.category-section').style.boxShadow = 'none';
+                });
+            });
+
+            // Form submission confirmation
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const confirmation = confirm('Are you sure you want to submit this EHS Inspection Report? Please ensure all required fields are completed.');
+                if (!confirmation) {
+                    e.preventDefault();
+                }
+            });
+
+            // Highlight non-compliance selections
+            const radioInputs = document.querySelectorAll('input[type="radio"][value="X"]');
+            radioInputs.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.closest('td').style.backgroundColor = '#ffebee';
+                    }
+                });
+            });
+
+            // Reset background color for compliance selections
+            const complianceRadios = document.querySelectorAll('input[type="radio"][value="P"], input[type="radio"][value="N/A"]');
+            complianceRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.closest('td').style.backgroundColor = '';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
