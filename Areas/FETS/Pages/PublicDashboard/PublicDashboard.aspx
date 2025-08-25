@@ -423,9 +423,12 @@
         
         <div class="dashboard-container">
             <div class="dashboard-header uniform-width-container">
-                <div style="display: flex; justify-content: flex-end; width: 100%;">
+                <div style="display: flex; justify-content: flex-end; gap: 10px; width: 100%;">
                     <a href="UserGuideHandler.ashx" class="btn-login" target="_blank" style="margin-bottom: 10px;">
                         <i class="fas fa-file-pdf"></i> User Guide
+                    </a>
+                    <a href="About.aspx" class="btn-login" target="_blank" style="margin-bottom: 10px;">
+                        <i class="fas fa-info-circle"></i> About
                     </a>
                 </div>
                 <div class="logo-container">

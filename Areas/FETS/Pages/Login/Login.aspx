@@ -247,6 +247,43 @@
             border-color: #b6bfc9;
         }
 
+        /* About button styling */
+        .about-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .btn-about {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 6px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-about i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .btn-about:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.25);
+        }
+
         /* Footer styling */
         .footer {
             margin-top: 40px;
@@ -419,6 +456,13 @@
                 <!-- Login button -->
                 <div class="form-group">
                     <asp:Button ID="btnLogin" runat="server" Text="Sign in" OnClick="btnLogin_Click" CssClass="btn-login" />
+                </div>
+
+                <!-- About button -->
+                <div class="about-button">
+                    <a href="/Areas/FETS/Pages/PublicDashboard/About.aspx" class="btn-about">
+                        <i class="fas fa-info-circle"></i> About
+                    </a>
                 </div>
 
                 <!-- Forgot password link -->

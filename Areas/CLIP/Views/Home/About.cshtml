@@ -1,9 +1,205 @@
-﻿@{
-    ViewBag.Title = "About";
+@{
+    ViewBag.Title = "About CLIP";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <p>Use this area to provide additional information.</p>
-</main>
+<div class="container-fluid px-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8">
+            <!-- Header Section -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <img src="~/Areas/CLIP/Images/logo.png" alt="CLIP Logo" height="80" class="mb-3" />
+                    </div>
+                    <h1 class="display-5 fw-bold text-primary mb-3">About CLIP</h1>
+                    <h2 class="h4 text-secondary mb-3">Competency, Licensing and Important Permit Management System</h2>
+                    <p class="lead text-muted">Environment, Health and Safety Department (EHS) - INARI AMERTRON BHD</p>
+                    <div class="mt-4">
+                        <a href="@Url.Action("Login", "Account", new { area = "CLIP" })" class="btn btn-primary me-2">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="row g-4 mb-5">
+                <!-- System Overview -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-info-circle text-primary fs-4"></i>
+                                </div>
+                                <h3 class="card-title mb-0">System Overview</h3>
+                            </div>
+                            <p class="card-text text-muted">
+                                CLIP is a comprehensive digital solution designed to manage competencies, licenses, and permits 
+                                across all INARI AMERTRON facilities. Our system ensures regulatory compliance while providing 
+                                real-time visibility into training requirements, certificate status, and permit management.
+                            </p>
+                            <p class="card-text text-muted">
+                                Built with modern web technologies, CLIP streamlines the management of critical safety and 
+                                operational requirements, ensuring that our workforce remains competent and compliant.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission & Purpose -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-success bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-bullseye text-success fs-4"></i>
+                                </div>
+                                <h3 class="card-title mb-0">Mission & Purpose</h3>
+                            </div>
+                            <p class="card-text text-muted mb-3">
+                                Our mission is to enhance workplace safety and operational excellence by providing a robust system for managing:
+                            </p>
+                            <ul class="list-unstyled text-muted">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Employee competency tracking and development</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>License and certificate management</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Permit monitoring and compliance</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Training program coordination</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Regulatory compliance assurance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Features -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-info bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-cogs text-info fs-4"></i>
+                                </div>
+                                <h3 class="card-title mb-0">Key Features</h3>
+                            </div>
+                            <p class="card-text text-muted mb-3">
+                                CLIP offers a comprehensive suite of features designed for efficiency and compliance:
+                            </p>
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                                        <i class="fas fa-chart-bar text-primary me-2"></i>
+                                        <span class="small">Real-time Dashboard & Analytics</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                                        <i class="fas fa-certificate text-warning me-2"></i>
+                                        <span class="small">Certificate of Fitness Management</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                                        <i class="fas fa-graduation-cap text-success me-2"></i>
+                                        <span class="small">Competency Module Tracking</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                                        <i class="fas fa-clipboard-list text-info me-2"></i>
+                                        <span class="small">Plant Monitoring & Permits</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center p-2 bg-light rounded">
+                                        <i class="fas fa-bell text-danger me-2"></i>
+                                        <span class="small">Automated Expiry Alerts</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For Our Users -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-warning bg-opacity-10 rounded-circle p-2 me-3">
+                                    <i class="fas fa-users text-warning fs-4"></i>
+                                </div>
+                                <h3 class="card-title mb-0">For Our Users</h3>
+                            </div>
+                            <p class="card-text text-muted mb-3">
+                                CLIP serves multiple user groups within our organization:
+                            </p>
+                            <ul class="list-unstyled text-muted">
+                                <li class="mb-2"><i class="fas fa-user text-primary me-2"></i><strong>Employees:</strong> View personal competency status and training requirements</li>
+                                <li class="mb-2"><i class="fas fa-user-tie text-success me-2"></i><strong>Supervisors:</strong> Monitor team competencies and assign training</li>
+                                <li class="mb-2"><i class="fas fa-shield-alt text-info me-2"></i><strong>EHS Personnel:</strong> Manage system-wide compliance and reports</li>
+                                <li class="mb-2"><i class="fas fa-chart-line text-warning me-2"></i><strong>Management:</strong> Review organizational compliance metrics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Capabilities -->
+            <div class="card border-0 shadow-sm mb-5">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0"><i class="fas fa-rocket me-2"></i>System Capabilities</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-certificate fs-2 text-primary"></i>
+                                </div>
+                                <h5>Certificate Management</h5>
+                                <p class="text-muted small">Track all certificates and licenses across facilities</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center">
+                                <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-clock fs-2 text-success"></i>
+                                </div>
+                                <h5>24/7 Monitoring</h5>
+                                <p class="text-muted small">Continuous system availability and automated alerts</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center">
+                                <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-chart-line fs-2 text-info"></i>
+                                </div>
+                                <h5>Advanced Analytics</h5>
+                                <p class="text-muted small">Comprehensive reporting and trend analysis</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="text-center">
+                                <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-shield-alt fs-2 text-warning"></i>
+                                </div>
+                                <h5>Data Security</h5>
+                                <p class="text-muted small">Secure data handling and role-based access control</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+    }
+</style>

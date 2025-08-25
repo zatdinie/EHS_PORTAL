@@ -118,11 +118,8 @@ namespace EHS_PORTAL.Areas.CLIP.Controllers
             return plantCounts;
         }
 
-        [Authorize]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 

@@ -573,6 +573,9 @@
     <Compile Include="Areas\CLIP\Models\UserCompetency.cs" />
     <Compile Include="Areas\CLIP\Models\UserPlant.cs" />
     <Compile Include="Areas\CLIP\Services\ActivityLogger.cs" />
+    <Compile Include="Areas\FETS\Pages\PublicDashboard\About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Training\Controllers\EnvironmentController.cs" />
     <Compile Include="Areas\Training\Controllers\GeneralController.cs" />
     <Compile Include="Areas\Training\Controllers\HomeController.cs" />
