@@ -430,7 +430,7 @@
             </div>
             <div class="footer">
                 <p>&copy; <%= DateTime.Now.Year %> INARI AMERTRON BHD. - Environment, Health and Safety Department (EHS)</p>
-                <p>Fire Extinguisher Tracking System (FETS) - Version 1.0</p>
+                <p>Fire Extinguisher Tracking System (FETS) - Launched on April 2025 version 1.0.0</p>
             </div>
         </div>
     </form>
