@@ -2861,7 +2861,7 @@ namespace FETS.Pages.ViewSection
                 
                 // Create query similar to LoadFireExtinguishers but without paging
                 string query = @"
-                    SELECT fe.FEID, fe.SerialNumber, fe.Location, fe.DateExpired, fe.Remarks,
+                    SELECT fe.FEID, fe.SerialNumber, fe.Location, fe.DateExpired, fe.Remarks, fe.AreaCode,
                            p.PlantID, p.PlantName, l.LevelID, l.LevelName, 
                            s.StatusID, s.StatusName, t.TypeID, t.TypeName
                     FROM FETS.FireExtinguishers fe
