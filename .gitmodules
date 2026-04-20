@@ -1,0 +1,8 @@
+[submodule "EHSAgreementSystem"]
+	path = EHSAgreementSystem
+	url = https://github.com/afiqqo231/EHSAgreementSystem.git
+	branch = EHS_PORTAL
+[submodule "Areas/CORD"]
+	path = Areas/CORD
+	url = https://github.com/afiqqo231/EHSAgreementSystem.git
+	branch = EHS_PORTAL
