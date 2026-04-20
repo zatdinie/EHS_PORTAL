@@ -3,11 +3,11 @@
 
     // The 5 SPA-navigable routes. Each entry maps a URL path to a skeleton type.
     var SPA_ROUTES = [
-        { path: '/dashboard',    skeleton: 'dashboard' },
-        { path: '/vendor',       skeleton: 'list' },
-        { path: '/briefing',     skeleton: 'list' },
-        { path: '/registration', skeleton: 'list' },
-        { path: '/eula',         skeleton: 'list' }
+        { path: '/cord/dashboard',    skeleton: 'dashboard' },
+        { path: '/cord/vendor',       skeleton: 'list' },
+        { path: '/cord/briefing',     skeleton: 'list' },
+        { path: '/cord/registration', skeleton: 'list' },
+        { path: '/cord/eula',         skeleton: 'list' }
     ];
 
     // The content wrapper div in _Layout.cshtml (line 140).
@@ -190,7 +190,7 @@
                     reinitScripts($c[0]);
                     if (push !== false) history.pushState({ url: url }, '', url);
                     var m = html.match(/data-page-title="([^"]+)"/);
-                    if (m) document.title = m[1] + ' \u2014 EHS Agreement System';
+                    if (m) document.title = m[1] + ' \u2014 CORD';
                     window.scrollTo(0, 0);
                     _busy = false;
                 }, wait);

@@ -512,6 +512,7 @@
     <Content Include="Areas\FETS\Scripts\**\*.js" />
     <Content Include="Areas\FETS\DATABASE\**\*.sql" />
     <Content Include="Areas\CORD\**\*.cshtml" />
+    <Content Include="Areas\CORD\favicon.ico" />
     <Content Include="Areas\CORD\Views\Web.config" />
     <Content Include="NLog.config" />
   </ItemGroup>

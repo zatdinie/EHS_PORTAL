@@ -8,7 +8,7 @@
         public override void Up()
         {
             CreateTable(
-                "EAS.AgreementFieldSignatures",
+                "CORD.AgreementFieldSignatures",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -17,13 +17,13 @@
                         SignatureData = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.Agreements", t => t.AgreementId, cascadeDelete: true)
-                .ForeignKey("EAS.PdfSignatureFields", t => t.FieldId)
+                .ForeignKey("CORD.Agreements", t => t.AgreementId, cascadeDelete: true)
+                .ForeignKey("CORD.PdfSignatureFields", t => t.FieldId)
                 .Index(t => t.AgreementId)
                 .Index(t => t.FieldId);
             
             CreateTable(
-                "EAS.Agreements",
+                "CORD.Agreements",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -37,15 +37,15 @@
                         BriefingId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.Vendors", t => t.VendorId, cascadeDelete: true)
-                .ForeignKey("EAS.Briefings", t => t.BriefingId)
-                .ForeignKey("EAS.EulaDocuments", t => t.DocumentId, cascadeDelete: true)
+                .ForeignKey("CORD.Vendors", t => t.VendorId, cascadeDelete: true)
+                .ForeignKey("CORD.Briefings", t => t.BriefingId)
+                .ForeignKey("CORD.EulaDocuments", t => t.DocumentId, cascadeDelete: true)
                 .Index(t => t.DocumentId)
                 .Index(t => t.VendorId)
                 .Index(t => t.BriefingId);
             
             CreateTable(
-                "EAS.Briefings",
+                "CORD.Briefings",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -58,7 +58,7 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "EAS.BriefingAttendees",
+                "CORD.BriefingAttendees",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -66,13 +66,13 @@
                         VendorId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.Briefings", t => t.BriefingId, cascadeDelete: true)
-                .ForeignKey("EAS.Vendors", t => t.VendorId, cascadeDelete: true)
+                .ForeignKey("CORD.Briefings", t => t.BriefingId, cascadeDelete: true)
+                .ForeignKey("CORD.Vendors", t => t.VendorId, cascadeDelete: true)
                 .Index(t => t.BriefingId)
                 .Index(t => t.VendorId);
             
             CreateTable(
-                "EAS.Vendors",
+                "CORD.Vendors",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -81,11 +81,11 @@
                         CurrentPICId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.PICs", t => t.CurrentPICId)
+                .ForeignKey("CORD.PICs", t => t.CurrentPICId)
                 .Index(t => t.CurrentPICId);
             
             CreateTable(
-                "EAS.PICs",
+                "CORD.PICs",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -96,11 +96,11 @@
                         CreatedAt = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.Vendors", t => t.VendorId, cascadeDelete: true)
+                .ForeignKey("CORD.Vendors", t => t.VendorId, cascadeDelete: true)
                 .Index(t => t.VendorId);
             
             CreateTable(
-                "EAS.OneTimeLinks",
+                "CORD.OneTimeLinks",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -111,11 +111,11 @@
                         UsedAt = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.Vendors", t => t.VendorId, cascadeDelete: true)
+                .ForeignKey("CORD.Vendors", t => t.VendorId, cascadeDelete: true)
                 .Index(t => t.VendorId);
             
             CreateTable(
-                "EAS.EulaDocuments",
+                "CORD.EulaDocuments",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -129,7 +129,7 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "EAS.PdfSignatureFields",
+                "CORD.PdfSignatureFields",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -145,11 +145,11 @@
                         FieldType = c.String(maxLength: 20),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.EulaDocuments", t => t.DocumentId)
+                .ForeignKey("CORD.EulaDocuments", t => t.DocumentId)
                 .Index(t => t.DocumentId);
             
             CreateTable(
-                "EAS.Registrations",
+                "CORD.Registrations",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -159,8 +159,8 @@
                         RegisteredAt = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("EAS.Briefings", t => t.BriefingId, cascadeDelete: true)
-                .ForeignKey("EAS.PICs", t => t.PICId, cascadeDelete: true)
+                .ForeignKey("CORD.Briefings", t => t.BriefingId, cascadeDelete: true)
+                .ForeignKey("CORD.PICs", t => t.PICId, cascadeDelete: true)
                 .Index(t => t.PICId)
                 .Index(t => t.BriefingId);
             
@@ -168,42 +168,42 @@
         
         public override void Down()
         {
-            DropForeignKey("EAS.Registrations", "PICId", "EAS.PICs");
-            DropForeignKey("EAS.Registrations", "BriefingId", "EAS.Briefings");
-            DropForeignKey("EAS.AgreementFieldSignatures", "FieldId", "EAS.PdfSignatureFields");
-            DropForeignKey("EAS.AgreementFieldSignatures", "AgreementId", "EAS.Agreements");
-            DropForeignKey("EAS.PdfSignatureFields", "DocumentId", "EAS.EulaDocuments");
-            DropForeignKey("EAS.Agreements", "DocumentId", "EAS.EulaDocuments");
-            DropForeignKey("EAS.Agreements", "BriefingId", "EAS.Briefings");
-            DropForeignKey("EAS.BriefingAttendees", "VendorId", "EAS.Vendors");
-            DropForeignKey("EAS.OneTimeLinks", "VendorId", "EAS.Vendors");
-            DropForeignKey("EAS.Vendors", "CurrentPICId", "EAS.PICs");
-            DropForeignKey("EAS.PICs", "VendorId", "EAS.Vendors");
-            DropForeignKey("EAS.Agreements", "VendorId", "EAS.Vendors");
-            DropForeignKey("EAS.BriefingAttendees", "BriefingId", "EAS.Briefings");
-            DropIndex("EAS.Registrations", new[] { "BriefingId" });
-            DropIndex("EAS.Registrations", new[] { "PICId" });
-            DropIndex("EAS.PdfSignatureFields", new[] { "DocumentId" });
-            DropIndex("EAS.OneTimeLinks", new[] { "VendorId" });
-            DropIndex("EAS.PICs", new[] { "VendorId" });
-            DropIndex("EAS.Vendors", new[] { "CurrentPICId" });
-            DropIndex("EAS.BriefingAttendees", new[] { "VendorId" });
-            DropIndex("EAS.BriefingAttendees", new[] { "BriefingId" });
-            DropIndex("EAS.Agreements", new[] { "BriefingId" });
-            DropIndex("EAS.Agreements", new[] { "VendorId" });
-            DropIndex("EAS.Agreements", new[] { "DocumentId" });
-            DropIndex("EAS.AgreementFieldSignatures", new[] { "FieldId" });
-            DropIndex("EAS.AgreementFieldSignatures", new[] { "AgreementId" });
-            DropTable("EAS.Registrations");
-            DropTable("EAS.PdfSignatureFields");
-            DropTable("EAS.EulaDocuments");
-            DropTable("EAS.OneTimeLinks");
-            DropTable("EAS.PICs");
-            DropTable("EAS.Vendors");
-            DropTable("EAS.BriefingAttendees");
-            DropTable("EAS.Briefings");
-            DropTable("EAS.Agreements");
-            DropTable("EAS.AgreementFieldSignatures");
+            DropForeignKey("CORD.Registrations", "PICId", "CORD.PICs");
+            DropForeignKey("CORD.Registrations", "BriefingId", "CORD.Briefings");
+            DropForeignKey("CORD.AgreementFieldSignatures", "FieldId", "CORD.PdfSignatureFields");
+            DropForeignKey("CORD.AgreementFieldSignatures", "AgreementId", "CORD.Agreements");
+            DropForeignKey("CORD.PdfSignatureFields", "DocumentId", "CORD.EulaDocuments");
+            DropForeignKey("CORD.Agreements", "DocumentId", "CORD.EulaDocuments");
+            DropForeignKey("CORD.Agreements", "BriefingId", "CORD.Briefings");
+            DropForeignKey("CORD.BriefingAttendees", "VendorId", "CORD.Vendors");
+            DropForeignKey("CORD.OneTimeLinks", "VendorId", "CORD.Vendors");
+            DropForeignKey("CORD.Vendors", "CurrentPICId", "CORD.PICs");
+            DropForeignKey("CORD.PICs", "VendorId", "CORD.Vendors");
+            DropForeignKey("CORD.Agreements", "VendorId", "CORD.Vendors");
+            DropForeignKey("CORD.BriefingAttendees", "BriefingId", "CORD.Briefings");
+            DropIndex("CORD.Registrations", new[] { "BriefingId" });
+            DropIndex("CORD.Registrations", new[] { "PICId" });
+            DropIndex("CORD.PdfSignatureFields", new[] { "DocumentId" });
+            DropIndex("CORD.OneTimeLinks", new[] { "VendorId" });
+            DropIndex("CORD.PICs", new[] { "VendorId" });
+            DropIndex("CORD.Vendors", new[] { "CurrentPICId" });
+            DropIndex("CORD.BriefingAttendees", new[] { "VendorId" });
+            DropIndex("CORD.BriefingAttendees", new[] { "BriefingId" });
+            DropIndex("CORD.Agreements", new[] { "BriefingId" });
+            DropIndex("CORD.Agreements", new[] { "VendorId" });
+            DropIndex("CORD.Agreements", new[] { "DocumentId" });
+            DropIndex("CORD.AgreementFieldSignatures", new[] { "FieldId" });
+            DropIndex("CORD.AgreementFieldSignatures", new[] { "AgreementId" });
+            DropTable("CORD.Registrations");
+            DropTable("CORD.PdfSignatureFields");
+            DropTable("CORD.EulaDocuments");
+            DropTable("CORD.OneTimeLinks");
+            DropTable("CORD.PICs");
+            DropTable("CORD.Vendors");
+            DropTable("CORD.BriefingAttendees");
+            DropTable("CORD.Briefings");
+            DropTable("CORD.Agreements");
+            DropTable("CORD.AgreementFieldSignatures");
         }
     }
 }
