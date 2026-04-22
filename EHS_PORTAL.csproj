@@ -241,6 +241,7 @@
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Areas\CLIP\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Areas\CLIP\Scripts\modernizr-2.8.3.js" />
+    <Content Include="Areas\CORD\Content\Site.css" />
     <Content Include="Areas\Training\favicon.ico" />
     <Content Include="Areas\Training\Images\environment.png" />
     <Content Include="Areas\Training\Images\general.png" />
@@ -272,6 +273,7 @@
     <Content Include="Error.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\clip.png" />
+    <Content Include="images\cord.png" />
     <Content Include="images\data.png" />
     <Content Include="images\favicon.ico" />
     <Content Include="images\fets.png" />
@@ -340,6 +342,8 @@
     <Content Include="Areas\FETS\Pages\PublicDashboard\UserGuideHandler.ashx" />
     <Content Include="images\RC-G0028.04_PPE Requisition and Issuance Form.pdf" />
     <Content Include="Areas\Training\Views\web.config" />
+    <Content Include="Areas\CORD\Views\AttendanceHistory\Index.cshtml" />
+    <Content Include="Areas\CORD\Views\AttendanceHistory\Create.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -659,10 +663,15 @@
     <Compile Include="Areas\FETS\Pages\**\*.ascx.designer.cs" />
     <Compile Include="Areas\FETS\App_Code\**\*.cs" />
     <Compile Include="Areas\FETS\Models\**\*.cs" />
-    <Compile Include="Migrations\202604200156362_InitialCreate.cs" />
-    <Compile Include="Migrations\202604200156362_InitialCreate.Designer.cs">
+    <Compile Include="Areas\CORD\Migrations\202604200156362_InitialCreate.cs" />
+    <Compile Include="Areas\CORD\Migrations\202604200156362_InitialCreate.Designer.cs">
       <DependentUpon>202604200156362_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Areas\CORD\Migrations\202604210923068_AddTableAttendanceHistory.cs" />
+    <Compile Include="Areas\CORD\Migrations\202604210923068_AddTableAttendanceHistory.Designer.cs">
+      <DependentUpon>202604210923068_AddTableAttendanceHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\CORD\Migrations\Configuration.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -804,8 +813,11 @@
     <EmbeddedResource Include="Areas\CLIP\Migrations\202504280328587_CombinedChanges.resx">
       <DependentUpon>202504280328587_CombinedChanges.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202604200156362_InitialCreate.resx">
+    <EmbeddedResource Include="Areas\CORD\Migrations\202604200156362_InitialCreate.resx">
       <DependentUpon>202604200156362_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Areas\CORD\Migrations\202604210923068_AddTableAttendanceHistory.resx">
+      <DependentUpon>202604210923068_AddTableAttendanceHistory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
