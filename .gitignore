@@ -62,3 +62,8 @@ Web.Release.config
 # Error logs
 App_Data/ErrorLogs/
 
+# PDF templates uploaded by users
+Pdftemplates/
+
+# Agreements signed by users
+Agreements/
