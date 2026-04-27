@@ -344,6 +344,7 @@
     <Content Include="Areas\Training\Views\web.config" />
     <Content Include="Areas\CORD\Views\AttendanceHistory\Index.cshtml" />
     <Content Include="Areas\CORD\Views\AttendanceHistory\Create.cshtml" />
+    <Content Include="Areas\CORD\Views\AttendanceHistory\_EditModal.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
