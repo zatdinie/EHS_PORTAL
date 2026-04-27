@@ -67,3 +67,9 @@ Pdftemplates/
 
 # Agreements signed by users
 Agreements/
+
+# local configuration
+CLAUDE.md
+App_Data/CORD/
+Uploads/CORD/
+.claude/
